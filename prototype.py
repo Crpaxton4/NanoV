@@ -17,7 +17,8 @@ class MyApp(ShowBase):
     def __init__(self):
         #call superclass constructor
         ShowBase.__init__(self)
-        #self.r = Ruler()
+
+        # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
         self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
 
@@ -27,6 +28,8 @@ class MyApp(ShowBase):
 
         self.set_up_lighting()
 
+
+        #TODO remove this GUI stuff and change it to the normal window menus
         print("making buttons")
 
         self.b1 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (0.75, 0, 0.8), text_scale = 0.25, text = ("Inc", "click!", "Inc", "disabled"), scale=.25, command=self.button_command1)
@@ -34,7 +37,7 @@ class MyApp(ShowBase):
 
         print("DONE")
 
-
+        #TODO Remvoe
         numItemsVisible = 4
         itemHeight = 0.11
 
@@ -59,6 +62,13 @@ class MyApp(ShowBase):
             itemFrame_pos = (0, 0, 0.4),
         )
 
+    '''
+
+    Menu item actions
+
+    TODO Change from button commands to functions for each menu item
+
+    '''
     def button_command1(self):
         print("button1")
         root_node = self.render.find('Root')
@@ -93,6 +103,7 @@ class MyApp(ShowBase):
         self.render_points(points)
 
 
+
     def set_up_lighting(self):
         print("setting up lights")
         # Create Ambient Light
@@ -108,7 +119,11 @@ class MyApp(ShowBase):
         self.plnp = self.render.attachNewNode(self.plight)
         self.render.setLight(self.plnp)
 
-    #define procedure to add object to scene at specified points
+    # TODO change this to accept a list of possible materials
+    # so that they are not hard coded into the function.
+
+    # TODO move the camera so that the scale of the scpheres will be 1
+    # to make the math easier
     def render_points(self, point_list):
         #Create Material for all the spheres to be rendered
 
@@ -144,6 +159,10 @@ class MyApp(ShowBase):
 
             self.sphere.setScale(0.5)
 
+
+    #TODO either remove this method or make it a menu item that is a neat effect
+    # this is a strech goal
+
     # Define a procedure to move the camera.
     def spinCameraTask(self, task):
         #print("spin camera") WORKS
@@ -155,6 +174,10 @@ class MyApp(ShowBase):
         self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
         return Task.cont
 
+
+################################################################################
+# running the program for testing. This will need to be put into a different
+# main file to make running and testing easier
 ################################################################################
 points_file = 'points.txt'
 

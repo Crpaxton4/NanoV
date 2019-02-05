@@ -1,5 +1,15 @@
 
 
+'''
+
+TODO
+    - Make this into a class
+    - develop a standard for the file (either plaintext or binary data file)
+    - determine what the columns will be for the data (id, x, y, z, type, ...)
+
+
+'''
+
 def read_points(path):
     points = []
 
