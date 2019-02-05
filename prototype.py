@@ -1,8 +1,5 @@
 from math import pi, sin, cos
-
 import Reader
-from Ruler import Ruler
-
 from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
 from direct.actor.Actor import Actor
@@ -10,11 +7,29 @@ from panda3d.core import *
 from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 
-class MyApp(ShowBase):
+
+"""
+
+Prototype.py
+
+"""
+
+class MainApp(ShowBase):
+    """
+
+    MainApp
+
+    """
 
     step = 0
 
     def __init__(self):
+        """
+
+        __init__
+
+        """
+
         #call superclass constructor
         ShowBase.__init__(self)
 
@@ -61,15 +76,19 @@ class MyApp(ShowBase):
             itemFrame_frameSize = (-0.2, 0.2, -0.37, 0.11),
             itemFrame_pos = (0, 0, 0.4),
         )
+    #END __init__
 
-    '''
+    ############################################################################
+    # Menu item actions
+    # TODO Change from button commands to functions for each menu item
+    ############################################################################
 
-    Menu item actions
-
-    TODO Change from button commands to functions for each menu item
-
-    '''
     def button_command1(self):
+        """
+
+        button_command1
+
+        """
         print("button1")
         root_node = self.render.find('Root')
         root_node.removeNode()
@@ -79,12 +98,18 @@ class MyApp(ShowBase):
 
         self.step += 1
         Reader.write_points('points.txt', self.step)
-
         points = Reader.read_points('points.txt')
 
         self.render_points(points)
+    #END button_command1
 
     def button_command2(self):
+        """
+
+        button_command2
+
+        """
+
         print("Button2")
         root_node = self.render.find('Root')
         root_node.removeNode()
@@ -101,10 +126,16 @@ class MyApp(ShowBase):
         points = Reader.read_points('points.txt')
 
         self.render_points(points)
-
+    #END button_command2
 
 
     def set_up_lighting(self):
+        """
+
+        set_up_lighting
+
+        """
+
         print("setting up lights")
         # Create Ambient Light
         self.alight = AmbientLight('alight')
@@ -118,6 +149,8 @@ class MyApp(ShowBase):
 
         self.plnp = self.render.attachNewNode(self.plight)
         self.render.setLight(self.plnp)
+    #END set_up_lighting
+
 
     # TODO change this to accept a list of possible materials
     # so that they are not hard coded into the function.
@@ -125,8 +158,13 @@ class MyApp(ShowBase):
     # TODO move the camera so that the scale of the scpheres will be 1
     # to make the math easier
     def render_points(self, point_list):
-        #Create Material for all the spheres to be rendered
+        """
 
+        render_points
+
+        """
+
+        #Create Material for all the spheres to be rendered
         # red
         self.myMaterial1 = Material()
         self.myMaterial1.setAmbient((0.44, 0.2, 0.2, 1.0))
@@ -158,13 +196,19 @@ class MyApp(ShowBase):
             flag = not flag
 
             self.sphere.setScale(0.5)
-
+    #END render_points
 
     #TODO either remove this method or make it a menu item that is a neat effect
     # this is a strech goal
 
     # Define a procedure to move the camera.
     def spinCameraTask(self, task):
+        """
+
+        spinCameraTask
+
+        """
+
         #print("spin camera") WORKS
         angleDegrees = task.time * 6.0
         angleRadians = angleDegrees * (pi / 180.0)
@@ -173,7 +217,9 @@ class MyApp(ShowBase):
 
         self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
         return Task.cont
+    #END spinCameraTask
 
+#END MainApp
 
 ################################################################################
 # running the program for testing. This will need to be put into a different
@@ -193,7 +239,7 @@ Reader.write_points(points_file, 10)
 
 #points = Reader.read_points(points_file)
 
-app = MyApp()
+app = MainApp()
 app.run()
 
 print('Done!')

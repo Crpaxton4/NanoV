@@ -1,6 +1,9 @@
 
 
-'''
+"""
+
+
+    Reader.py
 
 TODO
     - Make this into a class
@@ -8,9 +11,15 @@ TODO
     - determine what the columns will be for the data (id, x, y, z, type, ...)
 
 
-'''
+"""
 
 def read_points(path):
+    """
+
+    read_points
+
+    """
+
     points = []
 
     with open(path) as f:
@@ -23,6 +32,12 @@ def read_points(path):
     return points
 
 def write_points(path, step):
+    """
+
+    write_points
+
+    """
+
     with open(path, 'w+') as f:
         for x in [-2*step, -step, 0, step, 2*step]:
             for y in [-2*step, -step, 0, step, 2*step]:
