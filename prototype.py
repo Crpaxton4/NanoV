@@ -1,0 +1,176 @@
+from math import pi, sin, cos
+
+import Reader
+from Ruler import Ruler
+
+from direct.showbase.ShowBase import ShowBase
+from direct.task import Task
+from direct.actor.Actor import Actor
+from panda3d.core import *
+from panda3d.core import VBase4
+from direct.gui.DirectGui import *
+
+class MyApp(ShowBase):
+
+    step = 0
+
+    def __init__(self):
+        #call superclass constructor
+        ShowBase.__init__(self)
+        #self.r = Ruler()
+        # Add the spinCameraTask procedure to the task manager.
+        self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
+
+        # create the root node of the scene graph
+        self.root = self.render.attachNewNode("Root")
+        self.root.reparentTo(self.render)
+
+        self.set_up_lighting()
+
+        print("making buttons")
+
+        self.b1 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (0.75, 0, 0.8), text_scale = 0.25, text = ("Inc", "click!", "Inc", "disabled"), scale=.25, command=self.button_command1)
+        self.b2 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (-0.75, 0, 0.8), text_scale = 0.25, text = ("Dec", "click!", "Dec", "disabled"), scale=.25, command=self.button_command2)
+
+        print("DONE")
+
+
+        numItemsVisible = 4
+        itemHeight = 0.11
+
+        self.structureList = DirectScrolledList(
+            decButton_pos= (0.35, 0, 0.53),
+            decButton_text = "Dec",
+            decButton_text_scale = 0.04,
+            decButton_borderWidth = (0.005, 0.005),
+
+            incButton_pos= (0.35, 0, -0.02),
+            incButton_text = "Inc",
+            incButton_text_scale = 0.04,
+            incButton_borderWidth = (0.005, 0.005),
+
+            frameSize = (0.0, 0.5, -0.05, 0.59),
+            frameColor = (1,0,0,0.5),
+            pos = (-1, 0, 0),
+            items = [self.b1, self.b2],
+            numItemsVisible = numItemsVisible,
+            forceHeight = itemHeight,
+            itemFrame_frameSize = (-0.2, 0.2, -0.37, 0.11),
+            itemFrame_pos = (0, 0, 0.4),
+        )
+
+    def button_command1(self):
+        print("button1")
+        root_node = self.render.find('Root')
+        root_node.removeNode()
+
+        self.root = self.render.attachNewNode("Root")
+        self.root.reparentTo(render)
+
+        self.step += 1
+        Reader.write_points('points.txt', self.step)
+
+        points = Reader.read_points('points.txt')
+
+        self.render_points(points)
+
+    def button_command2(self):
+        print("Button2")
+        root_node = self.render.find('Root')
+        root_node.removeNode()
+
+        self.root = self.render.attachNewNode("Root")
+        self.root.reparentTo(render)
+
+        self.step -= 1
+        if self.step <= 0:
+            self.step = 0
+
+        Reader.write_points('points.txt', self.step)
+
+        points = Reader.read_points('points.txt')
+
+        self.render_points(points)
+
+
+    def set_up_lighting(self):
+        print("setting up lights")
+        # Create Ambient Light
+        self.alight = AmbientLight('alight')
+        self.alight.setColor(VBase4(0.2, 0.2, 0.2, 1))
+        self.alnp = self.render.attachNewNode(self.alight)
+        self.render.setLight(self.alnp)
+
+        # Create a positional point light
+        self.plight = PointLight('plight')
+        self.plight.setColor(VBase4(1.0, 1.0, 1.0, 1))
+
+        self.plnp = self.render.attachNewNode(self.plight)
+        self.render.setLight(self.plnp)
+
+    #define procedure to add object to scene at specified points
+    def render_points(self, point_list):
+        #Create Material for all the spheres to be rendered
+
+        # red
+        self.myMaterial1 = Material()
+        self.myMaterial1.setAmbient((0.44, 0.2, 0.2, 1.0))
+        self.myMaterial1.setDiffuse((0.7, 0.2, 0.2, 1.0))
+        self.myMaterial1.setSpecular((0.45, 0.2, 0.2, 1.0))
+        self.myMaterial1.setShininess(90.0) #Make this material shiny
+
+        # blue
+        self.myMaterial2 = Material()
+        self.myMaterial2.setAmbient((0.2, 0.2, 0.44, 1.0))
+        self.myMaterial2.setDiffuse((0.2, 0.2, 0.7, 1.0))
+        self.myMaterial2.setSpecular((0.2, 0.2, 0.45, 1.0))
+        self.myMaterial2.setShininess(90.0) #Make this material shiny
+
+
+        flag = True
+
+        # Create
+        for p in point_list:
+            self.sphere = self.loader.loadModel("/c/Users/Chris/Desktop/models/sphere.egg.pz")
+            self.sphere.reparentTo(self.render.find('Root'))
+            self.sphere.setPos(p[0], p[1], p[2])
+
+            if flag:
+                self.sphere.setMaterial(self.myMaterial1)
+            else:
+                self.sphere.setMaterial(self.myMaterial2)
+
+            flag = not flag
+
+            self.sphere.setScale(0.5)
+
+    # Define a procedure to move the camera.
+    def spinCameraTask(self, task):
+        #print("spin camera") WORKS
+        angleDegrees = task.time * 6.0
+        angleRadians = angleDegrees * (pi / 180.0)
+        self.camera.setPos(20 * sin(angleRadians), -20.0 * cos(angleRadians), 0)
+        self.camera.setHpr(angleDegrees, 0, 0)
+
+        self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
+        return Task.cont
+
+################################################################################
+points_file = 'points.txt'
+
+points = []
+
+## Create points for 'atoms'
+#for x in [-2.5, 0, 2.5]:
+    # for y in [-2.5, 0, 2.5]:
+    #     for z in [-2.5, 0, 2.5]:
+    #         points += [[x, y, z]]
+
+Reader.write_points(points_file, 10)
+
+#points = Reader.read_points(points_file)
+
+app = MyApp()
+app.run()
+
+print('Done!')
