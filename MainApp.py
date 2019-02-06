@@ -156,6 +156,8 @@ class MainApp(ShowBase):
             ("_Inc", 0, self.button_command1),
             0,
             ("_Dec", 0, self.button_command2),
+            0,
+            ('_New>Ctrl+G', 0, self.button_command1),
             0
         )
 
