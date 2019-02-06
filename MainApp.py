@@ -16,14 +16,14 @@ Prototype.py
 """
 
 
-def createFileMenuItems():
-    return (
-        ("_New", 0, menuItemSelected),
-        0
-    )
-
-def menuItemSelected():
-    print("Item Selected")
+# def createFileMenuItems():
+#     return (
+#         ("_New", 0, menuItemSelected),
+#         0
+#     )
+#
+# def menuItemSelected():
+#     print("Item Selected")
 
 class MainApp(ShowBase):
     """
@@ -58,15 +58,15 @@ class MainApp(ShowBase):
         #TODO remove this GUI stuff and change it to the normal window menus
         print("making buttons")
 
-        self.b1 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (0.75, 0, 0.8), text_scale = 0.25, text = ("Inc", "click!", "Inc", "disabled"), scale=.25, command=self.button_command1)
-        self.b2 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (-0.75, 0, 0.8), text_scale = 0.25, text = ("Dec", "click!", "Dec", "disabled"), scale=.25, command=self.button_command2)
+        #self.b1 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (0.75, 0, 0.8), text_scale = 0.25, text = ("Inc", "click!", "Inc", "disabled"), scale=.25, command=self.button_command1)
+        #self.b2 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (-0.75, 0, 0.8), text_scale = 0.25, text = ("Dec", "click!", "Dec", "disabled"), scale=.25, command=self.button_command2)
 
 
         menuBar = DropDownMenu(
             items=(
                 # (name, action)
-                ("_File", createFileMenuItems),
-                ("_Edit", createFileMenuItems)
+                ("_File", self.createFileMenuItems),
+                ("_Edit", self.createFileMenuItems)
             ),
 
             sidePad = 0.75,
@@ -151,6 +151,17 @@ class MainApp(ShowBase):
 
         self.render_points(points)
     #END button_command2
+
+    def createFileMenuItems(self):
+        return (
+            ("_Inc", 0, self.button_command1),
+            0,
+            ("_Dec", 0, self.button_command2),
+            0
+        )
+
+    def menuItemSelected(self):
+        print("Item Selected")
 
     def set_up_lighting(self):
         """
