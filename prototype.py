@@ -51,31 +51,6 @@ class MainApp(ShowBase):
         self.b2 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (-0.75, 0, 0.8), text_scale = 0.25, text = ("Dec", "click!", "Dec", "disabled"), scale=.25, command=self.button_command2)
 
         print("DONE")
-
-        #TODO Remvoe
-        numItemsVisible = 4
-        itemHeight = 0.11
-
-        self.structureList = DirectScrolledList(
-            decButton_pos= (0.35, 0, 0.53),
-            decButton_text = "Dec",
-            decButton_text_scale = 0.04,
-            decButton_borderWidth = (0.005, 0.005),
-
-            incButton_pos= (0.35, 0, -0.02),
-            incButton_text = "Inc",
-            incButton_text_scale = 0.04,
-            incButton_borderWidth = (0.005, 0.005),
-
-            frameSize = (0.0, 0.5, -0.05, 0.59),
-            frameColor = (1,0,0,0.5),
-            pos = (-1, 0, 0),
-            items = [self.b1, self.b2],
-            numItemsVisible = numItemsVisible,
-            forceHeight = itemHeight,
-            itemFrame_frameSize = (-0.2, 0.2, -0.37, 0.11),
-            itemFrame_pos = (0, 0, 0.4),
-        )
     #END __init__
 
     ############################################################################
