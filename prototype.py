@@ -6,6 +6,7 @@ from direct.actor.Actor import Actor
 from panda3d.core import *
 from panda3d.core import VBase4
 from direct.gui.DirectGui import *
+from Menu import DropDownMenu, PopupMenu
 
 
 """
@@ -13,6 +14,16 @@ from direct.gui.DirectGui import *
 Prototype.py
 
 """
+
+
+def createFileMenuItems():
+    return (
+        ("_New", 0, menuItemSelected),
+        0
+    )
+
+def menuItemSelected():
+    print("Item Selected")
 
 class MainApp(ShowBase):
     """
@@ -49,6 +60,44 @@ class MainApp(ShowBase):
 
         self.b1 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (0.75, 0, 0.8), text_scale = 0.25, text = ("Inc", "click!", "Inc", "disabled"), scale=.25, command=self.button_command1)
         self.b2 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (-0.75, 0, 0.8), text_scale = 0.25, text = ("Dec", "click!", "Dec", "disabled"), scale=.25, command=self.button_command2)
+
+
+        menuBar = DropDownMenu(
+            items=(
+                # (name, action)
+                ("_File", createFileMenuItems),
+                ("_Edit", createFileMenuItems)
+            ),
+
+            sidePad = 0.75,
+
+            align = DropDownMenu.ALeft,
+            effect = DropDownMenu.PTop,
+            edgePos = DropDownMenu.PTop,
+
+            baselineOffset = -0.35,
+            scale = 0.045,
+            itemHeight = 1.2,
+            leftPad = 0.2,
+            underscoreThickness = 1,
+
+            BGColor = (0.9, 0.9, 0.8, 0.94),
+            BGBorderColor = (0.8, 0.3, 0, 1),
+
+            separatorHeight = 0.3,
+            separatorColor = (0, 0, 0, 1),
+
+            frameColorHover = (0.3, 0.3, 0.3, 1),
+            frameColorPress = (0, 1, 0, 0.85),
+
+            textColorReady = (0, 0, 0, 1),
+            textColorHover = (1, 0.7, 0.2, 1),
+            textColorPress = (0, 0, 0, 1),
+            textColorDisabled = (0.65, 0.65, 0.65, 1),
+
+            draggable=True
+            #onMove=None
+        )
 
         print("DONE")
     #END __init__
@@ -102,7 +151,6 @@ class MainApp(ShowBase):
 
         self.render_points(points)
     #END button_command2
-
 
     def set_up_lighting(self):
         """
