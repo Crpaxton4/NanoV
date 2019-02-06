@@ -152,6 +152,9 @@ class MainApp(ShowBase):
         self.render_points(points)
     #END button_command2
 
+    ############################################################################
+    # Methods to create sub menus of menu bar
+    ############################################################################
     def createFileMenuItems(self):
         return (
             ("_Inc", 0, self.button_command1),
@@ -160,9 +163,9 @@ class MainApp(ShowBase):
             0
         )
 
-    def menuItemSelected(self):
-        print("Item Selected")
-
+    ############################################################################
+    # Rendering setup methods
+    ############################################################################
     def set_up_lighting(self):
         """
 
