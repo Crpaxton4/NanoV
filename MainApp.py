@@ -15,16 +15,6 @@ Prototype.py
 
 """
 
-
-# def createFileMenuItems():
-#     return (
-#         ("_New", 0, menuItemSelected),
-#         0
-#     )
-#
-# def menuItemSelected():
-#     print("Item Selected")
-
 class MainApp(ShowBase):
     """
 
@@ -156,6 +146,12 @@ class MainApp(ShowBase):
     # Methods to create sub menus of menu bar
     ############################################################################
     def createFileMenuItems(self):
+        """
+
+        createFileMenuItems
+
+        """
+
         return (
             ("_Inc", 0, self.button_command1),
             0,
