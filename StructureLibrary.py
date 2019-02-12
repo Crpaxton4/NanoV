@@ -3,46 +3,64 @@
 StructureLibrary.py
 
 """
-
+'''
+Library of structures that organizes the points of the various structures
+'''
 class StructureLibrary:
-        """
+    '''test Ca [type 1] on corners with a 6 atom diamond shape of B [type 2]
+    in the middle'''
+    def CaB6():
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+        acell = 1
+        # Corner
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+        typepos.append(1)
 
-        StructureLibrary
+        # Face
+        xpos.append(acell/2)
+        ypos.append(acell/2)
+        zpos.append(acell/4)
+        typepos.append(2)
 
-        """
-'''test Ca [type 1] on corners with a 6 atom diamond shape of B [type 2]
-in the middle'''
-def CaB6:
-    acell = 1
-    # Corner
-    xpos[1]=0
-    ypos[1]=0
-    zpos[1]=0
-    typepos[1]=1
+        xpos.append(acell/2)
+        ypos.append(acell/2)
+        zpos.append((3/4)*acell)
+        typepos.append(2)
+        xpos.append(acell/4)
+        ypos.append(acell/2)
+        zpos.append((1/2)*acell)
+        typepos.append(2)
+        xpos.append(acell/2)
+        ypos.append(acell/4)
+        zpos.append((1/2)*acell)
+        typepos.append(2)
+        xpos.append((3/4)*acell)
+        ypos.append(acell/2)
+        zpos.append((1/2)*acell)
+        typepos.append(2)
+        xpos.append(acell/2)
+        ypos.append((3/4)*acell)
+        zpos.append((1/2)*acell)
+        typepos.append(2)
 
-    # Face
-    xpos[2]=acell/2
-    ypos[2]=acell/2
-    zpos[2]=acell/4
-    typepos[2]=2
+        # Set iteration numbers and counter
+        numcellx=2;
+        numcelly=2;
+        numcellz=2;
+        atnum=0;
 
-    xpos[3]=acell/2
-    ypos[3]=acell/2
-    zpos[3]=(3/4)*acell
-    typepos[3]=2
-    xpos[4]=acell/4
-    ypos[4]=acell/2
-    zpos[4]=(1/2)*acell
-    typepos[4]=2
-    xpos[5]=acell/2
-    ypos[5]=acell/4
-    zpos[5]=(1/2)*acell
-    typepos[5]=2
-    xpos[6]=(3/4)*acell
-    ypos[6]=acell/2
-    zpos[6]=(1/2)*acell
-    typepos[6]=2
-    xpos[7]=acell/2
-    ypos[7]=(3/4)*acell
-    zpos[7]=(1/2)*acell
-    typepos[7]=2;
+        # Loop through and create layers
+        for i1 in range(numcellx):
+            for i2 in range(numcelly):
+                for i3 in range(numcellz):
+                    for i in range(7):
+                        atnum=atnum+1
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+                        Btypepos.append(typepos[i])
+        ret = [Bxpos,Bypos,Bzpos,Btypepos]
+        return ret
