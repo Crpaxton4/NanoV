@@ -1,3 +1,4 @@
+import math
 """
 
 StructureLibrary.py
@@ -58,6 +59,40 @@ class StructureLibrary:
                 for i3 in range(numcellz):
                     for i in range(7):
                         atnum=atnum+1
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+                        Btypepos.append(typepos[i])
+        ret = [Bxpos,Bypos,Bzpos,Btypepos]
+        return ret
+
+    '''test Al(1) in corner with B(2) atoms on faces parallel to each other'''
+    def AlB2():
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+        acell= math.sqrt(2)
+        # Corner
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+        typepos.append(1)
+
+        # Face
+        xpos.append(0)
+        ypos.append(acell/2)
+        zpos.append(acell/2)
+        typepos.append(2)
+
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
+
+        for i1 in range(numcellx):
+            for i2 in range(numcelly):
+                for i3 in range(numcellz):
+                    for i in range(2):
+                        atnum=atnum+1;
                         Bxpos.append(xpos[i]+i1*acell)
                         Bypos.append(ypos[i]+i2*acell)
                         Bzpos.append(zpos[i]+i3*acell)
