@@ -63,8 +63,12 @@ class StructureLibrary:
                         Bypos.append(ypos[i]+i2*acell)
                         Bzpos.append(zpos[i]+i3*acell)
                         Btypepos.append(typepos[i])
-        ret = [Bxpos,Bypos,Bzpos,Btypepos]
-        return ret
+        # rearrange the output
+        finalRet = []
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
+            finalRet.append(points)
+        return finalRet
 
     '''test Al(1) in corner with B(2) atoms on faces parallel to each other'''
     def AlB2():
@@ -97,5 +101,9 @@ class StructureLibrary:
                         Bypos.append(ypos[i]+i2*acell)
                         Bzpos.append(zpos[i]+i3*acell)
                         Btypepos.append(typepos[i])
-        ret = [Bxpos,Bypos,Bzpos,Btypepos]
-        return ret
+        # rearrange the output
+        finalRet = []
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
+            finalRet.append(points)
+        return finalRet
