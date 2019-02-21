@@ -107,3 +107,45 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
+
+    '''test BCC with Bs'''
+    def BCC():
+        xpos, ypos, zpos = ([] for i in range(3))
+        Bxpos, Bypos, Bzpos = ([] for i in range(3))
+        acell=(math.sqrt(4)/3)
+
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+
+        xpos.append(acell/2)
+        ypos.append(acell/2)
+        zpos.append(acell/2)
+
+        xpos.append(0)
+        ypos.append(acell)
+        zpos.append(acell)
+
+        xpos.append(acell)
+        ypos.append(0)
+        zpos.append(acell)
+
+        numcellx=2;
+        numcelly=2;
+        numcellz=2;
+        atnum=0;
+
+        for i1 in range(numcellx):
+            for i2 in range(numcelly):
+                for i3 in range(numcellz):
+                    for i in range(4):
+                        atnum=atnum+1
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+        finalRet = []
+        typeatom = 1
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            finalRet.append(points)
+        return finalRet
