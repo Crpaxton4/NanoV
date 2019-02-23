@@ -69,7 +69,13 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
-
+    data = CaB6()
+    file = open("CaB6.xyz","w")
+    file.write("{}\r\n".format(56))
+    file.write('Atoms\n')
+    for x in data:
+        file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    file.close()
     '''test Al(1) in corner with B(2) atoms on faces parallel to each other'''
     def AlB2():
         xpos, ypos, zpos, typepos = ([] for i in range(4))
@@ -103,11 +109,18 @@ class StructureLibrary:
                         Btypepos.append(typepos[i])
         # rearrange the output
         finalRet = []
+        print(atnum)
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
-
+    data = AlB2()
+    file = open("AlB2.xyz","w")
+    file.write("{}\r\n".format(16))
+    file.write('Atoms\n')
+    for x in data:
+        file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    file.close()
     '''test BCC with Bs'''
     def BCC():
         xpos, ypos, zpos = ([] for i in range(3))
@@ -145,7 +158,15 @@ class StructureLibrary:
                         Bzpos.append(zpos[i]+i3*acell)
         finalRet = []
         typeatom = 1
+        print(atnum)
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
             finalRet.append(points)
         return finalRet
+    data = BCC()
+    file = open("bcc.xyz","w")
+    file.write("{}\r\n".format(32))
+    file.write('Atoms\n')
+    for x in data:
+        file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    file.close()
