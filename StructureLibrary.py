@@ -54,9 +54,9 @@ class StructureLibrary:
         atnum=0;
 
         # Loop through and create layers
-        for i1 in range(numcellx):
-            for i2 in range(numcelly):
-                for i3 in range(numcellz):
+        for i1 in range(1,numcellx+1):
+            for i2 in range(1,numcelly+1):
+                for i3 in range(1,numcellz+1):
                     for i in range(7):
                         atnum=atnum+1
                         Bxpos.append(xpos[i]+i1*acell)
@@ -98,9 +98,9 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-        for i1 in range(numcellx):
-            for i2 in range(numcelly):
-                for i3 in range(numcellz):
+        for i1 in range(1,numcellx + 1):
+            for i2 in range(1,numcelly + 1):
+                for i3 in range(1,numcellz + 1):
                     for i in range(2):
                         atnum=atnum+1;
                         Bxpos.append(xpos[i]+i1*acell)
@@ -148,9 +148,9 @@ class StructureLibrary:
         numcellz=2;
         atnum=0;
 
-        for i1 in range(numcellx):
-            for i2 in range(numcelly):
-                for i3 in range(numcellz):
+        for i1 in range(1,numcellx + 1):
+            for i2 in range(1,numcelly + 1):
+                for i3 in range(1,numcellz + 1):
                     for i in range(4):
                         atnum=atnum+1
                         Bxpos.append(xpos[i]+i1*acell)
