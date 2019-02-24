@@ -145,10 +145,10 @@ class StructureLibrary:
         ypos.append(0)
         zpos.append(acell)
 
-        numcellx=2;
-        numcelly=2;
-        numcellz=2;
-        atnum=0;
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
 
         for i1 in range(1,numcellx + 1):
             for i2 in range(1,numcelly + 1):
