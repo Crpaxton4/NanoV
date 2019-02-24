@@ -8,6 +8,9 @@ from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 from Menu import DropDownMenu, PopupMenu
 
+import tkinter as tk
+from tkinter import simpledialog
+
 
 """
 Test
@@ -15,6 +18,7 @@ TEst test
 Prototype.py
 
 """
+
 
 class MainApp(ShowBase):
     """
@@ -34,6 +38,19 @@ class MainApp(ShowBase):
 
         #call superclass constructor
         ShowBase.__init__(self)
+
+        self.tk_parent = tk.Tk()
+        #self.tk_parent.withdraw()
+
+        windowWidth = self.tk_parent.winfo_reqwidth()
+        windowHeight = self.tk_parent.winfo_reqheight()
+
+        # Gets both half the screen width/height and window width/height
+        positionRight = int(self.tk_parent.winfo_screenwidth()/2 - windowWidth/2)
+        positionDown = int(self.tk_parent.winfo_screenheight()/2 - windowHeight/2)
+
+        # Positions the window in the center of the page.
+        self.tk_parent.geometry("+{}+{}".format(positionRight, positionDown))
 
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
@@ -143,6 +160,16 @@ class MainApp(ShowBase):
         self.render_points(points)
     #END button_command2
 
+    def input_dialog(self):
+        answer = simpledialog.askinteger("Input", "Enter an int", parent=self.tk_parent, minvalue=0, maxvalue=100)
+
+        if answer:
+            self.step = answer
+            Reader.write_points('points.txt', self.step)
+            points = Reader.read_points('points.txt')
+
+            self.render_points(points)
+
     ############################################################################
     # Methods to create sub menus of menu bar
     ############################################################################
@@ -158,7 +185,7 @@ class MainApp(ShowBase):
             0,
             ("_Dec", 0, self.button_command2),
             0,
-            ('_New>Ctrl+G', 0, self.button_command1),
+            ('_New>Ctrl+G', 0, self.input_dialog),
             0
         )
 
