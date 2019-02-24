@@ -1,5 +1,6 @@
 from math import pi, sin, cos
 import Reader
+from StructureLibrary import StructureLibrary
 from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
 from direct.actor.Actor import Actor
@@ -74,7 +75,8 @@ class MainApp(ShowBase):
             items=(
                 # (name, action)
                 ("_File", self.createFileMenuItems),
-                ("_Edit", self.createFileMenuItems)
+                ("_Edit", self.createFileMenuItems),
+                ("Structure _Library", self.createStructureMenuItems)
             ),
 
             sidePad = 0.75,
@@ -160,6 +162,12 @@ class MainApp(ShowBase):
         self.render_points(points)
     #END button_command2
 
+    def create_structure(self, structure):
+        points = structure(StructureLibrary)
+        print(points)
+        self.render_points(points)
+
+
     def input_dialog(self):
         answer = simpledialog.askinteger("Input", "Enter an int", parent=self.tk_parent, minvalue=0, maxvalue=100)
 
@@ -186,6 +194,18 @@ class MainApp(ShowBase):
             ("_Dec", 0, self.button_command2),
             0,
             ('_New>Ctrl+G', 0, self.input_dialog),
+            0
+        )
+
+    def createStructureMenuItems(self):
+        """
+
+        createStructureMenuItems
+
+        """
+
+        return (
+            ("BCC", 0, self.create_structure, StructureLibrary.BCC),
             0
         )
 
@@ -242,8 +262,11 @@ class MainApp(ShowBase):
         self.myMaterial2.setSpecular((0.2, 0.2, 0.45, 1.0))
         self.myMaterial2.setShininess(90.0) #Make this material shiny
 
+        root_node = self.render.find('Root')
+        root_node.removeNode()
 
-        flag = True
+        self.root = self.render.attachNewNode("Root")
+        self.root.reparentTo(render)
 
         # Create
         for p in point_list:
@@ -251,12 +274,7 @@ class MainApp(ShowBase):
             self.sphere.reparentTo(self.render.find('Root'))
             self.sphere.setPos(p[0], p[1], p[2])
 
-            if flag:
-                self.sphere.setMaterial(self.myMaterial1)
-            else:
-                self.sphere.setMaterial(self.myMaterial2)
-
-            flag = not flag
+            self.sphere.setMaterial(self.myMaterial1)
 
             self.sphere.setScale(0.5)
     #END render_points

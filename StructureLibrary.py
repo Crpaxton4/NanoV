@@ -10,7 +10,7 @@ Library of structures that organizes the points of the various structures
 class StructureLibrary:
     '''test Ca [type 1] on corners with a 6 atom diamond shape of B [type 2]
     in the middle'''
-    def CaB6():
+    def CaB6(self):
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell = 1
@@ -48,10 +48,10 @@ class StructureLibrary:
         typepos.append(2)
 
         # Set iteration numbers and counter
-        numcellx=2;
-        numcelly=2;
-        numcellz=2;
-        atnum=0;
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
 
         # Loop through and create layers
         for i1 in range(1,numcellx+1):
@@ -69,15 +69,16 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
-    data = CaB6()
-    file = open("CaB6.xyz","w")
-    file.write("{}\r\n".format(56))
-    file.write('Atoms\n')
-    for x in data:
-        file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    file.close()
+    # data = CaB6()
+    # file = open("CaB6.xyz","w")
+    # file.write("{}\r\n".format(56))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
     '''test Al(1) in corner with B(2) atoms on faces parallel to each other'''
-    def AlB2():
+
+    def AlB2(self):
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell= math.sqrt(2)
@@ -114,15 +115,15 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
-    data = AlB2()
-    file = open("AlB2.xyz","w")
-    file.write("{}\r\n".format(16))
-    file.write('Atoms\n')
-    for x in data:
-        file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    file.close()
-    '''test BCC with Bs'''
-    def BCC():
+    # data = AlB2()
+    # file = open("AlB2.xyz","w")
+    # file.write("{}\r\n".format(16))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
+    # '''test BCC with Bs'''
+    def BCC(self):
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
         acell=(math.sqrt(4)/3)
@@ -163,10 +164,10 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
             finalRet.append(points)
         return finalRet
-    data = BCC()
-    file = open("bcc.xyz","w")
-    file.write("{}\r\n".format(32))
-    file.write('Atoms\n')
-    for x in data:
-        file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    file.close()
+    #data = BCC()
+    #file = open("bcc.xyz","w")
+    #file.write("{}\r\n".format(32))
+    #file.write('Atoms\n')
+    #for x in data:
+    #    file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    #file.close()
