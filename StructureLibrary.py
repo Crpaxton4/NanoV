@@ -1,4 +1,5 @@
 import math
+
 """
 
 StructureLibrary.py
@@ -236,3 +237,25 @@ class StructureLibrary:
 # for x in data:
 #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
 # file.close()
+
+    ''' File Reader
+        This file reader parses an XYZ file and returns a list
+        of lists of each set of points in the format of
+        X, Y, Z, Particle Type
+    '''
+    def FileReader(path):
+        points = []
+        with open(path) as f:
+            # Skip first 2 lines (XYZ file format)
+            next(f)
+            next(f)
+            for line in f.readlines():
+                formatted_pts = []
+                raw_nums = line.split()
+                formatted_pts.append(raw_nums[1])
+                formatted_pts.append(raw_nums[2])
+                formatted_pts.append(raw_nums[3])
+                formatted_pts.append(raw_nums[0])
+                points.append(formatted_pts)
+        #return points
+        return points
