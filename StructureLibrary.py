@@ -230,19 +230,86 @@ class StructureLibrary:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
-# data = StructureLibrary.BCC(StructureLibrary)
-# file = open("bcc.xyz","w")
-# file.write("{}\r\n".format(32))
-# file.write('Atoms\n')
-# for x in data:
-#     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-# file.close()
+    def Diamond(self):
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+        acell=(math.sqrt(4)/3)
 
-    ''' File Reader
-        This file reader parses an XYZ file and returns a list
-        of lists of each set of points in the format of
-        X, Y, Z, Particle Type
-    '''
+        # Corner
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+        typepos.append(1)
+
+        # Face
+        xpos.append(acell/2)
+        ypos.append(acell/2)
+        zpos.append(0)
+        typepos.append(1)
+
+        # Face
+        xpos.append(0)
+        ypos.append(acell/2)
+        zpos.append(acell/2)
+        typepos.append(1)
+
+        # Face
+        xpos.append(acell/2)
+        ypos.append(0)
+        zpos.append(acell/2)
+        typepos.append(1)
+
+        # Diamond
+        xpos.append((3/4)*acell)
+        ypos.append((1/4)*acell)
+        zpos.append((1/4)*acell)
+        typepos.append(1)
+
+        # Diamond
+        xpos.append((1/4)*acell)
+        ypos.append((3/4)*acell)
+        zpos.append((1/4)*acell)
+        typepos.append(1)
+
+        # Diamond
+        xpos.append((1/4)*acell)
+        ypos.append((1/4)*acell)
+        zpos.append((3/4)*acell)
+        typepos.append(1)
+
+        # Diamond
+        xpos.append((3/4)*acell)
+        ypos.append((3/4)*acell)
+        zpos.append((3/4)*acell)
+        typepos.append(1)
+
+
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
+
+        for i1 in range(1,numcellx+1):
+            for i2 in range(1,numcelly+1):
+                for i3 in range(1,numcellz+1):
+                    for i in range(8):
+                        atnum=atnum+1
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+                        Btypepos.append(typepos[i])
+        # rearrange the output
+        print(atnum)
+        finalRet = []
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
+            finalRet.append(points)
+        return finalRet
+
+
+    ''' File Reader. This file reader parses an XYZ file
+    and returns a list of lists of each set of points in the format of
+    X, Y, Z, Particle Type '''
     def FileReader(path):
         points = []
         with open(path) as f:
@@ -259,3 +326,20 @@ class StructureLibrary:
                 points.append(formatted_pts)
         #return points
         return points
+
+''' Writing files to test the coords '''
+# data = StructureLibrary.Diamond(StructureLibrary)
+# file = open("diamond.xyz","w")
+# file.write("{}\r\n".format(64))
+# file.write('Atoms\n')
+# for x in data:
+#     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+# file.close()
+
+# data = StructureLibrary.BCC(StructureLibrary)
+# file = open("bcc.xyz","w")
+# file.write("{}\r\n".format(32))
+# file.write('Atoms\n')
+# for x in data:
+#     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+# file.close()
