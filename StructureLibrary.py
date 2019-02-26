@@ -123,7 +123,8 @@ class StructureLibrary:
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
-    # '''test BCC with Bs'''
+
+    '''test BCC with Bs'''
     def BCC(self):
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
@@ -230,6 +231,7 @@ class StructureLibrary:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
+    ''' test Diamond with Bs '''
     def Diamond(self):
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
@@ -305,7 +307,135 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
+    # data = Diamond()
+    # file = open("diamond.xyz","w")
+    # file.write("{}\r\n".format(64))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
 
+    def Laves(self):
+        xpos, ypos, zpos = ([] for i in range(3))
+        Bxpos, Bypos, Bzpos = ([] for i in range(3))
+        a=1.0
+        b=a*math.sqrt(3.0)/4.0/1.11
+        # altenate
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+
+        xpos.append(a/4.0)
+        ypos.append(a/4.0)
+        zpos.append(a/4.0)
+
+        xpos.append(a/2.0)
+        ypos.append(a/2.0)
+        zpos.append(0)
+
+        xpos.append(0)
+        ypos.append(a/2.0)
+        zpos.append(a/2.0)
+
+        xpos.append(a/2.0)
+        ypos.append(0)
+        zpos.append(a/2.0)
+
+        xpos.append(3.0*a/4.0)
+        ypos.append(3.0*a/4.0)
+        zpos.append(a/4.0)
+
+        xpos.append(a/4.0)
+        ypos.append(3.0*a/4.0)
+        zpos.append(3.0*a/4.0)
+
+        xpos.append(3.0*a/4.0)
+        ypos.append(a/4.0)
+        zpos.append(3.0*a/4.0)
+
+        xpos.append(3.0/4.0*a-b/math.sqrt(8))
+        ypos.append(3.0/4.0*a-b/math.sqrt(8))
+        zpos.append(3.0/4.0*a-b/math.sqrt(8))
+
+        xpos.append(3.0/4.0*a-b/math.sqrt(8))
+        ypos.append(3.0/4.0*a+b/math.sqrt(8))
+        zpos.append(3.0/4.0*a+b/math.sqrt(8))
+
+        xpos.append(3.0/4.0*a+b/math.sqrt(8))
+        ypos.append(3.0/4.0*a-b/math.sqrt(8))
+        zpos.append(3.0/4.0*a+b/math.sqrt(8))
+
+        xpos.append(3.0/4.0*a+b/math.sqrt(8))
+        ypos.append(3.0/4.0*a+b/math.sqrt(8))
+        zpos.append(3.0/4.0*a-b/math.sqrt(8))
+
+        xpos.append(xpos[7+1]-a/2.0)
+        xpos.append(xpos[7+2]-a/2.0)
+        xpos.append(xpos[7+3]-a/2.0)
+        xpos.append(xpos[7+4]-a/2.0)
+        ypos.append(ypos[7+1]-a/2.0)
+        ypos.append(ypos[7+2]-a/2.0)
+        ypos.append(ypos[7+3]-a/2.0)
+        ypos.append(ypos[7+4]-a/2.0)
+        zpos.append(zpos[7+1])
+        zpos.append(zpos[7+2])
+        zpos.append(zpos[7+3])
+        zpos.append(zpos[7+4])
+
+        xpos.append(xpos[7+1])
+        xpos.append(xpos[7+2])
+        xpos.append(xpos[7+3])
+        xpos.append(xpos[7+4])
+        ypos.append(ypos[7+1]-a/2.0)
+        ypos.append(ypos[7+2]-a/2.0)
+        ypos.append(ypos[7+3]-a/2.0)
+        ypos.append(ypos[7+4]-a/2.0)
+        zpos.append(zpos[7+1]-a/2.0)
+        zpos.append(zpos[7+2]-a/2.0)
+        zpos.append(zpos[7+3]-a/2.0)
+        zpos.append(zpos[7+4]-a/2.0)
+
+        xpos.append(xpos[7+1]-a/2.0)
+        xpos.append(xpos[7+2]-a/2.0)
+        xpos.append(xpos[7+3]-a/2.0)
+        xpos.append(xpos[7+4]-a/2.0)
+        ypos.append(ypos[7+1])
+        ypos.append(ypos[7+2])
+        ypos.append(ypos[7+3])
+        ypos.append(ypos[7+4])
+        zpos.append(zpos[7+1]-a/2.0)
+        zpos.append(zpos[7+2]-a/2.0)
+        zpos.append(zpos[7+3]-a/2.0)
+        zpos.append(zpos[7+4]-a/2.0)
+
+        typepos = []
+        Btypepos = []
+        for i in range(24):
+            if(i<=7):
+                typepos.append(1)
+            else:
+                typepos.append(1)
+
+        nt=0
+        maxx=1
+        maxy=1
+        maxz=1
+        for nx in range(0,maxx+1):
+            for ny in range(0,maxy+1):
+                for nz in range(0,maxz+1):
+                    for i in range(24):
+                        nt=nt+1
+                        Bxpos.append(xpos[i]+nx*a)
+                        Bypos.append(ypos[i]+ny*a)
+                        Bzpos.append(zpos[i]+nz*a)
+                        Btypepos.append(typepos[i])
+        # rearrange the output
+        print(nt)
+        finalRet = []
+        for x in range(nt):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
+            finalRet.append(points)
+        return finalRet
 
     ''' File Reader. This file reader parses an XYZ file
     and returns a list of lists of each set of points in the format of
@@ -327,6 +457,7 @@ class StructureLibrary:
         #return points
         return points
 
+
 ''' Writing files to test the coords '''
 # data = StructureLibrary.Diamond(StructureLibrary)
 # file = open("diamond.xyz","w")
@@ -339,6 +470,14 @@ class StructureLibrary:
 # data = StructureLibrary.BCC(StructureLibrary)
 # file = open("bcc.xyz","w")
 # file.write("{}\r\n".format(32))
+# file.write('Atoms\n')
+# for x in data:
+#     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+# file.close()
+
+# data = StructureLibrary.Laves(StructureLibrary)
+# file = open("laves.xyz","w")
+# file.write("{}\r\n".format(192))
 # file.write('Atoms\n')
 # for x in data:
 #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
