@@ -317,6 +317,7 @@ class StructureLibrary:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
+    ''' Laves face structure '''
     def Laves(self):
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
@@ -438,6 +439,13 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
+    # data = Laves()
+    # file = open("laves.xyz","w")
+    # file.write("{}\r\n".format(192))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
 
     ''' File Reader. This file reader parses an XYZ file
     and returns a list of lists of each set of points in the format of
@@ -458,7 +466,7 @@ class StructureLibrary:
                 points.append(formatted_pts)
         #return points
         return points
-    # 
+    #
     #
     # root = Tk()
     # root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("xyz files","*.xyz"),("all files","*.*")))
