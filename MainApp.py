@@ -163,7 +163,7 @@ class MainApp(ShowBase):
     #END button_command2
 
     def create_structure(self, structure):
-        points = structure(StructureLibrary)
+        points = structure()
         print(points)
         self.render_points(points)
 
@@ -270,13 +270,13 @@ class MainApp(ShowBase):
 
         # Create
         for p in point_list:
-            self.sphere = self.loader.loadModel("/c/Users/Chris/Desktop/models/sphere.egg.pz")
+            self.sphere = self.loader.loadModel("sphere.egg.pz")
             self.sphere.reparentTo(self.render.find('Root'))
             self.sphere.setPos(p[0], p[1], p[2])
 
             self.sphere.setMaterial(self.myMaterial1)
 
-            self.sphere.setScale(0.5)
+            self.sphere.setScale(0.1)
     #END render_points
 
     #TODO either remove this method or make it a menu item that is a neat effect

@@ -123,7 +123,7 @@ class StructureLibrary:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
     # '''test BCC with Bs'''
-    def BCC(self):
+    def BCC():
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
         acell=(math.sqrt(4)/3)
