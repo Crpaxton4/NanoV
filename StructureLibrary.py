@@ -1,4 +1,6 @@
 import math
+from tkinter import filedialog
+from tkinter import *
 
 """
 
@@ -456,6 +458,11 @@ class StructureLibrary:
                 points.append(formatted_pts)
         #return points
         return points
+    # 
+    #
+    # root = Tk()
+    # root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("xyz files","*.xyz"),("all files","*.*")))
+    # print(FileReader(root.filename))
 
 
 ''' Writing files to test the coords '''
