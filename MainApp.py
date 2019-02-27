@@ -276,7 +276,7 @@ class MainApp(ShowBase):
 
             self.sphere.setMaterial(self.myMaterial1)
 
-            self.sphere.setScale(0.1)
+            self.sphere.setScale(0.2)
     #END render_points
 
     #TODO either remove this method or make it a menu item that is a neat effect
