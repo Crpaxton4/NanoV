@@ -13,7 +13,7 @@ Library of structures that organizes the points of the various structures
 class StructureLibrary:
     '''test Ca [type 1] on corners with a 6 atom diamond shape of B [type 2]
     in the middle'''
-    def CaB6(self):
+    def CaB6():
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell = 1
@@ -81,7 +81,7 @@ class StructureLibrary:
     # file.close()
     '''test Al(1) in corner with B(2) atoms on faces parallel to each other'''
 
-    def AlB2(self):
+    def AlB2():
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell= math.sqrt(2)
@@ -128,7 +128,7 @@ class StructureLibrary:
 
 
     '''test BCC with Bs'''
-    def BCC(self):
+    def BCC():
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
         acell=(math.sqrt(4)/3)
@@ -178,7 +178,7 @@ class StructureLibrary:
     # file.close()
 
     '''test Au(type 1) in corner and Cu (type 2) on faces'''
-    def Cu3Au(self):
+    def Cu3Au():
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell=math.sqrt(2)
@@ -235,7 +235,7 @@ class StructureLibrary:
     # file.close()
 
     ''' test Diamond with Bs '''
-    def Diamond(self):
+    def Diamond():
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell=(math.sqrt(4)/3)
@@ -319,7 +319,7 @@ class StructureLibrary:
     # file.close()
 
     ''' Laves face structure '''
-    def Laves(self):
+    def Laves():
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
         a=1.0
