@@ -206,6 +206,8 @@ class MainApp(ShowBase):
 
         return (
             ("BCC", 0, self.create_structure, StructureLibrary.BCC),
+            0,
+            ("CaB6", 0, self.create_structure, StructureLibrary.CaB6),
             0
         )
 

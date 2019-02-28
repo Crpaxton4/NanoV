@@ -125,14 +125,10 @@ class StructureLibrary:
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
-<<<<<<< HEAD
-    # '''test BCC with Bs'''
-    def BCC():
-=======
+
 
     '''test BCC with Bs'''
     def BCC(self):
->>>>>>> 179ffac45614cb3e30b5ed1e8be24af8dc4719c1
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
         acell=(math.sqrt(4)/3)
