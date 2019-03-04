@@ -117,54 +117,8 @@ class MainApp(ShowBase):
     # TODO Change from button commands to functions for each menu item
     ############################################################################
 
-    def button_command1(self):
-        """
-
-        button_command1
-
-        """
-        print("button1")
-        root_node = self.render.find('Root')
-        root_node.removeNode()
-
-        self.root = self.render.attachNewNode("Root")
-        self.root.reparentTo(render)
-
-        self.step += 1
-        Reader.write_points('points.txt', self.step)
-        points = Reader.read_points('points.txt')
-
-        self.render_points(points)
-    #END button_command1
-
-    def button_command2(self):
-        """
-
-        button_command2
-
-        """
-
-        print("Button2")
-        root_node = self.render.find('Root')
-        root_node.removeNode()
-
-        self.root = self.render.attachNewNode("Root")
-        self.root.reparentTo(render)
-
-        self.step -= 1
-        if self.step <= 0:
-            self.step = 0
-
-        Reader.write_points('points.txt', self.step)
-
-        points = Reader.read_points('points.txt')
-
-        self.render_points(points)
-    #END button_command2
-
-    def create_structure(self, structure):
-        points = structure()
-        print(points)
+    def create_structure(self, structure_function):
+        points = structure_function()
         self.render_points(points)
 
 
@@ -178,6 +132,8 @@ class MainApp(ShowBase):
 
             self.render_points(points)
 
+    def read_in_file(self):
+        print("Read file")
     ############################################################################
     # Methods to create sub menus of menu bar
     ############################################################################
@@ -189,11 +145,7 @@ class MainApp(ShowBase):
         """
 
         return (
-            ("_Inc", 0, self.button_command1),
-            0,
-            ("_Dec", 0, self.button_command2),
-            0,
-            ('_New>Ctrl+G', 0, self.input_dialog),
+            ('_Load File...', 0, self.read_in_file),
             0
         )
 
@@ -205,10 +157,20 @@ class MainApp(ShowBase):
         """
 
         return (
+            ("CaB6", 0, self.create_structure, StructureLibrary.CaB6),
+            0,
+            ("AlB2", 0, self.create_structure, StructureLibrary.AlB2),
+            0,
             ("BCC", 0, self.create_structure, StructureLibrary.BCC),
             0,
-            ("CaB6", 0, self.create_structure, StructureLibrary.CaB6),
+            ("Cu3Au", 0, self.create_structure, StructureLibrary.Cu3Au),
+            0,
+            ("Diamond", 0, self.create_structure, StructureLibrary.Diamond),
+            0,
+            ("Laves", 0, self.create_structure, StructureLibrary.Laves),
             0
+
+
         )
 
     ############################################################################
@@ -248,6 +210,8 @@ class MainApp(ShowBase):
         render_points
 
         """
+
+        num_types = max(point_list, key=lambda point:point[3])
 
         #Create Material for all the spheres to be rendered
         # red

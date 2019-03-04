@@ -205,16 +205,16 @@ class StructureLibrary:
         zpos.append(acell/2)
         typepos.append(2)
 
-        numcellx=2;
-        numcelly=2;
-        numcellz=2;
-        atnum=0;
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
 
         for i1 in range(1,numcellx+1):
             for i2 in range(1,numcelly+1):
                 for i3 in range(1,numcellz+1):
                     for i in range(4):
-                           atnum=atnum+1;
+                           atnum=atnum+1
                            Bxpos.append(xpos[i]+i1*acell)
                            Bypos.append(ypos[i]+i2*acell)
                            Bzpos.append(zpos[i]+i3*acell)
