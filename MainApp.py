@@ -9,8 +9,8 @@ from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 from Menu import DropDownMenu, PopupMenu
 
-import tkinter as tk
-from tkinter import simpledialog
+from tkinter import filedialog
+from tkinter import *
 
 
 """
@@ -40,8 +40,8 @@ class MainApp(ShowBase):
         #call superclass constructor
         ShowBase.__init__(self)
 
-        self.tk_parent = tk.Tk()
-        #self.tk_parent.withdraw()
+        self.tk_parent = Tk()
+        self.tk_parent.withdraw()
 
         windowWidth = self.tk_parent.winfo_reqwidth()
         windowHeight = self.tk_parent.winfo_reqheight()
@@ -56,6 +56,8 @@ class MainApp(ShowBase):
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
         self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
+        #self.camera.setPos(20 * sin(1), -20.0 * cos(1), 0)
+        #self.camera.setHpr(0, 0, 0)
 
         # create the root node of the scene graph
         self.root = self.render.attachNewNode("Root")
@@ -133,6 +135,11 @@ class MainApp(ShowBase):
             self.render_points(points)
 
     def read_in_file(self):
+        self.tk_parent.filename =  filedialog.askopenfilename(initialdir = ".", title = "Select file", filetypes = (("xyz files","*.xyz"),("all files","*.*")))
+        print (self.tk_parent.filename)
+        if self.tk_parent.filename:
+            points = StructureLibrary.FileReader(self.tk_parent.filename)
+            self.render_points(points)
         print("Read file")
     ############################################################################
     # Methods to create sub menus of menu bar

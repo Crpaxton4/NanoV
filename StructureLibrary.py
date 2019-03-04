@@ -460,19 +460,18 @@ class StructureLibrary:
             for line in f.readlines():
                 formatted_pts = []
                 raw_nums = line.split()
-                formatted_pts.append(raw_nums[1])
-                formatted_pts.append(raw_nums[2])
-                formatted_pts.append(raw_nums[3])
-                formatted_pts.append(raw_nums[0])
+                formatted_pts.append(float(raw_nums[1]))
+                formatted_pts.append(float(raw_nums[2]))
+                formatted_pts.append(float(raw_nums[3]))
+                formatted_pts.append(float(raw_nums[0]))
                 points.append(formatted_pts)
         #return points
         return points
     #
     #
-    # root = Tk()
-    # root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("xyz files","*.xyz"),("all files","*.*")))
-    # print(FileReader(root.filename))
-
+# root = Tk()
+# root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("xyz files","*.xyz"),("all files","*.*")))
+# print(StructureLibrary.FileReader(root.filename))
 
 ''' Writing files to test the coords '''
 # data = StructureLibrary.Diamond(StructureLibrary)
