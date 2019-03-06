@@ -11,6 +11,7 @@ from Menu import DropDownMenu, PopupMenu
 
 from tkinter import filedialog
 from tkinter import *
+from panda3d.core import loadPrcFileData
 
 
 """
@@ -40,6 +41,8 @@ class MainApp(ShowBase):
         #call superclass constructor
         ShowBase.__init__(self)
         self.openWindow(keepCamera=False)
+        loadPrcFileData("", "want-directtools #t")
+        loadPrcFileData("", "want-tk #t")
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
         self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
