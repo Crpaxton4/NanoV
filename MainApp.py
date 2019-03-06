@@ -39,20 +39,7 @@ class MainApp(ShowBase):
 
         #call superclass constructor
         ShowBase.__init__(self)
-
-        self.tk_parent = Tk()
-        self.tk_parent.withdraw()
-
-        windowWidth = self.tk_parent.winfo_reqwidth()
-        windowHeight = self.tk_parent.winfo_reqheight()
-
-        # Gets both half the screen width/height and window width/height
-        positionRight = int(self.tk_parent.winfo_screenwidth()/2 - windowWidth/2)
-        positionDown = int(self.tk_parent.winfo_screenheight()/2 - windowHeight/2)
-
-        # Positions the window in the center of the page.
-        self.tk_parent.geometry("+{}+{}".format(positionRight, positionDown))
-
+        self.openWindow(keepCamera=False)
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
         self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
@@ -64,14 +51,6 @@ class MainApp(ShowBase):
         self.root.reparentTo(self.render)
 
         self.set_up_lighting()
-
-
-        #TODO remove this GUI stuff and change it to the normal window menus
-        print("making buttons")
-
-        #self.b1 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (0.75, 0, 0.8), text_scale = 0.25, text = ("Inc", "click!", "Inc", "disabled"), scale=.25, command=self.button_command1)
-        #self.b2 = DirectButton(frameSize = (-0.5, 0.5, -0.25, 0.25), pos = (-0.75, 0, 0.8), text_scale = 0.25, text = ("Dec", "click!", "Dec", "disabled"), scale=.25, command=self.button_command2)
-
 
         menuBar = DropDownMenu(
             items=(
@@ -107,8 +86,8 @@ class MainApp(ShowBase):
             textColorPress = (0, 0, 0, 1),
             textColorDisabled = (0.65, 0.65, 0.65, 1),
 
-            draggable=True
-            #onMove=None
+            draggable=True,
+            onMove=None
         )
 
         print("DONE")
@@ -135,10 +114,10 @@ class MainApp(ShowBase):
             self.render_points(points)
 
     def read_in_file(self):
-        self.tk_parent.filename =  filedialog.askopenfilename(initialdir = ".", title = "Select file", filetypes = (("xyz files","*.xyz"),("all files","*.*")))
-        print (self.tk_parent.filename)
-        if self.tk_parent.filename:
-            points = StructureLibrary.FileReader(self.tk_parent.filename)
+        filename =  filedialog.askopenfilename(initialdir = ".", title = "Select file", filetypes = (("xyz files","*.xyz"),("all files","*.*")))
+        print (filename)
+        if filename:
+            points = StructureLibrary.FileReader(filename)
             self.render_points(points)
         print("Read file")
     ############################################################################
