@@ -757,28 +757,3 @@ class StructureLibrary:
 # root = Tk()
 # root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("xyz files","*.xyz"),("all files","*.*")))
 # print(StructureLibrary.FileReader(root.filename))
-
-''' Writing files to test the coords '''
-# data = StructureLibrary.Diamond(StructureLibrary)
-# file = open("diamond.xyz","w")
-# file.write("{}\r\n".format(64))
-# file.write('Atoms\n')
-# for x in data:
-#     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-# file.close()
-
-# data = StructureLibrary.BCC(StructureLibrary)
-# file = open("bcc.xyz","w")
-# file.write("{}\r\n".format(32))
-# file.write('Atoms\n')
-# for x in data:
-#     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-# file.close()
-
-# data = StructureLibrary.Laves(StructureLibrary)
-# file = open("laves.xyz","w")
-# file.write("{}\r\n".format(192))
-# file.write('Atoms\n')
-# for x in data:
-#     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-# file.close()
