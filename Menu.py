@@ -15,7 +15,7 @@ __all__ = ['PopupMenu','DropDownMenu']
 from direct.showbase.DirectObject import DirectObject
 from direct.gui.DirectGui import DirectButton, DirectFrame, DGG, OnscreenText
 from direct.task import Task
-from pandac.PandaModules import *
+from panda3d.core import *
 from direct.showbase import ShowBase
 from direct.showbase.PythonUtil import clampScalar
 
