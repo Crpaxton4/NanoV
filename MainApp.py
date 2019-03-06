@@ -114,10 +114,12 @@ class MainApp(ShowBase):
             self.render_points(points)
 
     def read_in_file(self):
-        filename =  filedialog.askopenfilename(initialdir = ".", title = "Select file", filetypes = (("xyz files","*.xyz"),("all files","*.*")))
-        print (filename)
-        if filename:
-            points = StructureLibrary.FileReader(filename)
+        root = Tk()
+        root.withdraw()
+        root.filename =  filedialog.askopenfilename(initialdir = ".", title = "Select file", filetypes = (("xyz files","*.xyz"),("all files","*.*")))
+        print (root.filename)
+        if root.filename:
+            points = StructureLibrary.FileReader(root.filename)
             self.render_points(points)
         print("Read file")
     ############################################################################
