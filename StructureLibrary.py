@@ -448,6 +448,291 @@ class StructureLibrary:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
+    def MgSnCu4():
+        #test Mg(1)in corners with Sn(2) in the diamond structure.  Cu(3) in a
+        #pyrochlore strucutre
+
+        acell=1
+        xpos, ypos, zpos = ([] for i in range(3))
+
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+        typepos.append(1)
+        #corner
+
+        xpos.append(acell/2)
+        ypos.append(acell/2)
+        zpos.append(0)
+        typepos.append(1)
+        #face
+        xpos.append(0)
+        ypos.append(acell/2)
+        zpos.append(acell/2)
+        typepos.append(1)
+        #face
+        xpos.append(acell/2)
+        ypos.append(0)
+        zpos.append(acell/2)
+        typepos.append(1)
+        #face
+
+        xpos.append((3/4)*acell)
+        ypos.append((1/4)*acell)
+        zpos.append((1/4)*acell)
+        typepos.append(2)
+        #diamond
+        xpos.append((1/4)*acell)
+        ypos.append((3/4)*acell)
+        zpos.append((1/4)*acell)
+        typepos.append(2)
+        #diamond
+        xpos.append((1/4)*acell)
+        ypos.append((1/4)*acell)
+        zpos.append((3/4)*acell)
+        typepos.append(2)
+        #diamond
+        xpos.append((3/4)*acell)
+        ypos.append((3/4)*acell)
+        zpos.append((3/4)*acell)
+        typepos.append(2)
+        #diamond
+
+        xpos.append((3/5)*acell)
+        ypos.append((1/5)*acell)
+        zpos.append((1/5)*acell)
+        typepos.append(3)
+        #cluster 1 bottom left
+        xpos.append((4/5)*acell)
+        ypos.append((2/5)*acell)
+        zpos.append((1/5)*acell)
+        typepos.append(3)
+        #cluster 1 bottom right
+        xpos.append((4/5)*acell)
+        ypos.append((1/5)*acell)
+        zpos.append((2/5)*acell)
+        typepos.append(3)
+        #cluster 1 top right
+        xpos.append((3/5)*acell)
+        ypos.append((2/5)*acell)
+        zpos.append((2/5)*acell)
+        typepos.append(3)
+        #cluster 1 top left
+
+        xpos.append((1/5)*acell)
+        ypos.append((3/5)*acell)
+        zpos.append((1/5)*acell)
+        typepos.append(3)
+        #cluster 2 bottom left
+        xpos.append((2/5)*acell)
+        ypos.append((4/5)*acell)
+        zpos.append((1/5)*acell)
+        typepos.append(3)
+        #cluster 2 bottom right
+        xpos.append((1/5)*acell)
+        ypos.append((4/5)*acell)
+        zpos.append((2/5)*acell)
+        typepos.append(3)
+        #cluster 2 top right
+        xpos.append((2/5)*acell)
+        ypos.append((3/5)*acell)
+        zpos.append((2/5)*acell)
+        typepos.append(3)
+        #cluster 2 top left
+
+        xpos.append((1/5)*acell)
+        ypos.append((1/5)*acell)
+        zpos.append((3/5)*acell)
+        typepos.append(3)
+        #cluster 3 bottom left
+        xpos.append((2/5)*acell)
+        ypos.append((2/5)*acell)
+        zpos.append((3/5)*acell)
+        typepos.append(3)
+        #cluster 3 bottom right
+        xpos.append((2/5)*acell)
+        ypos.append((1/5)*acell)
+        zpos.append((4/5)*acell)
+        typepos.append(3)
+        #cluster 3 top right
+        xpos.append((1/5)*acell)
+        ypos.append((2/5)*acell)
+        zpos.append((4/5)*acell)
+        typepos.append(3)
+        #cluster 3 top left
+
+        xpos.append((3/5)*acell)
+        ypos.append((3/5)*acell)
+        zpos.append((3/5)*acell)
+        typepos.append(3)
+        #cluster 4 bottom left
+        xpos.append((4/5)*acell)
+        ypos.append((4/5)*acell)
+        zpos.append((3/5)*acell)
+        typepos.append(3)
+        #cluster 4 bottom right
+        xpos.append((4/5)*acell)
+        ypos.append((3/5)*acell)
+        zpos.append((4/5)*acell)
+        typepos.append(3)
+        #cluster 4 top right
+        xpos.append((3/5)*acell)
+        ypos.append((4/5)*acell)
+        zpos.append((4/5)*acell)
+        typepos.append(3)
+        #cluster 4 top left
+
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
+
+
+        for i1 in range(1, numcellx):
+            for i2 in range(1, numcelly):
+                for i3 in range(1, numcellz):
+                    for i in range(1, 24):
+                        atnum=atnum+1
+                        Bxpos.append(xpos(i)+i1*acell)
+                        Bypos.append(ypos(i)+i2*acell)
+                        Bzpos.append(zpos(i)+i3*acell)
+                        Btypepos.append(typepos(i))
+
+        finalRet = []
+        typeatom = 1
+        print(atnum)
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            finalRet.append(points)
+        return finalRet
+
+
+    def NaCl():
+        #test Diamond with Na atoms at corners and faces and Cl in the diamond
+        #structure
+        acell=1
+        xpos, ypos, zpos = ([] for i in range(3))
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+        typepos.append(1) #corner
+
+        xpos.append(acell/2)
+        ypos.append(acell/2)
+        zpos.append(0)
+        typepos.append(1) #face
+        xpos.append(0)
+        ypos.append(acell/2)
+        zpos.append(acell/2)
+        typepos.append(1) #face
+        xpos.append(acell/2)
+        ypos.append(0)
+        zpos.append(acell/2)
+        typepos.append(1) #face
+
+        xpos.append((3/4)*acell)
+        ypos.append((1/4)*acell)
+        zpos.append((3/4)*acell)
+        typepos.append(2) #diamond
+        xpos.append((1/4)*acell)
+        ypos.append((3/4)*acell)
+        zpos.append((3/4)*acell)
+        typepos.append(2) #diamond
+        xpos.append((1/4)*acell)
+        ypos.append((1/4)*acell)
+        zpos.append((1/4)*acell)
+        typepos.append(2) #diamond
+        xpos.append((3/4)*acell)
+        ypos.append((3/4)*acell)
+        zpos.append((1/4)*acell)
+        typepos.append(2) #diamond
+
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
+
+        for i1 in range(1, numcellx):
+            for i2 in range(1, numcelly):
+                for i3 in range(1, numcellz):
+                    for i in range(1, 8):
+                        atnum=atnum+1
+                        Bxpos.append(xpos(i)+i1*acell)
+                        Bypos.append(ypos(i)+i2*acell)
+                        Bzpos.append(zpos(i)+i3*acell)
+                        Btypepos.append(typepos(i))
+
+        finalRet = []
+        typeatom = 1
+        print(atnum)
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            finalRet.append(points)
+        return finalRet
+
+
+
+
+    def ZincBlende():
+        '''test Diamond with Bs'''
+        acell=1
+        xpos, ypos, zpos = ([] for i in range(3))
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+        typepos.append(1)
+        xpos.append(acell/2)
+        ypos.append(acell/2)
+        zpos.append(0)
+        typepos.append(1)
+        xpos.append(0)
+        ypos.append(acell/2)
+        zpos.append(acell/2)
+        typepos.append(1)
+        xpos.append(acell/2)
+        ypos.append(0)
+        zpos.append(acell/2)
+        typepos.append(1)
+        xpos.append((3/4)*acell)
+        ypos.append((1/4)*acell)
+        zpos.append((3/4)*acell)
+        typepos.append(2)
+        xpos.append((1/4)*acell)
+        ypos.append((3/4)*acell)
+        zpos.append((3/4)*acell)
+        typepos.append(2)
+        xpos.append((1/4)*acell)
+        ypos.append((1/4)*acell)
+        zpos.append((1/4)*acell)
+        typepos.append(2)
+        xpos.append((3/4)*acell)
+        ypos.append((3/4)*acell)
+        zpos.append((1/4)*acell)
+        typepos.append(2)
+
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
+
+        for i1 in range(1, numcellx):
+            for i2 in range(1, numcelly):
+                for i3 in range(1, numcellz):
+                    for i in range(1, 8):
+                       atnum=atnum+1
+                       Bxpos.append(xpos(i)+i1*acell)
+                       Bypos.append(ypos(i)+i2*acell)
+                       Bzpos.append(zpos(i)+i3*acell)
+                       Btypepos.append(typepos(i))
+
+        finalRet = []
+        typeatom = 1
+        print(atnum)
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            finalRet.append(points)
+        return finalRet
+
     ''' File Reader. This file reader parses an XYZ file
     and returns a list of lists of each set of points in the format of
     X, Y, Z, Particle Type '''
