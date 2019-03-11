@@ -40,20 +40,38 @@ class MainApp(ShowBase):
 
         #call superclass constructor
         ShowBase.__init__(self)
-        self.openWindow(keepCamera=False)
-        loadPrcFileData("", "want-directtools 1")
-        loadPrcFileData("", "want-tk 1")
+
+
+
+        # attempting to get tkinter to play nice with panda3d
+        self.startTk()
+        self.spawnTkLoop()
+        self.tkRoot.withdraw()
+
+
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
-        self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
-        #self.camera.setPos(20 * sin(1), -20.0 * cos(1), 0)
-        #self.camera.setHpr(0, 0, 0)
+        self.taskMgr.add(self.updateCameraLight, "updateCameraLight")
 
         # create the root node of the scene graph
         self.root = self.render.attachNewNode("Root")
         self.root.reparentTo(self.render)
 
         self.set_up_lighting()
+
+        self.disableMouse()
+        angleDegrees = 10.0 * 6.0
+        angleRadians = angleDegrees * (pi / 180.0)
+        self.camera.setPos(20 * sin(angleRadians), -20.0 * cos(angleRadians), 0)
+        self.camera.setHpr(angleDegrees, 0, 0)
+
+        self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
+
+        # seave the camera transformation and apply it after the mouse is reenabled
+        mat=Mat4(camera.getMat())
+        mat.invertInPlace()
+        self.mouseInterfaceNode.setMat(mat)
+        self.enableMouse()
 
         menuBar = DropDownMenu(
             items=(
@@ -117,12 +135,10 @@ class MainApp(ShowBase):
             self.render_points(points)
 
     def read_in_file(self):
-        root = Tk()
-        root.withdraw()
-        root.filename =  filedialog.askopenfilename(initialdir = ".", title = "Select file", filetypes = (("xyz files","*.xyz"),("all files","*.*")))
-        print (root.filename)
-        if root.filename:
-            points = StructureLibrary.FileReader(root.filename)
+        self.tkRoot.filename =  filedialog.askopenfilename(initialdir = ".", title = "Select file", filetypes = (("xyz files","*.xyz"),("all files","*.*")))
+        print (self.tkRoot.filename)
+        if self.tkRoot.filename:
+            points = StructureLibrary.FileReader(self.tkRoot.filename)
             self.render_points(points)
         print("Read file")
     ############################################################################
@@ -159,8 +175,13 @@ class MainApp(ShowBase):
             ("Diamond", 0, self.create_structure, StructureLibrary.Diamond),
             0,
             ("Laves", 0, self.create_structure, StructureLibrary.Laves),
+            0,
+            ("MgSnCu4", 0, self.create_structure, StructureLibrary.MgSnCu4),
+            0,
+            ("NaCl", 0, self.create_structure, StructureLibrary.NaCl),
+            0,
+            ("ZincBlende", 0, self.create_structure, StructureLibrary.ZincBlende),
             0
-
 
         )
 
@@ -219,6 +240,14 @@ class MainApp(ShowBase):
         self.myMaterial2.setSpecular((0.2, 0.2, 0.45, 1.0))
         self.myMaterial2.setShininess(90.0) #Make this material shiny
 
+        # green
+        self.myMaterial3 = Material()
+        self.myMaterial3.setAmbient((0.2, 0.44, 0.2, 1.0))
+        self.myMaterial3.setDiffuse((0.2, 0.7, 0.2, 1.0))
+        self.myMaterial3.setSpecular((0.2, 0.45, 0.2, 1.0))
+        self.myMaterial3.setShininess(90.0) #Make this material shiny
+
+
         root_node = self.render.find('Root')
         root_node.removeNode()
 
@@ -231,7 +260,14 @@ class MainApp(ShowBase):
             self.sphere.reparentTo(self.render.find('Root'))
             self.sphere.setPos(p[0], p[1], p[2])
 
-            self.sphere.setMaterial(self.myMaterial1)
+            # set the color of the atom based on the type
+            if p[3] == 1:
+                self.sphere.setMaterial(self.myMaterial1)
+            elif p[3] == 2:
+                self.sphere.setMaterial(self.myMaterial2)
+            else:
+                self.sphere.setMaterial(self.myMaterial3)
+
 
             self.sphere.setScale(0.2)
     #END render_points
@@ -240,20 +276,18 @@ class MainApp(ShowBase):
     # this is a strech goal
 
     # Define a procedure to move the camera.
-    def spinCameraTask(self, task):
+    def updateCameraLight(self, task):
         """
 
-        spinCameraTask
+        updateCameraLight
 
         """
 
         #print("spin camera") WORKS
-        angleDegrees = task.time * 6.0
-        angleRadians = angleDegrees * (pi / 180.0)
-        self.camera.setPos(20 * sin(angleRadians), -20.0 * cos(angleRadians), 0)
-        self.camera.setHpr(angleDegrees, 0, 0)
+        mat=Mat4(self.camera.getMat())
+        mat.invertInPlace()
+        self.render.find('plight').setMat(mat)
 
-        self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
         return Task.cont
     #END spinCameraTask
 
