@@ -41,8 +41,8 @@ class MainApp(ShowBase):
         #call superclass constructor
         ShowBase.__init__(self)
         self.openWindow(keepCamera=False)
-        loadPrcFileData("", "want-directtools #t")
-        loadPrcFileData("", "want-tk #t")
+        loadPrcFileData("", "want-directtools 1")
+        loadPrcFileData("", "want-tk 1")
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
         self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
