@@ -600,10 +600,9 @@ class StructureLibrary:
                         Btypepos.append(typepos[i])
 
         finalRet = []
-        typeatom = 1
         print(atnum)
         for x in range(atnum):
-            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
 
