@@ -65,12 +65,13 @@ class MainApp(ShowBase):
         self.camera.setPos(20 * sin(angleRadians), -20.0 * cos(angleRadians), 0)
         self.camera.setHpr(angleDegrees, 0, 0)
 
-        self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
+        #self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
 
         # seave the camera transformation and apply it after the mouse is reenabled
         mat=Mat4(camera.getMat())
         mat.invertInPlace()
         self.mouseInterfaceNode.setMat(mat)
+        self.plnp.setMat(mat)
         self.enableMouse()
 
         menuBar = DropDownMenu(
@@ -284,9 +285,9 @@ class MainApp(ShowBase):
         """
 
         #print("spin camera") WORKS
-        mat=Mat4(self.camera.getMat())
+        mat=Mat4(self.mouseInterfaceNode.getMat())
         mat.invertInPlace()
-        self.render.find('plight').setMat(mat)
+        self.plnp.setMat(mat)
 
         return Task.cont
     #END spinCameraTask
