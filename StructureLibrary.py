@@ -453,7 +453,8 @@ class StructureLibrary:
         #pyrochlore strucutre
 
         acell=1
-        xpos, ypos, zpos = ([] for i in range(3))
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
 
         xpos.append(0)
         ypos.append(0)
@@ -593,10 +594,10 @@ class StructureLibrary:
                 for i3 in range(1, numcellz):
                     for i in range(1, 24):
                         atnum=atnum+1
-                        Bxpos.append(xpos(i)+i1*acell)
-                        Bypos.append(ypos(i)+i2*acell)
-                        Bzpos.append(zpos(i)+i3*acell)
-                        Btypepos.append(typepos(i))
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+                        Btypepos.append(typepos[i])
 
         finalRet = []
         typeatom = 1
@@ -611,7 +612,9 @@ class StructureLibrary:
         #test Diamond with Na atoms at corners and faces and Cl in the diamond
         #structure
         acell=1
-        xpos, ypos, zpos = ([] for i in range(3))
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+
         xpos.append(0)
         ypos.append(0)
         zpos.append(0)
@@ -657,10 +660,10 @@ class StructureLibrary:
                 for i3 in range(1, numcellz):
                     for i in range(1, 8):
                         atnum=atnum+1
-                        Bxpos.append(xpos(i)+i1*acell)
-                        Bypos.append(ypos(i)+i2*acell)
-                        Bzpos.append(zpos(i)+i3*acell)
-                        Btypepos.append(typepos(i))
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+                        Btypepos.append(typepos[i])
 
         finalRet = []
         typeatom = 1
@@ -676,7 +679,9 @@ class StructureLibrary:
     def ZincBlende():
         '''test Diamond with Bs'''
         acell=1
-        xpos, ypos, zpos = ([] for i in range(3))
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+
         xpos.append(0)
         ypos.append(0)
         zpos.append(0)
@@ -720,10 +725,10 @@ class StructureLibrary:
                 for i3 in range(1, numcellz):
                     for i in range(1, 8):
                        atnum=atnum+1
-                       Bxpos.append(xpos(i)+i1*acell)
-                       Bypos.append(ypos(i)+i2*acell)
-                       Bzpos.append(zpos(i)+i3*acell)
-                       Btypepos.append(typepos(i))
+                       Bxpos.append(xpos[i]+i1*acell)
+                       Bypos.append(ypos[i]+i2*acell)
+                       Bzpos.append(zpos[i]+i3*acell)
+                       Btypepos.append(typepos[i])
 
         finalRet = []
         typeatom = 1
