@@ -454,7 +454,11 @@ class StructureLibrary:
 
         acell=1
         xpos, ypos, zpos, typepos = ([] for i in range(4))
+<<<<<<< HEAD
         
+=======
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+>>>>>>> b2c476220c7dc96634aea42144aade4d731e0e90
 
         xpos.append(0)
         ypos.append(0)
@@ -594,16 +598,15 @@ class StructureLibrary:
                 for i3 in range(1, numcellz):
                     for i in range(1, 24):
                         atnum=atnum+1
-                        Bxpos.append(xpos(i)+i1*acell)
-                        Bypos.append(ypos(i)+i2*acell)
-                        Bzpos.append(zpos(i)+i3*acell)
-                        Btypepos.append(typepos(i))
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+                        Btypepos.append(typepos[i])
 
         finalRet = []
-        typeatom = 1
         print(atnum)
         for x in range(atnum):
-            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
 
@@ -613,7 +616,12 @@ class StructureLibrary:
         #structure
         acell=1
         xpos, ypos, zpos, typepos = ([] for i in range(4))
+<<<<<<< HEAD
         typepos = []
+=======
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+
+>>>>>>> b2c476220c7dc96634aea42144aade4d731e0e90
         xpos.append(0)
         ypos.append(0)
         zpos.append(0)
@@ -660,10 +668,10 @@ class StructureLibrary:
                 for i3 in range(1, numcellz):
                     for i in range(1, 8):
                         atnum=atnum+1
-                        Bxpos.append(xpos(i)+i1*acell)
-                        Bypos.append(ypos(i)+i2*acell)
-                        Bzpos.append(zpos(i)+i3*acell)
-                        Btypepos.append(typepos(i))
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+                        Btypepos.append(typepos[i])
 
         finalRet = []
         typeatom = 1
@@ -680,6 +688,11 @@ class StructureLibrary:
         '''test Diamond with Bs'''
         acell=1
         xpos, ypos, zpos, typepos = ([] for i in range(4))
+<<<<<<< HEAD
+=======
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+
+>>>>>>> b2c476220c7dc96634aea42144aade4d731e0e90
         xpos.append(0)
         ypos.append(0)
         zpos.append(0)
@@ -725,10 +738,10 @@ class StructureLibrary:
                 for i3 in range(1, numcellz):
                     for i in range(1, 8):
                        atnum=atnum+1
-                       Bxpos.append(xpos(i)+i1*acell)
-                       Bypos.append(ypos(i)+i2*acell)
-                       Bzpos.append(zpos(i)+i3*acell)
-                       Btypepos.append(typepos(i))
+                       Bxpos.append(xpos[i]+i1*acell)
+                       Bypos.append(ypos[i]+i2*acell)
+                       Bzpos.append(zpos[i]+i3*acell)
+                       Btypepos.append(typepos[i])
 
         finalRet = []
         typeatom = 1
