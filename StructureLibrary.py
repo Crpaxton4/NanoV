@@ -454,11 +454,7 @@ class StructureLibrary:
 
         acell=1
         xpos, ypos, zpos, typepos = ([] for i in range(4))
-<<<<<<< HEAD
-        
-=======
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
->>>>>>> b2c476220c7dc96634aea42144aade4d731e0e90
 
         xpos.append(0)
         ypos.append(0)
@@ -592,7 +588,6 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         for i1 in range(1, numcellx):
             for i2 in range(1, numcelly):
                 for i3 in range(1, numcellz):
@@ -616,12 +611,8 @@ class StructureLibrary:
         #structure
         acell=1
         xpos, ypos, zpos, typepos = ([] for i in range(4))
-<<<<<<< HEAD
-        typepos = []
-=======
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
 
->>>>>>> b2c476220c7dc96634aea42144aade4d731e0e90
         xpos.append(0)
         ypos.append(0)
         zpos.append(0)
@@ -662,7 +653,6 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         for i1 in range(1, numcellx):
             for i2 in range(1, numcelly):
                 for i3 in range(1, numcellz):
@@ -688,11 +678,8 @@ class StructureLibrary:
         '''test Diamond with Bs'''
         acell=1
         xpos, ypos, zpos, typepos = ([] for i in range(4))
-<<<<<<< HEAD
-=======
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
 
->>>>>>> b2c476220c7dc96634aea42144aade4d731e0e90
         xpos.append(0)
         ypos.append(0)
         zpos.append(0)
@@ -731,7 +718,6 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
 
         for i1 in range(1, numcellx):
             for i2 in range(1, numcelly):
