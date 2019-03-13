@@ -15,9 +15,14 @@ from panda3d.core import loadPrcFileData
 
 
 """
-Test
-TEst test
-Prototype.py
+MainApp.py
+
+https://discourse.panda3d.org/t/fully-working-wxpython-panda3d-example/15022
+
+Look at this code to possibly restructure
+this entire class to use wx as the main
+window and panda is just a widget
+
 
 """
 
