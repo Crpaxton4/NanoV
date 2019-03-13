@@ -453,7 +453,8 @@ class StructureLibrary:
         #pyrochlore strucutre
 
         acell=1
-        xpos, ypos, zpos = ([] for i in range(3))
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        
 
         xpos.append(0)
         ypos.append(0)
@@ -587,7 +588,7 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         for i1 in range(1, numcellx):
             for i2 in range(1, numcelly):
                 for i3 in range(1, numcellz):
@@ -611,7 +612,8 @@ class StructureLibrary:
         #test Diamond with Na atoms at corners and faces and Cl in the diamond
         #structure
         acell=1
-        xpos, ypos, zpos = ([] for i in range(3))
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        typepos = []
         xpos.append(0)
         ypos.append(0)
         zpos.append(0)
@@ -652,6 +654,7 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         for i1 in range(1, numcellx):
             for i2 in range(1, numcelly):
                 for i3 in range(1, numcellz):
@@ -676,7 +679,7 @@ class StructureLibrary:
     def ZincBlende():
         '''test Diamond with Bs'''
         acell=1
-        xpos, ypos, zpos = ([] for i in range(3))
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
         xpos.append(0)
         ypos.append(0)
         zpos.append(0)
@@ -714,6 +717,8 @@ class StructureLibrary:
         numcelly=2
         numcellz=2
         atnum=0
+
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
 
         for i1 in range(1, numcellx):
             for i2 in range(1, numcelly):
