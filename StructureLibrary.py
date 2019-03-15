@@ -572,9 +572,9 @@ class StructureLibrary:
                 type.append(2)
 
         nt=0
-        maxx=0
-        maxy=0
-        maxz=0
+        maxx=1
+        maxy=1
+        maxz=1
         for nx in range(0,maxx):
             for ny in range (0,maxy):
                 for nz in range(0,maxz):
