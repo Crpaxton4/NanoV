@@ -477,20 +477,17 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-        print("before--------")
         for i1 in range(1,numcellx+1):
             for i2 in range(1,numcelly+1):
                 for i3 in range(1,numcellz+1):
                     for i in range(1,4):
                        atnum=atnum+1
-                       print(atnum)
                        Bxpos.append(xpos[i]+i1*acell)
                        Bypos.append(ypos[i]+i2*acell)
                        Bzpos.append(zpos[i]+i3*acell)
 
         finalRet = []
         typeatom = 1
-        print("SC")
         print(atnum)
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
