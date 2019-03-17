@@ -480,7 +480,7 @@ class StructureLibrary:
         for i1 in range(1,numcellx+1):
             for i2 in range(1,numcelly+1):
                 for i3 in range(1,numcellz+1):
-                    for i in range(1,4):
+                    for i in range(4):
                        atnum=atnum+1
                        Bxpos.append(xpos[i]+i1*acell)
                        Bypos.append(ypos[i]+i2*acell)
@@ -493,7 +493,13 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
             finalRet.append(points)
         return finalRet
-
+    # data = SC()
+    # file = open("sc.xyz","w")
+    # file.write("{}\r\n".format(24))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
 
     #The available code for this one is incorrect
     def MgCu2():
@@ -552,7 +558,7 @@ class StructureLibrary:
         ys.append(3.0/4.0*a+b/math.sqrt(8))
         zs.append(3.0/4.0*a-b/math.sqrt(8))
 
-        for i in range(1,4):
+        for i in range(4):
             ys.append(ys[8+i]-a/2.0)
             xs.append(xs[8+i]-a/2.0)
             zs.append(zs[8+i])
@@ -578,7 +584,7 @@ class StructureLibrary:
         for nx in range(0,maxx):
             for ny in range (0,maxy):
                 for nz in range(0,maxz):
-                    for i in range(1,24):
+                    for i in range(24):
                         nt=nt+1
                         Bxpos.append(xs[i]+nx*a)
                         Bypos.append(ys[i]+ny*a)
@@ -591,6 +597,13 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
+    # data = MgCu2()
+    # file = open("MgCu2.xyz","w")
+    # file.write("{}\r\n".format(24))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
 
 
     def FCC():
@@ -615,15 +628,15 @@ class StructureLibrary:
         ypos.append(0)
         zpos.append(acell/2)
 
-        numcellx=2
-        numcelly=2
-        numcellz=2
+        numcellx=1
+        numcelly=1
+        numcellz=1
         atnum=0
 
         for i1 in range(1, numcellx+1):
             for i2 in range(1, numcelly+1):
                 for i3 in range(1, numcellz+1):
-                    for i in range(1, 4):
+                    for i in range(4):
                         atnum=atnum+1
                         Bxpos.append(xpos[i]+i1*acell)
                         Bypos.append(ypos[i]+i2*acell)
@@ -636,7 +649,13 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
             finalRet.append(points)
         return finalRet
-
+    # data = FCC()
+    # file = open("FCC.xyz","w")
+    # file.write("{}\r\n".format(4))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
 
     def MgSnCu4():
         #test Mg(1)in corners with Sn(2) in the diamond structure.  Cu(3) in a
@@ -770,6 +789,13 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
+    # data = MgSnCu4()
+    # file = open("MgSnCu4.xyz","w")
+    # file.write("{}\r\n".format(288))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
 
 
     def NaCl():
@@ -797,21 +823,21 @@ class StructureLibrary:
         zpos.append(acell/2)
         typepos.append(1) #face
 
-        xpos.append((3/4)*acell)
-        ypos.append((1/4)*acell)
-        zpos.append((3/4)*acell)
+        xpos.append(acell/2)
+        ypos.append(0)
+        zpos.append(0)
         typepos.append(2) #diamond
-        xpos.append((1/4)*acell)
-        ypos.append((3/4)*acell)
-        zpos.append((3/4)*acell)
+        xpos.append(0)
+        ypos.append((1/2)*acell)
+        zpos.append(0)
         typepos.append(2) #diamond
-        xpos.append((1/4)*acell)
-        ypos.append((1/4)*acell)
-        zpos.append((1/4)*acell)
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append((1/2)*acell)
         typepos.append(2) #diamond
-        xpos.append((3/4)*acell)
-        ypos.append((3/4)*acell)
-        zpos.append((1/4)*acell)
+        xpos.append((1/2)*acell)
+        ypos.append((1/2)*acell)
+        zpos.append((1/2)*acell)
         typepos.append(2) #diamond
 
         numcellx=2
@@ -822,7 +848,7 @@ class StructureLibrary:
         for i1 in range(1, numcellx+1):
             for i2 in range(1, numcelly+1):
                 for i3 in range(1, numcellz+1):
-                    for i in range(1, 8):
+                    for i in range(8):
                         atnum=atnum+1
                         Bxpos.append(xpos[i]+i1*acell)
                         Bypos.append(ypos[i]+i2*acell)
@@ -835,6 +861,13 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
+    # data = NaCl()
+    # file = open("NaCl.xyz","w")
+    # file.write("{}\r\n".format(64))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
 
 
 
@@ -887,7 +920,7 @@ class StructureLibrary:
         for i1 in range(1, numcellx+1):
             for i2 in range(1, numcelly+1):
                 for i3 in range(1, numcellz+1):
-                    for i in range(1, 8):
+                    for i in range(8):
                        atnum=atnum+1
                        Bxpos.append(xpos[i]+i1*acell)
                        Bypos.append(ypos[i]+i2*acell)
@@ -900,6 +933,13 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
+    # data = ZincBlende()
+    # file = open("ZincBlende.xyz","w")
+    # file.write("{}\r\n".format(64))
+    # file.write('Atoms\n')
+    # for x in data:
+    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+    # file.close()
 
     ''' File Reader. This file reader parses an XYZ file
     and returns a list of lists of each set of points in the format of

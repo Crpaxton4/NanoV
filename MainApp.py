@@ -47,7 +47,7 @@ class MainApp(ShowBase):
         #self.openWindow(keepCamera=False)
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
-        self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
+        self.taskMgr.add(self.updateCameraLight, "UpdateCameraLight")
         #self.camera.setPos(20 * sin(1), -20.0 * cos(1), 0)
         #self.camera.setHpr(0, 0, 0)
 
@@ -57,6 +57,21 @@ class MainApp(ShowBase):
 
         self.set_up_lighting()
 
+        #setting up mouse to move the camera
+        self.disableMouse()
+        angleDegrees = 60.0
+        angleRadians = angleDegrees * (pi / 180.0)
+        self.camera.setPos(20 * sin(angleRadians), -20 * cos(angleRadians), 0)
+        self.camera.setHpr(angleDegrees, 0, 0)
+
+        mat = Mat4(camera.getMat())
+        mat.invertInPlace()
+        self.mouseInterfaceNode.setMat(mat)
+        self.plnp.setMat(mat)
+        self.enableMouse()
+
+
+        # create the menu for the window
         menuBar = DropDownMenu(
             items=(
                 # (name, action)
@@ -162,11 +177,11 @@ class MainApp(ShowBase):
             0,
             ("SC", 0, self.create_structure, StructureLibrary.SC),
             0,
-            ("MgCu2", 0, self.create_structure, StructureLibrary.MgCu2),
+            ("MgCu2", 0, []), #self.create_structure, StructureLibrary.MgCu2),
             0,
             ("FCC", 0, self.create_structure, StructureLibrary.FCC),
             0,
-            ("MgSnCu4", 0, self.create_structure, StructureLibrary.MgSnCu4),
+            ("MgSnCu4", 0, []),# self.create_structure, StructureLibrary.MgSnCu4),
             0,
             ("NaCl", 0, self.create_structure, StructureLibrary.NaCl),
             0,
@@ -246,24 +261,17 @@ class MainApp(ShowBase):
             self.sphere.setScale(0.2)
     #END render_points
 
-    #TODO either remove this method or make it a menu item that is a neat effect
-    # this is a strech goal
-
-    # Define a procedure to move the camera.
-    def spinCameraTask(self, task):
+    def updateCameraLight(self, task):
         """
 
-        spinCameraTask
+        updateCameraLight
 
         """
 
         #print("spin camera") WORKS
-        angleDegrees = task.time * 6.0
-        angleRadians = angleDegrees * (pi / 180.0)
-        self.camera.setPos(20 * sin(angleRadians), -20.0 * cos(angleRadians), 0)
-        self.camera.setHpr(angleDegrees, 0, 0)
-
-        self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
+        mat=Mat4(self.mouseInterfaceNode.getMat())
+        mat.invertInPlace()
+        self.plnp.setMat(mat)
         return Task.cont
     #END spinCameraTask
 
@@ -276,12 +284,6 @@ class MainApp(ShowBase):
 points_file = 'points.txt'
 
 points = []
-
-## Create points for 'atoms'
-#for x in [-2.5, 0, 2.5]:
-    # for y in [-2.5, 0, 2.5]:
-    #     for z in [-2.5, 0, 2.5]:
-    #         points += [[x, y, z]]
 
 Reader.write_points(points_file, 10)
 
