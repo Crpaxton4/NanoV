@@ -47,7 +47,7 @@ class MainApp(ShowBase):
         #self.openWindow(keepCamera=False)
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
-        #self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
+        self.taskMgr.add(self.updateCameraLight, "UpdateCameraLight")
         #self.camera.setPos(20 * sin(1), -20.0 * cos(1), 0)
         #self.camera.setHpr(0, 0, 0)
 
@@ -261,24 +261,17 @@ class MainApp(ShowBase):
             self.sphere.setScale(0.2)
     #END render_points
 
-    #TODO either remove this method or make it a menu item that is a neat effect
-    # this is a strech goal
-
-    # Define a procedure to move the camera.
-    def spinCameraTask(self, task):
+    def updateCameraLight(self, task):
         """
 
-        spinCameraTask
+        updateCameraLight
 
         """
 
         #print("spin camera") WORKS
-        angleDegrees = task.time * 6.0
-        angleRadians = angleDegrees * (pi / 180.0)
-        self.camera.setPos(20 * sin(angleRadians), -20.0 * cos(angleRadians), 0)
-        self.camera.setHpr(angleDegrees, 0, 0)
-
-        self.plnp.setPos((20 * sin(angleRadians), -20.0 * cos(angleRadians), 0))
+        mat=Mat4(self.mouseInterfaceNode.getMat())
+        mat.invertInPlace()
+        self.plnp.setMat(mat)
         return Task.cont
     #END spinCameraTask
 
@@ -291,12 +284,6 @@ class MainApp(ShowBase):
 points_file = 'points.txt'
 
 points = []
-
-## Create points for 'atoms'
-#for x in [-2.5, 0, 2.5]:
-    # for y in [-2.5, 0, 2.5]:
-    #     for z in [-2.5, 0, 2.5]:
-    #         points += [[x, y, z]]
 
 Reader.write_points(points_file, 10)
 
