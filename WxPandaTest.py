@@ -26,13 +26,15 @@ class App(ShowBase):
         self.startWx()
         self.wxApp.Bind(wx.EVT_CLOSE, self.quit)
         self.frame = Frame(None, wx.ID_ANY, 'Editor')
+        self.frame.SetDimensions(0, 0, 800, 600)
+        self.frame.Center()
         self.frame.Show()
         self.frame.Layout()
 
         # YNJH : create P3D window
         wp = core.WindowProperties()
-        wp.setOrigin(20,20)
-        wp.setSize(400,300)
+        wp.setOrigin(0, 0)
+        wp.setSize(800,600)
         wp.setParentWindow(self.frame.GetHandle())
         base.openMainWindow(type = 'onscreen', props=wp, size=(800, 600))
 

@@ -29,12 +29,12 @@ class Frame(wx.Frame):
         wx.Frame.__init__(self, *args, **kwargs)
 
         # add menu
-        menubar = wx.MenuBar()
-        fileMenu = wx.Menu()
-        fitem = fileMenu.Append(wx.ID_EXIT, 'Quit', 'Quit application')
-        self.Bind(wx.EVT_MENU, self.onQuit, fitem)
-        menubar.Append(fileMenu, '&File')
-        self.SetMenuBar(menubar)
+        # menubar = wx.MenuBar()
+        # fileMenu = wx.Menu()
+        # fitem = fileMenu.Append(wx.ID_EXIT, 'Quit', 'Quit application')
+        # self.Bind(wx.EVT_MENU, self.onQuit, fitem)
+        # menubar.Append(fileMenu, '&File')
+        # self.SetMenuBar(menubar)
 
     def onQuit(self, evt):
         self.Close()
@@ -62,13 +62,15 @@ class MainApp(ShowBase):
         self.startWx()
         self.wxApp.Bind(wx.EVT_CLOSE, self.quit)
         self.frame = Frame(None, wx.ID_ANY, 'Editor')
+        self.frame.SetDimensions(0, 0, 800, 600)
+        self.frame.Center()
         self.frame.Show()
         self.frame.Layout()
 
         # YNJH : create P3D window
         wp = WindowProperties()
-        wp.setOrigin(20,20)
-        wp.setSize(400,300)
+        wp.setOrigin(0, 0)
+        wp.setSize(800,600)
         wp.setParentWindow(self.frame.GetHandle())
         base.openMainWindow(type = 'onscreen', props=wp, size=(800, 600))
 
@@ -104,7 +106,7 @@ class MainApp(ShowBase):
             items=(
                 # (name, action)
                 ("_File", self.createFileMenuItems),
-                ("_Edit", self.createFileMenuItems),
+                ("_Edit", self.createEditMenuItems),
                 ("Structure _Library", self.createStructureMenuItems)
             ),
 
@@ -182,6 +184,24 @@ class MainApp(ShowBase):
             ('_Load File...', 0, self.read_in_file),
             0
         )
+
+    def createEditMenuItems(self):
+        """
+
+        createFileMenuItems
+
+        """
+
+        return (
+            ('Test Popup', 0, self.popup),
+            0
+        )
+
+    def popup(self):
+        dlg = wx.TextEntryDialog(self.frame, "Test...")
+        dlg.ShowModal()
+        result = dlg.GetValue()
+        dlg.Destroy()
 
     def createStructureMenuItems(self):
         """
