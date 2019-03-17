@@ -731,8 +731,8 @@ class StructureLibrary:
         zs.append(3.0/4.0*a-b/sqrt(8))
 
         xs.append(3.0/4.0*a-b/sqrt(8))
-        ys(10)=3.0/4.0*a+b/sqrt(8))
-        zs(10)=3.0/4.0*a+b/sqrt(8))
+        ys.append(3.0/4.0*a+b/sqrt(8))
+        zs.append(3.0/4.0*a+b/sqrt(8))
 
         xs.append(3.0/4.0*a+b/sqrt(8))
         ys.append(3.0/4.0*a-b/sqrt(8))
@@ -792,8 +792,6 @@ class StructureLibrary:
             else:
                 typepos.append(3)
 
-        for i in range
-
         numcellx=1
         numcelly=1
         numcellz=1
@@ -801,7 +799,7 @@ class StructureLibrary:
 
         for i1 in range(1, numcellx+1):
             for i2 in range(1, numcelly+1):
-                for i3 in range(1, numcellz+1+1):
+                for i3 in range(1, numcellz+1):
                     for i in range(24):
                         atnum=atnum+1
                         Bxpos.append(xpos[i]+i1*a)
