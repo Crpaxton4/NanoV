@@ -47,7 +47,7 @@ class MainApp(ShowBase):
         #self.openWindow(keepCamera=False)
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
-        self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
+        #self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
         #self.camera.setPos(20 * sin(1), -20.0 * cos(1), 0)
         #self.camera.setHpr(0, 0, 0)
 
@@ -56,6 +56,19 @@ class MainApp(ShowBase):
         self.root.reparentTo(self.render)
 
         self.set_up_lighting()
+
+        #setting up mouse to move the camera
+        self.disableMouse()
+        angleDegrees = 60.0
+        angleRadians = angleDegrees * (pi / 180.0)
+        self.camera.setPos(20*sin(angleRadians), -20 * cos(angleRadians), 0)
+        self.camera.setHpr(angleDegrees, 0, 0)
+
+        mat = Mat4(camera.getMat())
+        mat.invertInPlace()
+        self.mouseInterfaceNode.setMat(mat)
+        self.plnp.setMat(mat)
+        self.enableMouse()
 
         menuBar = DropDownMenu(
             items=(
