@@ -261,10 +261,6 @@ class MainApp(ShowBase):
             self.sphere.setScale(0.2)
     #END render_points
 
-    #TODO either remove this method or make it a menu item that is a neat effect
-    # this is a strech goal
-
-    # Define a procedure to move the camera.
     def updateCameraLight(self, task):
         """
 
@@ -288,12 +284,6 @@ class MainApp(ShowBase):
 points_file = 'points.txt'
 
 points = []
-
-## Create points for 'atoms'
-#for x in [-2.5, 0, 2.5]:
-    # for y in [-2.5, 0, 2.5]:
-    #     for z in [-2.5, 0, 2.5]:
-    #         points += [[x, y, z]]
 
 Reader.write_points(points_file, 10)
 
