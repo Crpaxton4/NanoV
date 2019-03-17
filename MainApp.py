@@ -9,8 +9,7 @@ from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 from Menu import DropDownMenu, PopupMenu
 
-from tkinter import filedialog
-from tkinter import *
+import wx
 
 
 """
@@ -25,6 +24,20 @@ window and panda is just a widget
 
 """
 
+class Frame(wx.Frame):
+    def __init__(self, *args, **kwargs):
+        wx.Frame.__init__(self, *args, **kwargs)
+
+        # add menu
+        menubar = wx.MenuBar()
+        fileMenu = wx.Menu()
+        fitem = fileMenu.Append(wx.ID_EXIT, 'Quit', 'Quit application')
+        self.Bind(wx.EVT_MENU, self.onQuit, fitem)
+        menubar.Append(fileMenu, '&File')
+        self.SetMenuBar(menubar)
+
+    def onQuit(self, evt):
+        self.Close()
 
 class MainApp(ShowBase):
     """
@@ -41,12 +54,27 @@ class MainApp(ShowBase):
         __init__
 
         """
-
-        #call superclass constructor
         ShowBase.__init__(self)
-        #self.openWindow(keepCamera=False)
-        # TODO change this so that the user can control the camera position and facing
-        # Add the spinCameraTask procedure to the task manager.
+
+
+        #Created the WxX window that panda will be running in
+        # setup application window
+        self.startWx()
+        self.wxApp.Bind(wx.EVT_CLOSE, self.quit)
+        self.frame = Frame(None, wx.ID_ANY, 'Editor')
+        self.frame.Show()
+        self.frame.Layout()
+
+        # YNJH : create P3D window
+        wp = WindowProperties()
+        wp.setOrigin(20,20)
+        wp.setSize(400,300)
+        wp.setParentWindow(self.frame.GetHandle())
+        base.openMainWindow(type = 'onscreen', props=wp, size=(800, 600))
+
+
+
+
         self.taskMgr.add(self.updateCameraLight, "UpdateCameraLight")
         #self.camera.setPos(20 * sin(1), -20.0 * cos(1), 0)
         #self.camera.setHpr(0, 0, 0)
@@ -274,6 +302,15 @@ class MainApp(ShowBase):
         self.plnp.setMat(mat)
         return Task.cont
     #END spinCameraTask
+
+
+    def quit(self, event=None):
+        self.onDestroy(event)
+        try:
+            base
+        except NameError:
+            sys.exit()
+        base.userExit()
 
 #END MainApp
 
