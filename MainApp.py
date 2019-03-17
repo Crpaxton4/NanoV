@@ -61,7 +61,7 @@ class MainApp(ShowBase):
         self.disableMouse()
         angleDegrees = 60.0
         angleRadians = angleDegrees * (pi / 180.0)
-        self.camera.setPos(20*sin(angleRadians), -20 * cos(angleRadians), 0)
+        self.camera.setPos(20 * sin(angleRadians), -20 * cos(angleRadians), 0)
         self.camera.setHpr(angleDegrees, 0, 0)
 
         mat = Mat4(camera.getMat())
@@ -70,6 +70,8 @@ class MainApp(ShowBase):
         self.plnp.setMat(mat)
         self.enableMouse()
 
+
+        # create the menu for the window
         menuBar = DropDownMenu(
             items=(
                 # (name, action)
@@ -175,11 +177,11 @@ class MainApp(ShowBase):
             0,
             ("SC", 0, self.create_structure, StructureLibrary.SC),
             0,
-            ("MgCu2", 0, self.create_structure, StructureLibrary.MgCu2),
+            ("MgCu2", 0, []), #self.create_structure, StructureLibrary.MgCu2),
             0,
             ("FCC", 0, self.create_structure, StructureLibrary.FCC),
             0,
-            ("MgSnCu4", 0, self.create_structure, StructureLibrary.MgSnCu4),
+            ("MgSnCu4", 0, []),# self.create_structure, StructureLibrary.MgSnCu4),
             0,
             ("NaCl", 0, self.create_structure, StructureLibrary.NaCl),
             0,
