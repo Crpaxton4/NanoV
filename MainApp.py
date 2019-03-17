@@ -44,7 +44,7 @@ class MainApp(ShowBase):
 
         #call superclass constructor
         ShowBase.__init__(self)
-        self.openWindow(keepCamera=False)
+        #self.openWindow(keepCamera=False)
         # TODO change this so that the user can control the camera position and facing
         # Add the spinCameraTask procedure to the task manager.
         self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
@@ -159,9 +159,19 @@ class MainApp(ShowBase):
             ("Diamond", 0, self.create_structure, StructureLibrary.Diamond),
             0,
             ("Laves", 0, self.create_structure, StructureLibrary.Laves),
+            0,
+            ("SC", 0, self.create_structure, StructureLibrary.SC),
+            0,
+            ("MgCu2", 0, self.create_structure, StructureLibrary.MgCu2),
+            0,
+            ("FCC", 0, self.create_structure, StructureLibrary.FCC),
+            0,
+            ("MgSnCu4", 0, self.create_structure, StructureLibrary.MgSnCu4),
+            0,
+            ("NaCl", 0, self.create_structure, StructureLibrary.NaCl),
+            0,
+            ("ZincBlende", 0, self.create_structure, StructureLibrary.ZincBlende),
             0
-
-
         )
 
     ############################################################################
