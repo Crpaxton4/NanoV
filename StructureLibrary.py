@@ -952,12 +952,12 @@ class StructureLibrary:
                        Btypepos.append(typepos[i])
 
         finalRet = []
-        print(atnum)
+        #print(atnum)
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
-    # data = ZincBlende()
+    data = ZincBlende()
     # file = open("ZincBlende.xyz","w")
     # file.write("{}\r\n".format(64))
     # file.write('Atoms\n')
@@ -984,8 +984,16 @@ class StructureLibrary:
                 points.append(formatted_pts)
         #return points
         return points
-    #
-    #
-# root = Tk()
-# root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("xyz files","*.xyz"),("all files","*.*")))
-# print(StructureLibrary.FileReader(root.filename))
+
+    ''' OutputFiles is a method that takes in a list of points for a structure
+    that is either manually loaded or selected from the structure menu and
+    writes a file to the directory the user is in with an XYZ format '''
+    def OutputFiles(points):
+        data = points
+        file = open("structure.xyz","w")
+        numberOfAtoms = len(data)
+        file.write("{}\r\n".format(numberOfAtoms))
+        file.write('Atoms\n')
+        for y in data:
+            file.write("{}\t {}\t {}\t {}\t\r\n".format(y[3], y[0], y[1],y[2]))
+        file.close()
