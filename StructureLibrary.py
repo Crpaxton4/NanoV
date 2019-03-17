@@ -643,149 +643,125 @@ class StructureLibrary:
         #pyrochlore strucutre
 
         acell=1
-        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        xs, ys, zs, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
 
-        xpos.append(0)
-        ypos.append(0)
-        zpos.append(0)
-        typepos.append(1)
-        #corner
+        a=1.0
+        b=a*sqrt(3.0)/4.0/1.11
+        #altenate
+        xs.append(0.0)
+        ys.append(0.0)
+        zs.append(0.0)
 
-        xpos.append(acell/2)
-        ypos.append(acell/2)
-        zpos.append(0)
-        typepos.append(1)
-        #face
-        xpos.append(0)
-        ypos.append(acell/2)
-        zpos.append(acell/2)
-        typepos.append(1)
-        #face
-        xpos.append(acell/2)
-        ypos.append(0)
-        zpos.append(acell/2)
-        typepos.append(1)
-        #face
+        xs.append(a/2.0)
+        ys.append(0)
+        zs.append(a/2.0)
 
-        xpos.append((3/4)*acell)
-        ypos.append((1/4)*acell)
-        zpos.append((1/4)*acell)
-        typepos.append(2)
-        #diamond
-        xpos.append((1/4)*acell)
-        ypos.append((3/4)*acell)
-        zpos.append((1/4)*acell)
-        typepos.append(2)
-        #diamond
-        xpos.append((1/4)*acell)
-        ypos.append((1/4)*acell)
-        zpos.append((3/4)*acell)
-        typepos.append(2)
-        #diamond
-        xpos.append((3/4)*acell)
-        ypos.append((3/4)*acell)
-        zpos.append((3/4)*acell)
-        typepos.append(2)
-        #diamond
+        xs.append(a/2.0)
+        ys.append(a/2.0)
+        zs.append(0.0)
 
-        xpos.append((3/5)*acell)
-        ypos.append((1/5)*acell)
-        zpos.append((1/5)*acell)
-        typepos.append(3)
-        #cluster 1 bottom left
-        xpos.append((4/5)*acell)
-        ypos.append((2/5)*acell)
-        zpos.append((1/5)*acell)
-        typepos.append(3)
-        #cluster 1 bottom right
-        xpos.append((4/5)*acell)
-        ypos.append((1/5)*acell)
-        zpos.append((2/5)*acell)
-        typepos.append(3)
-        #cluster 1 top right
-        xpos.append((3/5)*acell)
-        ypos.append((2/5)*acell)
-        zpos.append((2/5)*acell)
-        typepos.append(3)
-        #cluster 1 top left
+        xs.append(0)
+        ys.append(a/2.0)
+        zs.append(a/2.0)
 
-        xpos.append((1/5)*acell)
-        ypos.append((3/5)*acell)
-        zpos.append((1/5)*acell)
-        typepos.append(3)
-        #cluster 2 bottom left
-        xpos.append((2/5)*acell)
-        ypos.append((4/5)*acell)
-        zpos.append((1/5)*acell)
-        typepos.append(3)
-        #cluster 2 bottom right
-        xpos.append((1/5)*acell)
-        ypos.append((4/5)*acell)
-        zpos.append((2/5)*acell)
-        typepos.append(3)
-        #cluster 2 top right
-        xpos.append((2/5)*acell)
-        ypos.append((3/5)*acell)
-        zpos.append((2/5)*acell)
-        typepos.append(3)
-        #cluster 2 top left
+        xs.append(a/4.0)
+        ys.append(a/4.0)
+        zs.append(a/4.0)
 
-        xpos.append((1/5)*acell)
-        ypos.append((1/5)*acell)
-        zpos.append((3/5)*acell)
-        typepos.append(3)
-        #cluster 3 bottom left
-        xpos.append((2/5)*acell)
-        ypos.append((2/5)*acell)
-        zpos.append((3/5)*acell)
-        typepos.append(3)
-        #cluster 3 bottom right
-        xpos.append((2/5)*acell)
-        ypos.append((1/5)*acell)
-        zpos.append((4/5)*acell)
-        typepos.append(3)
-        #cluster 3 top right
-        xpos.append((1/5)*acell)
-        ypos.append((2/5)*acell)
-        zpos.append((4/5)*acell)
-        typepos.append(3)
-        #cluster 3 top left
+        xs.append(3.0*a/4.0)
+        ys.append(3*a/4.0)
+        zs.append(a/4.0)
 
-        xpos.append((3/5)*acell)
-        ypos.append((3/5)*acell)
-        zpos.append((3/5)*acell)
-        typepos.append(3)
-        #cluster 4 bottom left
-        xpos.append((4/5)*acell)
-        ypos.append((4/5)*acell)
-        zpos.append((3/5)*acell)
-        typepos.append(3)
-        #cluster 4 bottom right
-        xpos.append((4/5)*acell)
-        ypos.append((3/5)*acell)
-        zpos.append((4/5)*acell)
-        typepos.append(3)
-        #cluster 4 top right
-        xpos.append((3/5)*acell)
-        ypos.append((4/5)*acell)
-        zpos.append((4/5)*acell)
-        typepos.append(3)
-        #cluster 4 top left
+        xs.append(a/4.0)
+        ys.append(3*a/4.0)
+        zs.append(3.0*a/4.0)
 
-        numcellx=2
-        numcelly=2
-        numcellz=2
+        xs.append(3.0*a/4.0)
+        ys.append(a/4.0)
+        zs.append(3.0*a/4.0)
+
+        xs.append(3.0/4.0*a-b/sqrt(8))
+        ys.append(3.0/4.0*a-b/sqrt(8))
+        zs.append(3.0/4.0*a-b/sqrt(8))
+
+        xs.append(3.0/4.0*a-b/sqrt(8))
+        ys(10)=3.0/4.0*a+b/sqrt(8))
+        zs(10)=3.0/4.0*a+b/sqrt(8))
+
+        xs.append(3.0/4.0*a+b/sqrt(8))
+        ys.append(3.0/4.0*a-b/sqrt(8))
+        zs.append(3.0/4.0*a+b/sqrt(8))
+
+        xs.append(3.0/4.0*a+b/sqrt(8))
+        ys.append(3.0/4.0*a+b/sqrt(8))
+        zs.append(3.0/4.0*a-b/sqrt(8))
+
+
+        xs.append(xs[7+1]-a/2.0)
+        xs.append(xs[7+2]-a/2.0)
+        xs.append(xs[7+3]-a/2.0)
+        xs.append(xs[7+4]-a/2.0)
+        ys.append(ys[7+1]-a/2.0)
+        ys.append(ys[7+2]-a/2.0)
+        ys.append(ys[7+3]-a/2.0)
+        ys.append(ys[7+4]-a/2.0)
+        zs.append(zs[7+1])
+        zs.append(zs[7+2])
+        zs.append(zs[7+3])
+        zs.append(zs[7+4])
+
+        xs.append(xs[7+1])
+        xs.append(xs[7+2])
+        xs.append(xs[7+3])
+        xs.append(xs[7+4])
+        ys.append(ys[7+1]-a/2.0)
+        ys.append(ys[7+2]-a/2.0)
+        ys.append(ys[7+3]-a/2.0)
+        ys.append(ys[7+4]-a/2.0)
+        zs.append(zs[7+1]-a/2.0)
+        zs.append(zs[7+2]-a/2.0)
+        zs.append(zs[7+3]-a/2.0)
+        zs.append(zs[7+4]-a/2.0)
+
+        xs.append(xs[7+1]-a/2.0)
+        xs.append(xs[7+2]-a/2.0)
+        xs.append(xs[7+3]-a/2.0)
+        xs.append([7+4]-a/2.0)
+        ys.append(ys[7+1])
+        ys.append(ys[7+2])
+        ys.append(ys[7+3])
+        ys.append(ys[7+4])
+        zs.append(zs[7+1]-a/2.0)
+        zs.append(zs[7+2]-a/2.0)
+        zs.append(zs[7+3]-a/2.0)
+        zs.append(zs[7+4]-a/2.0)
+
+
+
+        for i in range(24):
+            if(i<4):
+                typepos.append(1)
+            elif(i<9):
+                typepos.append(2)
+            else:
+                typepos.append(3)
+
+        for i in range
+
+        numcellx=1
+        numcelly=1
+        numcellz=1
         atnum=0
 
         for i1 in range(1, numcellx+1):
             for i2 in range(1, numcelly+1):
                 for i3 in range(1, numcellz+1+1):
-                    for i in range(1, 24):
+                    for i in range(24):
                         atnum=atnum+1
-                        Bxpos.append(xpos[i]+i1*acell)
-                        Bypos.append(ypos[i]+i2*acell)
-                        Bzpos.append(zpos[i]+i3*acell)
+                        Bxpos.append(xpos[i]+i1*a)
+                        Bypos.append(ypos[i]+i2*a)
+                        Bzpos.append(zpos[i]+i3*a)
                         Btypepos.append(typepos[i])
 
         finalRet = []
