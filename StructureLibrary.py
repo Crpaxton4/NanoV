@@ -448,6 +448,196 @@ class StructureLibrary:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
+    def SC():
+        #test SC with Bs
+
+        xpos, ypos, zpos = ([] for i in range(3))
+        Bxpos, Bypos, Bzpos = ([] for i in range(3))
+        acell=(1)
+
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+
+        xpos.append(0)
+        ypos.append(acell)
+        zpos.append(acell)
+
+        xpos.append(acell)
+        ypos.append(0)
+        zpos.append(acell)
+
+        xpos.append(acell)
+        ypos.append(acell)
+        zpos.append(acell)
+
+
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
+
+        for i1 in range(1,numcellx+1):
+            for i2 in range(1,numcelly+1):
+                for i3 in range(1,numcellz+1):
+                    for i in range(1,4):
+                       atnum=atnum+1
+                       Bxpos.append(xpos[i]+i1*acell)
+                       Bypos.append(ypos[i]+i2*acell)
+                       Bzpos.append(zpos[i]+i3*acell)
+
+        finalRet = []
+        typeatom = 1
+        print(atnum)
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            finalRet.append(points)
+        return finalRet
+
+
+    #The available code for this one is incorrect
+    def MgCu2():
+        a=1.0
+        b=a*math.sqrt(3.0)/4.0/1.11
+
+        xs, ys, zs, type = ([] for i in range(4))
+        Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
+
+        #altenate
+        xs.append(0.0)
+        ys.append(0.0)
+        zs.append(0.0)
+
+        xs.append(a/4.0)
+        ys.append(a/4.0)
+        zs.append(a/4.0)
+
+        xs.append(a/2.0)
+        ys.append(a/2.0)
+        zs.append(0.0)
+
+        xs.append(0)
+        ys.append(a/2.0)
+        zs.append(a/2.0)
+
+        xs.append(a/2.0)
+        ys.append(0)
+        zs.append(a/2.0)
+
+        xs.append(3.0*a/4.0)
+        ys.append(3*a/4.0)
+        zs.append(a/4.0)
+
+        xs.append(a/4.0)
+        ys.append(3*a/4.0)
+        zs.append(3.0*a/4.0)
+
+        xs.append(3.0*a/4.0)
+        ys.append(a/4.0)
+        zs.append(3.0*a/4.0)
+
+        xs.append(3.0/4.0*a-b/math.sqrt(8))
+        ys.append(3.0/4.0*a-b/math.sqrt(8))
+        zs.append(3.0/4.0*a-b/math.sqrt(8))
+
+        xs.append(3.0/4.0*a-b/math.sqrt(8))
+        ys.append(3.0/4.0*a+b/math.sqrt(8))
+        zs.append(3.0/4.0*a+b/math.sqrt(8))
+
+        xs.append(3.0/4.0*a+b/math.sqrt(8))
+        ys.append(3.0/4.0*a-b/math.sqrt(8))
+        zs.append(3.0/4.0*a+b/math.sqrt(8))
+
+        xs.append(3.0/4.0*a+b/math.sqrt(8))
+        ys.append(3.0/4.0*a+b/math.sqrt(8))
+        zs.append(3.0/4.0*a-b/math.sqrt(8))
+
+        for i in range(1,4):
+            ys.append(ys[8+i]-a/2.0)
+            xs.append(xs[8+i]-a/2.0)
+            zs.append(zs[8+i])
+
+            xs.append(xs[8+i])
+            ys.append(ys[8+i]-a/2.0)
+            zs.append(zs[8+i]-a/2.0)
+
+            xs.append(xs[8+i]-a/2.0)
+            ys.append(ys[8+i])
+            zs.append(zs[8+i]-a/2.0)
+
+        for i in range(1,24):
+            if(i<=8):
+                type.append(1)
+            else:
+                type.append(2)
+
+        nt=0
+        maxx=1
+        maxy=1
+        maxz=1
+        for nx in range(0,maxx):
+            for ny in range (0,maxy):
+                for nz in range(0,maxz):
+                    for i in range(1,24):
+                        nt=nt+1
+                        Bxpos.append(xs[i]+nx*a)
+                        Bypos.append(ys[i]+ny*a)
+                        Bzpos.append(zs[i]+nz*a)
+                        Btypepos.append(type[i])
+
+        finalRet = []
+        print(nt)
+        for x in range(nt):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
+            finalRet.append(points)
+        return finalRet
+
+
+    def FCC():
+        #test FCC with Bs
+        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        Bxpos, Bypos, Bzpos = ([] for i in range(3))
+
+        acell=math.sqrt(2)
+        xpos.append(0)
+        ypos.append(0)
+        zpos.append(0)
+
+        xpos.append(acell/2)
+        ypos.append(acell/2)
+        zpos.append(0)
+
+        xpos.append(0)
+        ypos.append(acell/2)
+        zpos.append(acell/2)
+
+        xpos.append(acell/2)
+        ypos.append(0)
+        zpos.append(acell/2)
+
+        numcellx=2
+        numcelly=2
+        numcellz=2
+        atnum=0
+
+        for i1 in range(1, numcellx+1):
+            for i2 in range(1, numcelly+1):
+                for i3 in range(1, numcellz+1):
+                    for i in range(1, 4):
+                        atnum=atnum+1
+                        Bxpos.append(xpos[i]+i1*acell)
+                        Bypos.append(ypos[i]+i2*acell)
+                        Bzpos.append(zpos[i]+i3*acell)
+
+        finalRet = []
+        typeatom = 1
+        print(atnum)
+        for x in range(atnum):
+            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            finalRet.append(points)
+        return finalRet
+
+
     def MgSnCu4():
         #test Mg(1)in corners with Sn(2) in the diamond structure.  Cu(3) in a
         #pyrochlore strucutre
@@ -588,10 +778,9 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-
-        for i1 in range(1, numcellx):
-            for i2 in range(1, numcelly):
-                for i3 in range(1, numcellz):
+        for i1 in range(1, numcellx+1):
+            for i2 in range(1, numcelly+1):
+                for i3 in range(1, numcellz+1+1):
                     for i in range(1, 24):
                         atnum=atnum+1
                         Bxpos.append(xpos[i]+i1*acell)
@@ -654,9 +843,9 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-        for i1 in range(1, numcellx):
-            for i2 in range(1, numcelly):
-                for i3 in range(1, numcellz):
+        for i1 in range(1, numcellx+1):
+            for i2 in range(1, numcelly+1):
+                for i3 in range(1, numcellz+1):
                     for i in range(1, 8):
                         atnum=atnum+1
                         Bxpos.append(xpos[i]+i1*acell)
@@ -665,10 +854,9 @@ class StructureLibrary:
                         Btypepos.append(typepos[i])
 
         finalRet = []
-        typeatom = 1
         print(atnum)
         for x in range(atnum):
-            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
 
@@ -719,9 +907,10 @@ class StructureLibrary:
         numcellz=2
         atnum=0
 
-        for i1 in range(1, numcellx):
-            for i2 in range(1, numcelly):
-                for i3 in range(1, numcellz):
+
+        for i1 in range(1, numcellx+1):
+            for i2 in range(1, numcelly+1):
+                for i3 in range(1, numcellz+1):
                     for i in range(1, 8):
                        atnum=atnum+1
                        Bxpos.append(xpos[i]+i1*acell)
@@ -730,10 +919,9 @@ class StructureLibrary:
                        Btypepos.append(typepos[i])
 
         finalRet = []
-        typeatom = 1
         print(atnum)
         for x in range(atnum):
-            points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
+            points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet
 
