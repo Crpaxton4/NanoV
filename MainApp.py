@@ -275,7 +275,16 @@ class MainApp(ShowBase):
 
         """
 
-        num_types = max(point_list, key=lambda point:point[3])
+        max_x_point = max(point_list, key=lambda p: p[0])
+        max_x_val = max_x_point[0]
+
+        max_y_point = max(point_list, key=lambda p: p[1])
+        max_y_val = max_y_point[1]
+
+        max_z_point = max(point_list, key=lambda p: p[2])
+        max_z_val = max_z_point[2]
+
+        print([max_x_val, max_y_val, max_z_val])
 
         #Create Material for all the spheres to be rendered
         # red
@@ -302,7 +311,7 @@ class MainApp(ShowBase):
         for p in point_list:
             self.sphere = self.loader.loadModel("sphere.egg.pz")
             self.sphere.reparentTo(self.render.find('Root'))
-            self.sphere.setPos(p[0], p[1], p[2])
+            self.sphere.setPos(p[0] - max_x_val/2, p[1] - max_y_val/2, p[2] - max_z_val/2)
 
             self.sphere.setMaterial(self.myMaterial1)
 
