@@ -587,7 +587,7 @@ class StructureLibrary:
         xs.append(xs[7+1]-a/2.0)
         xs.append(xs[7+2]-a/2.0)
         xs.append(xs[7+3]-a/2.0)
-        xs.append([7+4]-a/2.0)
+        xs.append(xs[7+4]-a/2.0)
         ys.append(ys[7+1])
         ys.append(ys[7+2])
         ys.append(ys[7+3])
@@ -692,7 +692,7 @@ class StructureLibrary:
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
 
         a=1.0
-        b=a*sqrt(3.0)/4.0/1.11
+        b=a*math.sqrt(3.0)/4.0/1.11
         #altenate
         xs.append(0.0)
         ys.append(0.0)
@@ -726,21 +726,21 @@ class StructureLibrary:
         ys.append(a/4.0)
         zs.append(3.0*a/4.0)
 
-        xs.append(3.0/4.0*a-b/sqrt(8))
-        ys.append(3.0/4.0*a-b/sqrt(8))
-        zs.append(3.0/4.0*a-b/sqrt(8))
+        xs.append(3.0/4.0*a-b/math.sqrt(8))
+        ys.append(3.0/4.0*a-b/math.sqrt(8))
+        zs.append(3.0/4.0*a-b/math.sqrt(8))
 
-        xs.append(3.0/4.0*a-b/sqrt(8))
-        ys.append(3.0/4.0*a+b/sqrt(8))
-        zs.append(3.0/4.0*a+b/sqrt(8))
+        xs.append(3.0/4.0*a-b/math.sqrt(8))
+        ys.append(3.0/4.0*a+b/math.sqrt(8))
+        zs.append(3.0/4.0*a+b/math.sqrt(8))
 
-        xs.append(3.0/4.0*a+b/sqrt(8))
-        ys.append(3.0/4.0*a-b/sqrt(8))
-        zs.append(3.0/4.0*a+b/sqrt(8))
+        xs.append(3.0/4.0*a+b/math.sqrt(8))
+        ys.append(3.0/4.0*a-b/math.sqrt(8))
+        zs.append(3.0/4.0*a+b/math.sqrt(8))
 
-        xs.append(3.0/4.0*a+b/sqrt(8))
-        ys.append(3.0/4.0*a+b/sqrt(8))
-        zs.append(3.0/4.0*a-b/sqrt(8))
+        xs.append(3.0/4.0*a+b/math.sqrt(8))
+        ys.append(3.0/4.0*a+b/math.sqrt(8))
+        zs.append(3.0/4.0*a-b/math.sqrt(8))
 
 
         xs.append(xs[7+1]-a/2.0)
@@ -772,7 +772,7 @@ class StructureLibrary:
         xs.append(xs[7+1]-a/2.0)
         xs.append(xs[7+2]-a/2.0)
         xs.append(xs[7+3]-a/2.0)
-        xs.append([7+4]-a/2.0)
+        xs.append(xs[7+4]-a/2.0)
         ys.append(ys[7+1])
         ys.append(ys[7+2])
         ys.append(ys[7+3])
@@ -797,14 +797,14 @@ class StructureLibrary:
         numcellz=1
         atnum=0
 
-        for i1 in range(1, numcellx+1):
-            for i2 in range(1, numcelly+1):
-                for i3 in range(1, numcellz+1):
+        for i1 in range(0, numcellx+1):
+            for i2 in range(0, numcelly+1):
+                for i3 in range(0, numcellz+1):
                     for i in range(24):
                         atnum=atnum+1
-                        Bxpos.append(xpos[i]+i1*a)
-                        Bypos.append(ypos[i]+i2*a)
-                        Bzpos.append(zpos[i]+i3*a)
+                        Bxpos.append(xs[i]+i1*a)
+                        Bypos.append(ys[i]+i2*a)
+                        Bzpos.append(zs[i]+i3*a)
                         Btypepos.append(typepos[i])
 
         finalRet = []
@@ -815,7 +815,7 @@ class StructureLibrary:
         return finalRet
     # data = MgSnCu4()
     # file = open("MgSnCu4.xyz","w")
-    # file.write("{}\r\n".format(288))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
