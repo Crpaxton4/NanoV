@@ -587,7 +587,7 @@ class StructureLibrary:
         xs.append(xs[7+1]-a/2.0)
         xs.append(xs[7+2]-a/2.0)
         xs.append(xs[7+3]-a/2.0)
-        xs.append([7+4]-a/2.0)
+        xs.append(xs[7+4]-a/2.0)
         ys.append(ys[7+1])
         ys.append(ys[7+2])
         ys.append(ys[7+3])
