@@ -57,4 +57,4 @@ class CuttingLibrary:
         for i in range(count):
             file.write("{}\t {}\t {}\t {}\t\r\n".format(typeResult[i], result[3*i],result[3*i+1], result[3*i+2]))
         file.close()
-    Sphere('bcc.xyz',2)
+    #Sphere('bcc.xyz',1)
