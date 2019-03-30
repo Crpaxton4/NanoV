@@ -110,7 +110,7 @@ class MainApp(ShowBase):
                 ("Structure _Library", self.createStructureMenuItems)
             ),
 
-            sidePad = 0.75,
+            sidePad = 0.4,
 
             align = DropDownMenu.ALeft,
             effect = DropDownMenu.PTop,
@@ -118,21 +118,21 @@ class MainApp(ShowBase):
 
             baselineOffset = -0.35,
             scale = 0.045,
-            itemHeight = 1.2,
-            leftPad = 0.2,
+            itemHeight = 1.15,
+            leftPad = 0.4,
             underscoreThickness = 1,
 
-            BGColor = (0.9, 0.9, 0.8, 0.94),
-            BGBorderColor = (0.8, 0.3, 0, 1),
+            BGColor = (1, 1, 1, 1),
+            BGBorderColor = (1, 1, 0.9, 1),
 
-            separatorHeight = 0.3,
-            separatorColor = (0, 0, 0, 1),
+            separatorHeight = 0,
+            separatorColor = (0, 0, 0, 0.5),
 
-            frameColorHover = (0.3, 0.3, 0.3, 1),
-            frameColorPress = (0, 1, 0, 0.85),
+            frameColorHover = (0.7, 0.7, 0.7, 1),
+            frameColorPress = (0.3, 0.3, 0.3, 0.85),
 
             textColorReady = (0, 0, 0, 1),
-            textColorHover = (1, 0.7, 0.2, 1),
+            textColorHover = (0, 0, 0, 1),
             textColorPress = (0, 0, 0, 1),
             textColorDisabled = (0.65, 0.65, 0.65, 1),
 
@@ -275,6 +275,8 @@ class MainApp(ShowBase):
 
         """
 
+        # get max coord of poitns of structure
+        # so that it can be centered in the viewport
         max_x_point = max(point_list, key=lambda p: p[0])
         max_x_val = max_x_point[0]
 
@@ -301,6 +303,13 @@ class MainApp(ShowBase):
         self.myMaterial2.setSpecular((0.2, 0.2, 0.45, 1.0))
         self.myMaterial2.setShininess(90.0) #Make this material shiny
 
+        # green
+        self.myMaterial3 = Material()
+        self.myMaterial3.setAmbient((0.2, 0.44, 0.2, 1.0))
+        self.myMaterial3.setDiffuse((0.2, 0.7, 0.2, 1.0))
+        self.myMaterial3.setSpecular((0.2, 0.45, 0.2, 1.0))
+        self.myMaterial3.setShininess(90.0) #Make this material shiny
+
         root_node = self.render.find('Root')
         root_node.removeNode()
 
@@ -313,7 +322,12 @@ class MainApp(ShowBase):
             self.sphere.reparentTo(self.render.find('Root'))
             self.sphere.setPos(p[0] - max_x_val/2, p[1] - max_y_val/2, p[2] - max_z_val/2)
 
-            self.sphere.setMaterial(self.myMaterial1)
+            if p[3] == 1:
+                self.sphere.setMaterial(self.myMaterial1)
+            elif p[3] == 2:
+                self.sphere.setMaterial(self.myMaterial2)
+            else:
+                self.sphere.setMaterial(self.myMaterial3)
 
             self.sphere.setScale(0.2)
     #END render_points
