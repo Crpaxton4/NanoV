@@ -61,7 +61,7 @@ class MainApp(ShowBase):
         # setup application window
         self.startWx()
         self.wxApp.Bind(wx.EVT_CLOSE, self.quit)
-        self.frame = Frame(None, wx.ID_ANY, 'Editor')
+        self.frame = Frame(None, wx.ID_ANY, 'NanoV')
         self.frame.SetDimensions(0, 0, 800, 600)
         self.frame.Center()
         self.frame.Show()
