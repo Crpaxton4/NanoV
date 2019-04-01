@@ -164,11 +164,23 @@ class MainApp(ShowBase):
             self.render_points(points)
 
     def read_in_file(self):
-        filename =  filedialog.askopenfilename(initialdir = ".", title = "Select file", filetypes = (("xyz files","*.xyz"),("all files","*.*")))
-        print (filename)
-        if filename:
-            points = StructureLibrary.FileReader(filename)
-            self.render_points(points)
+        fileDialog = wx.FileDialog(None, "Open XYZ file", wildcard="XYZ files (*.xyz)|*.xyz",
+                       style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+
+        if fileDialog.ShowModal() == wx.ID_CANCEL:
+            return     # the user changed their mind
+
+        # Proceed loading the file chosen by the user
+        filename = fileDialog.GetPath()
+        try:
+            if filename:
+                points = StructureLibrary.FileReader(filename)
+                self.render_points(points)
+
+        except IOError:
+            wx.LogError("Cannot open file '%s'." % newfile)
+
+
         print("Read file")
     ############################################################################
     # Methods to create sub menus of menu bar
