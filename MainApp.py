@@ -214,6 +214,8 @@ class MainApp(ShowBase):
         dlg.ShowModal()
         result = dlg.GetValue()
         dlg.Destroy()
+        print(typeof(result))
+
 
     def createStructureMenuItems(self):
         """
