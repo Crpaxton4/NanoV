@@ -23,6 +23,11 @@ this entire class to use wx as the main
 window and panda is just a widget
 
 
+installer
+
+https://www.panda3d.org/manual/?title=Distributing_as_a_self-contained_installer&oldid=7571
+
+
 """
 
 class Frame(wx.Frame):
