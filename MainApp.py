@@ -5,6 +5,7 @@ from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
 from direct.actor.Actor import Actor
 from panda3d.core import *
+loadPrcFileData("", "want-wx true")
 from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 from Menu import DropDownMenu, PopupMenu
@@ -70,7 +71,8 @@ class MainApp(ShowBase):
         # YNJH : create P3D window
         wp = WindowProperties()
         wp.setOrigin(0, 0)
-        wp.setSize(800,600)
+        #wp.setSize(800,600)
+        wp.setSize(int(self.pipe.getDisplayWidth() * 0.8), int(self.pipe.getDisplayHeight() * 0.8))
         wp.setParentWindow(self.frame.GetHandle())
         base.openMainWindow(type = 'onscreen', props=wp, size=(800, 600))
 
