@@ -30,7 +30,7 @@ setup(
                 'pandagles2',
                 'pandadx9'
             ],
-            'include_modules' : ['wxpython']
+            'include_modules' : ['wxpython','wx','wx.core*']
         }
     }
 )
