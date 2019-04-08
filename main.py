@@ -68,7 +68,8 @@ class MainApp(ShowBase):
         self.startWx()
         self.wxApp.Bind(wx.EVT_CLOSE, self.quit)
         self.frame = Frame(None, wx.ID_ANY, 'NanoV')
-        self.frame.SetDimensions(0, 0, 800, 600)
+        #self.frame.SetDimensions(0, 0, 800, 600)
+        self.frame.SetSize(int(self.pipe.getDisplayWidth() * 0.8), int(self.pipe.getDisplayHeight() * 0.8))
         self.frame.Center()
         self.frame.Show()
         self.frame.Layout()
@@ -77,10 +78,14 @@ class MainApp(ShowBase):
         wp = WindowProperties()
         wp.setOrigin(0, 0)
         #wp.setSize(800,600)
-        wp.setSize(int(self.pipe.getDisplayWidth() * 0.8), int(self.pipe.getDisplayHeight() * 0.8))
+        #wp.setSize(int(self.pipe.getDisplayWidth() * 0.8), int(self.pipe.getDisplayHeight() * 0.8))
+        wp.setSize(self.frame.GetSize()[0], self.frame.GetSize()[1])
         wp.setParentWindow(self.frame.GetHandle())
-        base.openMainWindow(type = 'onscreen', props=wp, size=(800, 600))
-
+        base.openMainWindow(type = 'onscreen', props=wp, size=(self.frame.GetSize()[0], self.frame.GetSize()[1]))
+        print(self.frame.GetSize()[0])
+        print(self.frame.GetSize()[1])
+        print(self.pipe.getDisplayWidth())
+        print(self.pipe.getDisplayHeight())
 
 
 
