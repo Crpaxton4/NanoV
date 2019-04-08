@@ -295,62 +295,75 @@ class MainApp(ShowBase):
         render_points
 
         """
+        # Create Popup to specify the particle size
+        particleSize = .2
+        dlg = wx.TextEntryDialog(self.frame, "Particle Size", "Enter a Particle Size")
+        if dlg.ShowModal() == wx.ID_OK:
+            result = dlg.GetValue()
+            try:
+                particleSize = float(result)
+            except:
+                wx.MessageBox(message="The user did not enter a numeric value so " +
+                "the particle size  could not be changed. The default size is .2",
+                caption='Incorrect Entry, Particle Size not changed',
+                style=wx.OK | wx.ICON_INFORMATION)
+                print("An exception occurred")
+            # =======
+            # get max coord of poitns of structure
+            # so that it can be centered in the viewport
+            max_x_point = max(point_list, key=lambda p: p[0])
+            max_x_val = max_x_point[0]
 
-        # get max coord of poitns of structure
-        # so that it can be centered in the viewport
-        max_x_point = max(point_list, key=lambda p: p[0])
-        max_x_val = max_x_point[0]
+            max_y_point = max(point_list, key=lambda p: p[1])
+            max_y_val = max_y_point[1]
 
-        max_y_point = max(point_list, key=lambda p: p[1])
-        max_y_val = max_y_point[1]
+            max_z_point = max(point_list, key=lambda p: p[2])
+            max_z_val = max_z_point[2]
 
-        max_z_point = max(point_list, key=lambda p: p[2])
-        max_z_val = max_z_point[2]
+            print([max_x_val, max_y_val, max_z_val])
 
-        print([max_x_val, max_y_val, max_z_val])
+            #Create Material for all the spheres to be rendered
+            # red
+            self.myMaterial1 = Material()
+            self.myMaterial1.setAmbient((0.44, 0.2, 0.2, 1.0))
+            self.myMaterial1.setDiffuse((0.7, 0.2, 0.2, 1.0))
+            self.myMaterial1.setSpecular((0.45, 0.2, 0.2, 1.0))
+            self.myMaterial1.setShininess(90.0) #Make this material shiny
 
-        #Create Material for all the spheres to be rendered
-        # red
-        self.myMaterial1 = Material()
-        self.myMaterial1.setAmbient((0.44, 0.2, 0.2, 1.0))
-        self.myMaterial1.setDiffuse((0.7, 0.2, 0.2, 1.0))
-        self.myMaterial1.setSpecular((0.45, 0.2, 0.2, 1.0))
-        self.myMaterial1.setShininess(90.0) #Make this material shiny
+            # blue
+            self.myMaterial2 = Material()
+            self.myMaterial2.setAmbient((0.2, 0.2, 0.44, 1.0))
+            self.myMaterial2.setDiffuse((0.2, 0.2, 0.7, 1.0))
+            self.myMaterial2.setSpecular((0.2, 0.2, 0.45, 1.0))
+            self.myMaterial2.setShininess(90.0) #Make this material shiny
 
-        # blue
-        self.myMaterial2 = Material()
-        self.myMaterial2.setAmbient((0.2, 0.2, 0.44, 1.0))
-        self.myMaterial2.setDiffuse((0.2, 0.2, 0.7, 1.0))
-        self.myMaterial2.setSpecular((0.2, 0.2, 0.45, 1.0))
-        self.myMaterial2.setShininess(90.0) #Make this material shiny
+            # green
+            self.myMaterial3 = Material()
+            self.myMaterial3.setAmbient((0.2, 0.44, 0.2, 1.0))
+            self.myMaterial3.setDiffuse((0.2, 0.7, 0.2, 1.0))
+            self.myMaterial3.setSpecular((0.2, 0.45, 0.2, 1.0))
+            self.myMaterial3.setShininess(90.0) #Make this material shiny
 
-        # green
-        self.myMaterial3 = Material()
-        self.myMaterial3.setAmbient((0.2, 0.44, 0.2, 1.0))
-        self.myMaterial3.setDiffuse((0.2, 0.7, 0.2, 1.0))
-        self.myMaterial3.setSpecular((0.2, 0.45, 0.2, 1.0))
-        self.myMaterial3.setShininess(90.0) #Make this material shiny
+            root_node = self.render.find('Root')
+            root_node.removeNode()
 
-        root_node = self.render.find('Root')
-        root_node.removeNode()
+            self.root = self.render.attachNewNode("Root")
+            self.root.reparentTo(render)
 
-        self.root = self.render.attachNewNode("Root")
-        self.root.reparentTo(render)
+            # Create
+            for p in point_list:
+                self.sphere = self.loader.loadModel("sphere.egg.pz")
+                self.sphere.reparentTo(self.render.find('Root'))
+                self.sphere.setPos(p[0] - max_x_val/2, p[1] - max_y_val/2, p[2] - max_z_val/2)
 
-        # Create
-        for p in point_list:
-            self.sphere = self.loader.loadModel("sphere.egg.pz")
-            self.sphere.reparentTo(self.render.find('Root'))
-            self.sphere.setPos(p[0] - max_x_val/2, p[1] - max_y_val/2, p[2] - max_z_val/2)
-
-            if p[3] == 1:
-                self.sphere.setMaterial(self.myMaterial1)
-            elif p[3] == 2:
-                self.sphere.setMaterial(self.myMaterial2)
-            else:
-                self.sphere.setMaterial(self.myMaterial3)
-
-            self.sphere.setScale(0.2)
+                if p[3] == 1:
+                    self.sphere.setMaterial(self.myMaterial1)
+                elif p[3] == 2:
+                    self.sphere.setMaterial(self.myMaterial2)
+                else:
+                    self.sphere.setMaterial(self.myMaterial3)
+                self.sphere.setScale(particleSize)
+        dlg.Destroy()
     #END render_points
 
     def updateCameraLight(self, task):
