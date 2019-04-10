@@ -29,11 +29,46 @@ https://www.panda3d.org/manual/?title=Distributing_as_a_self-contained_installer
 
 
 """
+class PopupFrame(wx.Frame):
+    """
+        Class used for creating frames other than the main one
+        """
+
+    def __init__(self, title, parent=None):
+        wx.Frame.__init__(self, parent=parent, title=title)
+
+        hbox = wx.BoxSizer(wx.HORIZONTAL)
+
+        # btn = wx.Button(self, label='Hi')
+        # btn.Bind(wx.EVT_BUTTON, self.printHi)
+
+        xtext = wx.StaticText(self, -1, "X Position:")
+        ytext = wx.StaticText(self, -1, "Y Position:")
+        ztext = wx.StaticText(self, -1, "Z Position:")
+
+        xpos = wx.TextCtrl(self, -1, "", size=(200, -1))
+        ypos = wx.TextCtrl(self, -1, "", size=(200, -1))
+        zpos = wx.TextCtrl(self, -1, "", size=(200, -1))
+
+        pSizeText = wx.StaticText(self, -1, "Particle Size:")
+        pSizeEntry = wx.TextCtrl(self, -1, "", size=(200, -1))
+
+        sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
+        sizer.AddMany([xtext, xpos,ytext,ypos,ztext,zpos,pSizeText,pSizeEntry])
+
+        hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
+
+        self.SetSizer(hbox)
+
+        self.Show()
+
+    def printHi(self,event):
+        print('Hi')
+
 
 class Frame(wx.Frame):
     def __init__(self, *args, **kwargs):
         wx.Frame.__init__(self, *args, **kwargs)
-
         # add menu
         # menubar = wx.MenuBar()
         # fileMenu = wx.Menu()
@@ -44,6 +79,7 @@ class Frame(wx.Frame):
 
     def onQuit(self, evt):
         self.Close()
+
 
 class MainApp(ShowBase):
     """
@@ -86,6 +122,8 @@ class MainApp(ShowBase):
         print(self.frame.GetSize()[1])
         print(self.pipe.getDisplayWidth())
         print(self.pipe.getDisplayHeight())
+
+
 
 
 
@@ -217,16 +255,13 @@ class MainApp(ShowBase):
         """
 
         return (
-            ('Test Popup', 0, self.popup),
+            ('Load Structure', 0, self.popup),
             0
         )
 
     def popup(self):
-        dlg = wx.TextEntryDialog(self.frame, "Test...")
-        dlg.ShowModal()
-        result = dlg.GetValue()
-        dlg.Destroy()
-        print(typeof(result))
+        title = 'Structure Information'
+        frame = PopupFrame(title=title)
 
 
     def createStructureMenuItems(self):
@@ -393,6 +428,7 @@ class MainApp(ShowBase):
         except NameError:
             sys.exit()
         base.userExit()
+
 
 #END MainApp
 
