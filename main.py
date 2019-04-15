@@ -42,19 +42,21 @@ class PopupFrame(wx.Frame):
         # btn = wx.Button(self, label='Hi')
         # btn.Bind(wx.EVT_BUTTON, self.printHi)
 
-        xtext = wx.StaticText(self, -1, "X Position:")
-        ytext = wx.StaticText(self, -1, "Y Position:")
-        ztext = wx.StaticText(self, -1, "Z Position:")
+        xtext = wx.StaticText(self, -1, "X Cell:")
+        ytext = wx.StaticText(self, -1, "Y Cell:")
+        ztext = wx.StaticText(self, -1, "Z Cell:")
+        acellTxt =  wx.StaticText(self, -1, "Acell:")
 
         xpos = wx.TextCtrl(self, -1, "", size=(200, -1))
         ypos = wx.TextCtrl(self, -1, "", size=(200, -1))
         zpos = wx.TextCtrl(self, -1, "", size=(200, -1))
+        acell = wx.TextCtrl(self, -1, "", size=(200, -1))
 
         pSizeText = wx.StaticText(self, -1, "Particle Size:")
         pSizeEntry = wx.TextCtrl(self, -1, "", size=(200, -1))
 
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
-        sizer.AddMany([xtext, xpos,ytext,ypos,ztext,zpos,pSizeText,pSizeEntry])
+        sizer.AddMany([xtext, xpos,ytext,ypos,ztext,zpos,pSizeText,pSizeEntry,acellTxt,acell])
 
         hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
 
