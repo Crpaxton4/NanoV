@@ -37,6 +37,8 @@ class PopupFrame(wx.Frame):
     def __init__(self, title, parent=None):
         wx.Frame.__init__(self, parent=parent, title=title)
         hbox = wx.BoxSizer(wx.HORIZONTAL)
+        hbox2 = wx.BoxSizer(wx.HORIZONTAL)
+        vbox = wx.BoxSizer(wx.VERTICAL)
         # btn = wx.Button(self, label='Hi')
         # btn.Bind(wx.EVT_BUTTON, self.printHi)
 
@@ -51,6 +53,7 @@ class PopupFrame(wx.Frame):
         # End if else statements
         pSizeText = wx.StaticText(self, -1, "Particle Size:")
 
+
         xpos = wx.TextCtrl(self, -1, "", size=(200, -1))
         ypos = wx.TextCtrl(self, -1, "", size=(200, -1))
         zpos = wx.TextCtrl(self, -1, "", size=(200, -1))
@@ -63,12 +66,21 @@ class PopupFrame(wx.Frame):
 
         pSizeEntry = wx.TextCtrl(self, -1, "", size=(200, -1))
 
+        submitButton = wx.Button(self, -1, "Submit")
+        cancelButton = wx.Button(self, -1, "Cancel")
+
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
         sizer.AddMany([xtext, xpos,ytext,ypos,ztext,zpos,pSizeText,pSizeEntry,acellTxt,acell,type1Txt,combo1,type2Txt,combo2,type3Txt,combo3])
-
         hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
 
-        self.SetSizer(hbox)
+        sizer2 = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
+        sizer2.AddMany([cancelButton, submitButton])
+        hbox2.Add(sizer2, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
+
+        vbox.Add(hbox)
+        vbox.Add(hbox2)
+
+        self.SetSizer(vbox)
         self.Center()
         gp = base.win.getPipe()
         print(gp.getDisplayWidth())
