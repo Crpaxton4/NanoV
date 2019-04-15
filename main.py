@@ -36,9 +36,7 @@ class PopupFrame(wx.Frame):
 
     def __init__(self, title, parent=None):
         wx.Frame.__init__(self, parent=parent, title=title)
-
         hbox = wx.BoxSizer(wx.HORIZONTAL)
-
         # btn = wx.Button(self, label='Hi')
         # btn.Bind(wx.EVT_BUTTON, self.printHi)
 
@@ -46,22 +44,35 @@ class PopupFrame(wx.Frame):
         ytext = wx.StaticText(self, -1, "Y Cell:")
         ztext = wx.StaticText(self, -1, "Z Cell:")
         acellTxt =  wx.StaticText(self, -1, "Acell:")
+        # Put in if Else Statements
+        type1Txt =  wx.StaticText(self, -1, "Type 1:")
+        type2Txt =  wx.StaticText(self, -1, "Type 2:")
+        type3Txt =  wx.StaticText(self, -1, "Type 3:")
+        # End if else statements
+        pSizeText = wx.StaticText(self, -1, "Particle Size:")
 
         xpos = wx.TextCtrl(self, -1, "", size=(200, -1))
         ypos = wx.TextCtrl(self, -1, "", size=(200, -1))
         zpos = wx.TextCtrl(self, -1, "", size=(200, -1))
         acell = wx.TextCtrl(self, -1, "", size=(200, -1))
+        colorTypes = ['Red', 'Green', 'Blue']
+        combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+        combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+        combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
 
-        pSizeText = wx.StaticText(self, -1, "Particle Size:")
+
         pSizeEntry = wx.TextCtrl(self, -1, "", size=(200, -1))
 
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
-        sizer.AddMany([xtext, xpos,ytext,ypos,ztext,zpos,pSizeText,pSizeEntry,acellTxt,acell])
+        sizer.AddMany([xtext, xpos,ytext,ypos,ztext,zpos,pSizeText,pSizeEntry,acellTxt,acell,type1Txt,combo1,type2Txt,combo2,type3Txt,combo3])
 
         hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
 
         self.SetSizer(hbox)
-
+        self.Center()
+        gp = base.win.getPipe()
+        print(gp.getDisplayWidth())
+        self.SetSize(400, int(gp.getDisplayHeight() * 0.35))
         self.Show()
 
     def printHi(self,event):
@@ -263,6 +274,7 @@ class MainApp(ShowBase):
 
     def popup(self):
         title = 'Structure Information'
+        print(self.pipe.getDisplayWidth())
         frame = PopupFrame(title=title)
 
 
