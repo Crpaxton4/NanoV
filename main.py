@@ -241,10 +241,12 @@ class MainApp(ShowBase):
 
 
     def create_structure(self, structure_function, frame):
-        x = frame.xval
-        y = frame.yval
-        z = frame.zval
-        points = structure_function()
+        x = int(frame.xval)
+        y = int(frame.yval)
+        z = int(frame.zval)
+        points,count = structure_function(x,y,z)
+        print('This is count')
+        print(count)
         self.render_points(points)
 
 
