@@ -34,7 +34,11 @@ class PopupFrame(wx.Frame):
         Class used for creating frames other than the main one
         """
 
-    def __init__(self, title, parent=None):
+    def __init__(self, title, pandaParent, structure, parent=None):
+
+        self.pandaParent = pandaParent
+        self.structure = structure
+
         wx.Frame.__init__(self, parent=parent, title=title)
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
@@ -45,7 +49,6 @@ class PopupFrame(wx.Frame):
         xtext = wx.StaticText(self, -1, "X Cell:")
         ytext = wx.StaticText(self, -1, "Y Cell:")
         ztext = wx.StaticText(self, -1, "Z Cell:")
-        acellTxt =  wx.StaticText(self, -1, "Acell:")
         # Put in if Else Statements
         type1Txt =  wx.StaticText(self, -1, "Type 1:")
         type2Txt =  wx.StaticText(self, -1, "Type 2:")
@@ -54,23 +57,23 @@ class PopupFrame(wx.Frame):
         pSizeText = wx.StaticText(self, -1, "Particle Size:")
 
 
-        xpos = wx.TextCtrl(self, -1, "", size=(200, -1))
-        ypos = wx.TextCtrl(self, -1, "", size=(200, -1))
-        zpos = wx.TextCtrl(self, -1, "", size=(200, -1))
-        acell = wx.TextCtrl(self, -1, "", size=(200, -1))
+        self.xpos = wx.TextCtrl(self, -1, "", size=(200, -1))
+        self.ypos = wx.TextCtrl(self, -1, "", size=(200, -1))
+        self.zpos = wx.TextCtrl(self, -1, "", size=(200, -1))
         colorTypes = ['Red', 'Green', 'Blue']
-        combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-        combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-        combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+        self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+        self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+        self.combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
 
 
-        pSizeEntry = wx.TextCtrl(self, -1, "", size=(200, -1))
+        self.pSizeEntry = wx.TextCtrl(self, -1, "", size=(200, -1))
 
         submitButton = wx.Button(self, -1, "Submit")
         cancelButton = wx.Button(self, -1, "Cancel")
+        submitButton.Bind(wx.EVT_BUTTON,self.submit)
 
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
-        sizer.AddMany([xtext, xpos,ytext,ypos,ztext,zpos,pSizeText,pSizeEntry,acellTxt,acell,type1Txt,combo1,type2Txt,combo2,type3Txt,combo3])
+        sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2,type3Txt,self.combo3])
         hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
 
         sizer2 = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
@@ -87,9 +90,17 @@ class PopupFrame(wx.Frame):
         self.SetSize(400, int(gp.getDisplayHeight() * 0.35))
         self.Show()
 
-    def printHi(self,event):
-        print('Hi')
+    def submit(self,event):
+        self.xval = self.xpos.GetValue()
+        self.yval = self.ypos.GetValue()
+        self.zval = self.zpos.GetValue()
+        self.partSize = self.pSizeEntry.GetValue()
+        self.type1 = self.combo1.GetValue()
+        self.type2 = self.combo2.GetValue()
+        self.type3 = self.combo3.GetValue()
 
+        self.pandaParent.create_structure(self.structure, self)
+        self.Close()
 
 class Frame(wx.Frame):
     def __init__(self, *args, **kwargs):
@@ -223,7 +234,16 @@ class MainApp(ShowBase):
     # TODO Change from button commands to functions for each menu item
     ############################################################################
 
-    def create_structure(self, structure_function):
+    def atom_property_dialog(self, structure_function):
+        title = 'Structure Information'
+        print(self.pipe.getDisplayWidth())
+        frame = PopupFrame(title=title, pandaParent=self, structure=structure_function)
+
+
+    def create_structure(self, structure_function, frame):
+        x = frame.xval
+        y = frame.yval
+        z = frame.zval
         points = structure_function()
         self.render_points(points)
 
@@ -298,29 +318,29 @@ class MainApp(ShowBase):
         """
 
         return (
-            ("CaB6", 0, self.create_structure, StructureLibrary.CaB6),
+            ("CaB6", 0, self.atom_property_dialog, StructureLibrary.CaB6),
             0,
-            ("AlB2", 0, self.create_structure, StructureLibrary.AlB2),
+            ("AlB2", 0, self.atom_property_dialog, StructureLibrary.AlB2),
             0,
-            ("BCC", 0, self.create_structure, StructureLibrary.BCC),
+            ("BCC", 0, self.atom_property_dialog, StructureLibrary.BCC),
             0,
-            ("Cu3Au", 0, self.create_structure, StructureLibrary.Cu3Au),
+            ("Cu3Au", 0, self.atom_property_dialog, StructureLibrary.Cu3Au),
             0,
-            ("Diamond", 0, self.create_structure, StructureLibrary.Diamond),
+            ("Diamond", 0, self.atom_property_dialog, StructureLibrary.Diamond),
             0,
-            ("Laves", 0, self.create_structure, StructureLibrary.Laves),
+            ("Laves", 0, self.atom_property_dialog, StructureLibrary.Laves),
             0,
-            ("SC", 0, self.create_structure, StructureLibrary.SC),
+            ("SC", 0, self.atom_property_dialog, StructureLibrary.SC),
             0,
-            ("MgCu2", 0, self.create_structure, StructureLibrary.MgCu2),
+            ("MgCu2", 0, self.atom_property_dialog, StructureLibrary.MgCu2),
             0,
-            ("FCC", 0, self.create_structure, StructureLibrary.FCC),
+            ("FCC", 0, self.atom_property_dialog, StructureLibrary.FCC),
             0,
-            ("MgSnCu4", 0, self.create_structure, StructureLibrary.MgSnCu4),
+            ("MgSnCu4", 0, self.atom_property_dialog, StructureLibrary.MgSnCu4),
             0,
-            ("NaCl", 0, self.create_structure, StructureLibrary.NaCl),
+            ("NaCl", 0, self.atom_property_dialog, StructureLibrary.NaCl),
             0,
-            ("ZincBlende", 0, self.create_structure, StructureLibrary.ZincBlende),
+            ("ZincBlende", 0, self.atom_property_dialog, StructureLibrary.ZincBlende),
             0
         )
 
@@ -363,73 +383,73 @@ class MainApp(ShowBase):
         """
         # Create Popup to specify the particle size
         particleSize = .2
-        dlg = wx.TextEntryDialog(self.frame, "Particle Size", "Enter a Particle Size")
-        if dlg.ShowModal() == wx.ID_OK:
-            result = dlg.GetValue()
-            try:
-                particleSize = float(result)
-            except:
-                wx.MessageBox(message="The user did not enter a numeric value so " +
-                "the particle size  could not be changed. The default size is .2",
-                caption='Incorrect Entry, Particle Size not changed',
-                style=wx.OK | wx.ICON_INFORMATION)
-                print("An exception occurred")
+        # dlg = wx.TextEntryDialog(self.frame, "Particle Size", "Enter a Particle Size")
+        # if dlg.ShowModal() == wx.ID_OK:
+        #     result = dlg.GetValue()
+        #     try:
+        #         particleSize = float(result)
+        #     except:
+        #         wx.MessageBox(message="The user did not enter a numeric value so " +
+        #         "the particle size  could not be changed. The default size is .2",
+        #         caption='Incorrect Entry, Particle Size not changed',
+        #         style=wx.OK | wx.ICON_INFORMATION)
+        #         print("An exception occurred")
             # =======
             # get max coord of poitns of structure
             # so that it can be centered in the viewport
-            max_x_point = max(point_list, key=lambda p: p[0])
-            max_x_val = max_x_point[0]
+        max_x_point = max(point_list, key=lambda p: p[0])
+        max_x_val = max_x_point[0]
 
-            max_y_point = max(point_list, key=lambda p: p[1])
-            max_y_val = max_y_point[1]
+        max_y_point = max(point_list, key=lambda p: p[1])
+        max_y_val = max_y_point[1]
 
-            max_z_point = max(point_list, key=lambda p: p[2])
-            max_z_val = max_z_point[2]
+        max_z_point = max(point_list, key=lambda p: p[2])
+        max_z_val = max_z_point[2]
 
-            print([max_x_val, max_y_val, max_z_val])
+        print([max_x_val, max_y_val, max_z_val])
 
-            #Create Material for all the spheres to be rendered
-            # red
-            self.myMaterial1 = Material()
-            self.myMaterial1.setAmbient((0.44, 0.2, 0.2, 1.0))
-            self.myMaterial1.setDiffuse((0.7, 0.2, 0.2, 1.0))
-            self.myMaterial1.setSpecular((0.45, 0.2, 0.2, 1.0))
-            self.myMaterial1.setShininess(90.0) #Make this material shiny
+        #Create Material for all the spheres to be rendered
+        # red
+        self.myMaterial1 = Material()
+        self.myMaterial1.setAmbient((0.44, 0.2, 0.2, 1.0))
+        self.myMaterial1.setDiffuse((0.7, 0.2, 0.2, 1.0))
+        self.myMaterial1.setSpecular((0.45, 0.2, 0.2, 1.0))
+        self.myMaterial1.setShininess(90.0) #Make this material shiny
 
-            # blue
-            self.myMaterial2 = Material()
-            self.myMaterial2.setAmbient((0.2, 0.2, 0.44, 1.0))
-            self.myMaterial2.setDiffuse((0.2, 0.2, 0.7, 1.0))
-            self.myMaterial2.setSpecular((0.2, 0.2, 0.45, 1.0))
-            self.myMaterial2.setShininess(90.0) #Make this material shiny
+        # blue
+        self.myMaterial2 = Material()
+        self.myMaterial2.setAmbient((0.2, 0.2, 0.44, 1.0))
+        self.myMaterial2.setDiffuse((0.2, 0.2, 0.7, 1.0))
+        self.myMaterial2.setSpecular((0.2, 0.2, 0.45, 1.0))
+        self.myMaterial2.setShininess(90.0) #Make this material shiny
 
-            # green
-            self.myMaterial3 = Material()
-            self.myMaterial3.setAmbient((0.2, 0.44, 0.2, 1.0))
-            self.myMaterial3.setDiffuse((0.2, 0.7, 0.2, 1.0))
-            self.myMaterial3.setSpecular((0.2, 0.45, 0.2, 1.0))
-            self.myMaterial3.setShininess(90.0) #Make this material shiny
+        # green
+        self.myMaterial3 = Material()
+        self.myMaterial3.setAmbient((0.2, 0.44, 0.2, 1.0))
+        self.myMaterial3.setDiffuse((0.2, 0.7, 0.2, 1.0))
+        self.myMaterial3.setSpecular((0.2, 0.45, 0.2, 1.0))
+        self.myMaterial3.setShininess(90.0) #Make this material shiny
 
-            root_node = self.render.find('Root')
-            root_node.removeNode()
+        root_node = self.render.find('Root')
+        root_node.removeNode()
 
-            self.root = self.render.attachNewNode("Root")
-            self.root.reparentTo(render)
+        self.root = self.render.attachNewNode("Root")
+        self.root.reparentTo(render)
 
-            # Create
-            for p in point_list:
-                self.sphere = self.loader.loadModel("sphere.egg.pz")
-                self.sphere.reparentTo(self.render.find('Root'))
-                self.sphere.setPos(p[0] - max_x_val/2, p[1] - max_y_val/2, p[2] - max_z_val/2)
+        # Create
+        for p in point_list:
+            self.sphere = self.loader.loadModel("sphere.egg.pz")
+            self.sphere.reparentTo(self.render.find('Root'))
+            self.sphere.setPos(p[0] - max_x_val/2, p[1] - max_y_val/2, p[2] - max_z_val/2)
 
-                if p[3] == 1:
-                    self.sphere.setMaterial(self.myMaterial1)
-                elif p[3] == 2:
-                    self.sphere.setMaterial(self.myMaterial2)
-                else:
-                    self.sphere.setMaterial(self.myMaterial3)
-                self.sphere.setScale(particleSize)
-        dlg.Destroy()
+            if p[3] == 1:
+                self.sphere.setMaterial(self.myMaterial1)
+            elif p[3] == 2:
+                self.sphere.setMaterial(self.myMaterial2)
+            else:
+                self.sphere.setMaterial(self.myMaterial3)
+            self.sphere.setScale(particleSize)
+    #dlg.Destroy()
     #END render_points
 
     def updateCameraLight(self, task):
