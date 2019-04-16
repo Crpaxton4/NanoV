@@ -34,10 +34,11 @@ class PopupFrame(wx.Frame):
         Class used for creating frames other than the main one
         """
 
-    def __init__(self, title, pandaParent, structure, parent=None):
+    def __init__(self, title, pandaParent, structure, typeCount, parent=None):
 
         self.pandaParent = pandaParent
         self.structure = structure
+        self.typeCount = typeCount
 
         wx.Frame.__init__(self, parent=parent, title=title)
         hbox = wx.BoxSizer(wx.HORIZONTAL)
@@ -45,27 +46,17 @@ class PopupFrame(wx.Frame):
         vbox = wx.BoxSizer(wx.VERTICAL)
         # btn = wx.Button(self, label='Hi')
         # btn.Bind(wx.EVT_BUTTON, self.printHi)
-
+        colorTypes = ['Red', 'Green', 'Blue']
         xtext = wx.StaticText(self, -1, "X Cell:")
         ytext = wx.StaticText(self, -1, "Y Cell:")
         ztext = wx.StaticText(self, -1, "Z Cell:")
-        # Put in if Else Statements
-        type1Txt =  wx.StaticText(self, -1, "Type 1:")
-        type2Txt =  wx.StaticText(self, -1, "Type 2:")
-        type3Txt =  wx.StaticText(self, -1, "Type 3:")
-        # End if else statements
-        pSizeText = wx.StaticText(self, -1, "Particle Size:")
-
 
         self.xpos = wx.TextCtrl(self, -1, "", size=(200, -1))
         self.ypos = wx.TextCtrl(self, -1, "", size=(200, -1))
         self.zpos = wx.TextCtrl(self, -1, "", size=(200, -1))
-        colorTypes = ['Red', 'Green', 'Blue']
-        self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-        self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-        self.combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
 
 
+        pSizeText = wx.StaticText(self, -1, "Particle Size:")
         self.pSizeEntry = wx.TextCtrl(self, -1, "", size=(200, -1))
 
         submitButton = wx.Button(self, -1, "Submit")
@@ -73,7 +64,28 @@ class PopupFrame(wx.Frame):
         submitButton.Bind(wx.EVT_BUTTON,self.submit)
 
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
-        sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2,type3Txt,self.combo3])
+
+        # Put in if Else Statements
+        if typeCount == 1:
+            type1Txt =  wx.StaticText(self, -1, "Type 1:")
+            self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+            sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1])
+        elif typeCount == 2:
+            type1Txt =  wx.StaticText(self, -1, "Type 1:")
+            self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+            type2Txt =  wx.StaticText(self, -1, "Type 2:")
+            self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+            sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2])
+        else:
+            type1Txt =  wx.StaticText(self, -1, "Type 1:")
+            self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+            type2Txt =  wx.StaticText(self, -1, "Type 2:")
+            self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+            type3Txt =  wx.StaticText(self, -1, "Type 3:")
+            self.combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+            sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2,type3Txt,self.combo3])
+        # End if else statements
+
         hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
 
         sizer2 = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
@@ -237,17 +249,21 @@ class MainApp(ShowBase):
     def atom_property_dialog(self, structure_function):
         title = 'Structure Information'
         print(self.pipe.getDisplayWidth())
-        frame = PopupFrame(title=title, pandaParent=self, structure=structure_function)
+        # Need to call structure_function to get the number of type of atoms
+        dummy,typeCount = structure_function(1,1,1)
+        frame = PopupFrame(title=title, pandaParent=self, structure=structure_function, typeCount=typeCount)
 
 
     def create_structure(self, structure_function, frame):
         x = int(frame.xval)
         y = int(frame.yval)
         z = int(frame.zval)
+        partSize = float(frame.partSize)
         points,count = structure_function(x,y,z)
+        typeColers = [frame.type1,frame.type2,frame.type3,str(count)]
         print('This is count')
         print(count)
-        self.render_points(points)
+        self.render_points(points,partSize,typeColors)
 
 
     def input_dialog(self):
@@ -377,14 +393,14 @@ class MainApp(ShowBase):
 
     # TODO move the camera so that the scale of the scpheres will be 1
     # to make the math easier
-    def render_points(self, point_list):
+    def render_points(self, point_list, particleSize):
         """
 
         render_points
 
         """
         # Create Popup to specify the particle size
-        particleSize = .2
+        #particleSize = .2
         # dlg = wx.TextEntryDialog(self.frame, "Particle Size", "Enter a Particle Size")
         # if dlg.ShowModal() == wx.ID_OK:
         #     result = dlg.GetValue()
