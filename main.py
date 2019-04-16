@@ -142,13 +142,13 @@ class MainApp(ShowBase):
         #wp.setSize(int(self.pipe.getDisplayWidth() * 0.8), int(self.pipe.getDisplayHeight() * 0.8))
         wp.setSize(self.frame.GetSize()[0], self.frame.GetSize()[1])
         wp.setParentWindow(self.frame.GetHandle())
-        base.openMainWindow(type = 'onscreen', props=wp, size=(self.frame.GetSize()[0], self.frame.GetSize()[1]))
+        self.openMainWindow(type = 'onscreen', props=wp, size=(self.frame.GetSize()[0], self.frame.GetSize()[1]))
         print(self.frame.GetSize()[0])
         print(self.frame.GetSize()[1])
         print(self.pipe.getDisplayWidth())
         print(self.pipe.getDisplayHeight())
 
-
+        self.setBackgroundColor(0, 0, 0);
 
 
 
