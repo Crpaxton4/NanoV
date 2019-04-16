@@ -7,11 +7,15 @@ StructureLibrary.py
 """
 '''
 Library of structures that organizes the points of the various structures
+
+Method call:
+atomsArray, numOfAtomTypes = CaB6(numx, numy, numz)
+where numx, numy, and numz are the dimensions for the structure
 '''
 class StructureLibrary:
     '''test Ca [type 1] on corners with a 6 atom diamond shape of B [type 2]
     in the middle'''
-    def CaB6():
+    def CaB6(numcellx, numcelly, numcellz):
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell = 1
@@ -49,10 +53,13 @@ class StructureLibrary:
         typepos.append(2)
 
         # Set iteration numbers and counter
-        numcellx=2
-        numcelly=2
-        numcellz=2
+        # now being passed as a parameter
         atnum=0
+
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(typepos)
+        typecount = len(typeset)
+
 
         # Loop through and create layers
         for i1 in range(1,numcellx+1):
@@ -69,17 +76,18 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    # data = CaB6()
+        return finalRet, typecount
+    # data, count = CaB6(2, 2, 2)
     # file = open("CaB6.xyz","w")
-    # file.write("{}\r\n".format(56))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
+    # print("num types: " + str(count))
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
     '''test Al(1) in corner with B(2) atoms on faces parallel to each other'''
 
-    def AlB2():
+    def AlB2(numcellx, numcelly, numcellz):
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell= math.sqrt(2)
@@ -95,10 +103,12 @@ class StructureLibrary:
         zpos.append(acell/2)
         typepos.append(2)
 
-        numcellx=2
-        numcelly=2
-        numcellz=2
+
         atnum=0
+
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(typepos)
+        typecount = len(typeset)
 
         for i1 in range(1,numcellx + 1):
             for i2 in range(1,numcelly + 1):
@@ -115,10 +125,13 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    # data = AlB2()
+        return finalRet, typecount
+
+    # data, count = AlB2(3, 3, 3)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("AlB2.xyz","w")
-    # file.write("{}\r\n".format(16))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
@@ -126,7 +139,7 @@ class StructureLibrary:
 
 
     '''test BCC with Bs'''
-    def BCC():
+    def BCC(numcellx, numcelly, numcellz):
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
         acell=(math.sqrt(4)/3)
@@ -147,9 +160,6 @@ class StructureLibrary:
         ypos.append(0)
         zpos.append(acell)
 
-        numcellx=2
-        numcelly=2
-        numcellz=2
         atnum=0
 
         for i1 in range(1,numcellx + 1):
@@ -166,17 +176,21 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
             finalRet.append(points)
-        return finalRet
-    # data = BCC()
+        #harded coded since there is only one type of atom in this structure
+        return finalRet, 1
+
+    # data, count = BCC(3, 3, 3)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("bcc.xyz","w")
-    # file.write("{}\r\n".format(32))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
     '''test Au(type 1) in corner and Cu (type 2) on faces'''
-    def Cu3Au():
+    def Cu3Au(numcellx, numcelly, numcellz):
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell=math.sqrt(2)
@@ -203,9 +217,9 @@ class StructureLibrary:
         zpos.append(acell/2)
         typepos.append(2)
 
-        numcellx=2
-        numcelly=2
-        numcellz=2
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(typepos)
+        typecount = len(typeset)
         atnum=0
 
         for i1 in range(1,numcellx+1):
@@ -223,17 +237,20 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    # data = Cu3Au()
+        return finalRet, typecount
+
+    # data, count = Cu3Au(3, 3, 3)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("Cu3Au.xyz","w")
-    # file.write("{}\r\n".format(32))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
     ''' test Diamond with Bs '''
-    def Diamond():
+    def Diamond(numcellx, numcelly, numcellz):
         xpos, ypos, zpos, typepos = ([] for i in range(4))
         Bxpos, Bypos, Bzpos, Btypepos = ([] for i in range(4))
         acell=(math.sqrt(4)/3)
@@ -287,9 +304,9 @@ class StructureLibrary:
         typepos.append(1)
 
 
-        numcellx=2
-        numcelly=2
-        numcellz=2
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(typepos)
+        typecount = len(typeset)
         atnum=0
 
         for i1 in range(1,numcellx+1):
@@ -307,17 +324,20 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    # data = Diamond()
+        return finalRet, typecount
+
+    # data, count = Diamond(3, 3, 3)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("diamond.xyz","w")
-    # file.write("{}\r\n".format(64))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
     ''' Laves face structure '''
-    def Laves():
+    def Laves(numcellx, numcelly, numcellz):
         xpos, ypos, zpos = ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
         a=1.0
@@ -419,12 +439,13 @@ class StructureLibrary:
                 typepos.append(1)
 
         nt=0
-        maxx=1
-        maxy=1
-        maxz=1
-        for nx in range(0,maxx+1):
-            for ny in range(0,maxy+1):
-                for nz in range(0,maxz+1):
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(typepos)
+        typecount = len(typeset)
+
+        for nx in range(0,numcellx+1):
+            for ny in range(0,numcelly+1):
+                for nz in range(0,numcellz+1):
                     for i in range(24):
                         nt=nt+1
                         Bxpos.append(xpos[i]+nx*a)
@@ -437,16 +458,19 @@ class StructureLibrary:
         for x in range(nt):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    # data = Laves()
+        return finalRet, typecount
+
+    # data, count = Laves(1, 1, 2)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("laves.xyz","w")
-    # file.write("{}\r\n".format(192))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
-    def SC():
+    def SC(numcellx, numcelly, numcellz):
         #test SC with Bs
 
         xpos, ypos, zpos = ([] for i in range(3))
@@ -469,10 +493,6 @@ class StructureLibrary:
         ypos.append(acell)
         zpos.append(acell)
 
-
-        numcellx=2
-        numcelly=2
-        numcellz=2
         atnum=0
 
         for i1 in range(1,numcellx+1):
@@ -490,8 +510,12 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
             finalRet.append(points)
-        return finalRet
-    # data = SC()
+        #hard coded because ther is only one type of atom in the structure
+        return finalRet, 1
+
+    # data, count = SC(2, 2, 2)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("sc.xyz","w")
     # file.write("{}\r\n".format(24))
     # file.write('Atoms\n')
@@ -500,7 +524,7 @@ class StructureLibrary:
     # file.close()
 
     #The available code for this one is incorrect
-    def MgCu2():
+    def MgCu2(numcellx, numcelly, numcellz):
         a=1.0
         b=a*math.sqrt(3.0)/4.0/1.11
 
@@ -602,12 +626,13 @@ class StructureLibrary:
                 type.append(2)
 
         nt=0
-        maxx=1
-        maxy=1
-        maxz=1
-        for nx in range(0,maxx):
-            for ny in range (0,maxy):
-                for nz in range(0,maxz):
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(type)
+        typecount = len(typeset)
+
+        for nx in range(0,numcellx):
+            for ny in range (0,numcelly):
+                for nz in range(0,numcellz):
                     for i in range(24):
                         nt=nt+1
                         Bxpos.append(xs[i]+nx*a)
@@ -620,19 +645,22 @@ class StructureLibrary:
         for x in range(nt):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    # data = MgCu2()
+        return finalRet, typecount
+
+    # data, count = MgCu2(2,2,2)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("MgCu2.xyz","w")
-    # file.write("{}\r\n".format(24))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
 
-    def FCC():
+    def FCC(numcellx, numcelly, numcellz):
         #test FCC with Bs
-        xpos, ypos, zpos, typepos = ([] for i in range(4))
+        xpos, ypos, zpos= ([] for i in range(3))
         Bxpos, Bypos, Bzpos = ([] for i in range(3))
 
         acell=math.sqrt(2)
@@ -652,9 +680,7 @@ class StructureLibrary:
         ypos.append(0)
         zpos.append(acell/2)
 
-        numcellx=1
-        numcelly=1
-        numcellz=1
+
         atnum=0
 
         for i1 in range(1, numcellx+1):
@@ -672,16 +698,20 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],typeatom]
             finalRet.append(points)
-        return finalRet
-    # data = FCC()
+        #hard coded as only one atom type in structure
+        return finalRet, 1
+
+    # data, count = FCC(2,2,2)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("FCC.xyz","w")
-    # file.write("{}\r\n".format(4))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
-    def MgSnCu4():
+    def MgSnCu4(numcellx, numcelly, numcellz):
         #test Mg(1)in corners with Sn(2) in the diamond structure.  Cu(3) in a
         #pyrochlore strucutre
 
@@ -790,9 +820,10 @@ class StructureLibrary:
             else:
                 typepos.append(3)
 
-        numcellx=1
-        numcelly=1
-        numcellz=1
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(typepos)
+        typecount = len(typeset)
+
         atnum=0
 
         for i1 in range(0, numcellx+1):
@@ -810,8 +841,11 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    # data = MgSnCu4()
+        return finalRet, typecount
+
+    # data, count = MgSnCu4(2,2,2)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("MgSnCu4.xyz","w")
     # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
@@ -820,7 +854,7 @@ class StructureLibrary:
     # file.close()
 
 
-    def NaCl():
+    def NaCl(numcellx, numcelly, numcellz):
         #test Diamond with Na atoms at corners and faces and Cl in the diamond
         #structure
         acell=1
@@ -862,9 +896,10 @@ class StructureLibrary:
         zpos.append((1/2)*acell)
         typepos.append(2) #diamond
 
-        numcellx=2
-        numcelly=2
-        numcellz=2
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(typepos)
+        typecount = len(typeset)
+
         atnum=0
 
         for i1 in range(1, numcellx+1):
@@ -882,10 +917,13 @@ class StructureLibrary:
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    # data = NaCl()
+        return finalRet, typecount
+
+    # data, count = NaCl(2,2,2)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("NaCl.xyz","w")
-    # file.write("{}\r\n".format(64))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
@@ -894,7 +932,7 @@ class StructureLibrary:
 
 
 
-    def ZincBlende():
+    def ZincBlende(numcellx, numcelly, numcellz):
         '''test Diamond with Bs'''
         acell=1
         xpos, ypos, zpos, typepos = ([] for i in range(4))
@@ -933,9 +971,10 @@ class StructureLibrary:
         zpos.append((1/4)*acell)
         typepos.append(2)
 
-        numcellx=2
-        numcelly=2
-        numcellz=2
+        #cast typepos to set to get the unique values then do len to get count
+        typeset = set(typepos)
+        typecount = len(typeset)
+
         atnum=0
 
 
@@ -950,14 +989,17 @@ class StructureLibrary:
                        Btypepos.append(typepos[i])
 
         finalRet = []
-        #print(atnum)
+        print(atnum)
         for x in range(atnum):
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
-        return finalRet
-    data = ZincBlende()
+        return finalRet, typecount
+
+    # data, count = ZincBlende(2,2,2)
+    # print("num atoms: " + str(len(data)))
+    # print("num types: " + str(count))
     # file = open("ZincBlende.xyz","w")
-    # file.write("{}\r\n".format(64))
+    # file.write("{}\r\n".format(len(data)))
     # file.write('Atoms\n')
     # for x in data:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
