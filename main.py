@@ -51,17 +51,18 @@ class PopupFrame(wx.Frame):
         ytext = wx.StaticText(self, -1, "Y Cell:")
         ztext = wx.StaticText(self, -1, "Z Cell:")
 
-        self.xpos = wx.TextCtrl(self, -1, "", size=(200, -1))
-        self.ypos = wx.TextCtrl(self, -1, "", size=(200, -1))
-        self.zpos = wx.TextCtrl(self, -1, "", size=(200, -1))
+        self.xpos = wx.TextCtrl(self, -1, "3", size=(200, -1))
+        self.ypos = wx.TextCtrl(self, -1, "3", size=(200, -1))
+        self.zpos = wx.TextCtrl(self, -1, "3", size=(200, -1))
 
 
         pSizeText = wx.StaticText(self, -1, "Particle Size:")
-        self.pSizeEntry = wx.TextCtrl(self, -1, "", size=(200, -1))
+        self.pSizeEntry = wx.TextCtrl(self, -1, ".2", size=(200, -1))
 
         submitButton = wx.Button(self, -1, "Submit")
         cancelButton = wx.Button(self, -1, "Cancel")
         submitButton.Bind(wx.EVT_BUTTON,self.submit)
+        cancelButton.Bind(wx.EVT_BUTTON,self.submit)
 
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
 
@@ -107,11 +108,19 @@ class PopupFrame(wx.Frame):
         self.yval = self.ypos.GetValue()
         self.zval = self.zpos.GetValue()
         self.partSize = self.pSizeEntry.GetValue()
-        self.type1 = self.combo1.GetValue()
-        self.type2 = self.combo2.GetValue()
-        self.type3 = self.combo3.GetValue()
+        if self.typeCount == 1:
+            self.type1 = self.combo1.GetValue()
+        elif self.typeCount == 2:
+            self.type1 = self.combo1.GetValue()
+            self.type2 = self.combo2.GetValue()
+        else:
+            self.type1 = self.combo1.GetValue()
+            self.type2 = self.combo2.GetValue()
+            self.type3 = self.combo3.GetValue()
 
         self.pandaParent.create_structure(self.structure, self)
+        self.Close()
+    def cancel(self,event):
         self.Close()
 
 class Frame(wx.Frame):
@@ -260,9 +269,14 @@ class MainApp(ShowBase):
         z = int(frame.zval)
         partSize = float(frame.partSize)
         points,count = structure_function(x,y,z)
-        typeColers = [frame.type1,frame.type2,frame.type3,str(count)]
-        print('This is count')
+        typeColors = []
         print(count)
+        if count == 1:
+            typeColors = [frame.type1]
+        elif count == 2:
+            typeColors = [frame.type1,frame.type2]
+        else:
+            typeColors = [frame.type1,frame.type2,frame.type3]
         self.render_points(points,partSize,typeColors)
 
 
@@ -393,12 +407,13 @@ class MainApp(ShowBase):
 
     # TODO move the camera so that the scale of the scpheres will be 1
     # to make the math easier
-    def render_points(self, point_list, particleSize):
+    def render_points(self, point_list, particleSize, typeColors):
         """
 
         render_points
 
         """
+        print(typeColors)
         # Create Popup to specify the particle size
         #particleSize = .2
         # dlg = wx.TextEntryDialog(self.frame, "Particle Size", "Enter a Particle Size")
@@ -461,14 +476,30 @@ class MainApp(ShowBase):
             self.sphere.setPos(p[0] - max_x_val/2, p[1] - max_y_val/2, p[2] - max_z_val/2)
 
             if p[3] == 1:
-                self.sphere.setMaterial(self.myMaterial1)
+                if typeColors[0] == 'Red':
+                    self.sphere.setMaterial(self.myMaterial1)
+                elif typeColors[0] == 'Blue':
+                    self.sphere.setMaterial(self.myMaterial2)
+                else:
+                    self.sphere.setMaterial(self.myMaterial3)
             elif p[3] == 2:
-                self.sphere.setMaterial(self.myMaterial2)
+                if typeColors[1] == 'Red':
+                    self.sphere.setMaterial(self.myMaterial1)
+                elif typeColors[1] == 'Blue':
+                    self.sphere.setMaterial(self.myMaterial2)
+                else:
+                    self.sphere.setMaterial(self.myMaterial3)
             else:
-                self.sphere.setMaterial(self.myMaterial3)
+                if typeColors[2] == 'Red':
+                    self.sphere.setMaterial(self.myMaterial1)
+                elif typeColors[2] == 'Blue':
+                    self.sphere.setMaterial(self.myMaterial2)
+                else:
+                    self.sphere.setMaterial(self.myMaterial3)
             self.sphere.setScale(particleSize)
     #dlg.Destroy()
     #END render_points
+
 
     def updateCameraLight(self, task):
         """
