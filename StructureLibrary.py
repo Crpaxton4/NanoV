@@ -1005,11 +1005,12 @@ class StructureLibrary:
     #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
     # file.close()
 
-    ''' File Reader. This file reader parses an XYZ file
+    '''File Reader. This file reader parses an XYZ file
     and returns a list of lists of each set of points in the format of
     X, Y, Z, Particle Type '''
     def FileReader(path):
         points = []
+        typeset = []
         with open(path) as f:
             # Skip first 2 lines (XYZ file format)
             next(f)
@@ -1022,8 +1023,11 @@ class StructureLibrary:
                 formatted_pts.append(float(raw_nums[3]))
                 formatted_pts.append(float(raw_nums[0]))
                 points.append(formatted_pts)
+                if (float(raw_nums[0]) not in typeset):
+                    typeset.append(float(raw_nums[0]))
+        typecount = len(typeset)
         #return points
-        return points
+        return points,typecount
 
     ''' OutputFiles is a method that takes in a list of points for a structure
     that is either manually loaded or selected from the structure menu and

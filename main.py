@@ -34,11 +34,13 @@ class PopupFrame(wx.Frame):
         Class used for creating frames other than the main one
         """
 
-    def __init__(self, title, pandaParent, structure, typeCount, parent=None):
+    def __init__(self, title, pandaParent, structure, typeCount, isStructInput, filename, parent=None):
 
         self.pandaParent = pandaParent
         self.structure = structure
         self.typeCount = typeCount
+        self.isStructInput = isStructInput
+        self.filename = filename
 
         wx.Frame.__init__(self, parent=parent, title=title)
         hbox = wx.BoxSizer(wx.HORIZONTAL)
@@ -47,51 +49,83 @@ class PopupFrame(wx.Frame):
         # btn = wx.Button(self, label='Hi')
         # btn.Bind(wx.EVT_BUTTON, self.printHi)
         colorTypes = ['Red', 'Green', 'Blue']
-        xtext = wx.StaticText(self, -1, "X Cell:")
-        ytext = wx.StaticText(self, -1, "Y Cell:")
-        ztext = wx.StaticText(self, -1, "Z Cell:")
+        # Check to see if the frame should be for structures
+        if self.isStructInput:
+            xtext = wx.StaticText(self, -1, "X Cell:")
+            ytext = wx.StaticText(self, -1, "Y Cell:")
+            ztext = wx.StaticText(self, -1, "Z Cell:")
 
-        self.xpos = wx.TextCtrl(self, -1, "3", size=(200, -1))
-        self.ypos = wx.TextCtrl(self, -1, "3", size=(200, -1))
-        self.zpos = wx.TextCtrl(self, -1, "3", size=(200, -1))
+            self.xpos = wx.TextCtrl(self, -1, "3", size=(200, -1))
+            self.ypos = wx.TextCtrl(self, -1, "3", size=(200, -1))
+            self.zpos = wx.TextCtrl(self, -1, "3", size=(200, -1))
 
+            submitButton = wx.Button(self, -1, "Submit")
+            cancelButton = wx.Button(self, -1, "Cancel")
+            submitButton.Bind(wx.EVT_BUTTON,self.submit)
+            cancelButton.Bind(wx.EVT_BUTTON,self.cancel)
+        else:
+            submitButton2 = wx.Button(self, -1, "Submit")
+            cancelButton2 = wx.Button(self, -1, "Cancel")
+            submitButton2.Bind(wx.EVT_BUTTON,self.submit2)
+            cancelButton2.Bind(wx.EVT_BUTTON,self.cancel2)
 
         pSizeText = wx.StaticText(self, -1, "Particle Size:")
         self.pSizeEntry = wx.TextCtrl(self, -1, ".2", size=(200, -1))
 
-        submitButton = wx.Button(self, -1, "Submit")
-        cancelButton = wx.Button(self, -1, "Cancel")
-        submitButton.Bind(wx.EVT_BUTTON,self.submit)
-        cancelButton.Bind(wx.EVT_BUTTON,self.submit)
 
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
 
         # Put in if Else Statements
-        if typeCount == 1:
-            type1Txt =  wx.StaticText(self, -1, "Type 1:")
-            self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-            sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1])
-        elif typeCount == 2:
-            type1Txt =  wx.StaticText(self, -1, "Type 1:")
-            self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-            type2Txt =  wx.StaticText(self, -1, "Type 2:")
-            self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-            sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2])
+        if isStructInput:
+            if typeCount == 1:
+                type1Txt =  wx.StaticText(self, -1, "Type 1:")
+                self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1])
+            elif typeCount == 2:
+                type1Txt =  wx.StaticText(self, -1, "Type 1:")
+                self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                type2Txt =  wx.StaticText(self, -1, "Type 2:")
+                self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2])
+            else:
+                type1Txt =  wx.StaticText(self, -1, "Type 1:")
+                self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                type2Txt =  wx.StaticText(self, -1, "Type 2:")
+                self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                type3Txt =  wx.StaticText(self, -1, "Type 3:")
+                self.combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2,type3Txt,self.combo3])
+
+            hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
+            sizer2 = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
+            sizer2.AddMany([cancelButton, submitButton])
+            hbox2.Add(sizer2, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
         else:
-            type1Txt =  wx.StaticText(self, -1, "Type 1:")
-            self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-            type2Txt =  wx.StaticText(self, -1, "Type 2:")
-            self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-            type3Txt =  wx.StaticText(self, -1, "Type 3:")
-            self.combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
-            sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2,type3Txt,self.combo3])
-        # End if else statements
+            if typeCount == 1:
+                type1Txt =  wx.StaticText(self, -1, "Type 1:")
+                self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                sizer.AddMany([pSizeText,self.pSizeEntry,type1Txt,self.combo1])
+            elif typeCount == 2:
+                type1Txt =  wx.StaticText(self, -1, "Type 1:")
+                self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                type2Txt =  wx.StaticText(self, -1, "Type 2:")
+                self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                sizer.AddMany([pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2])
+            else:
+                type1Txt =  wx.StaticText(self, -1, "Type 1:")
+                self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                type2Txt =  wx.StaticText(self, -1, "Type 2:")
+                self.combo2 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                type3Txt =  wx.StaticText(self, -1, "Type 3:")
+                self.combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
+                sizer.AddMany([pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2,type3Txt,self.combo3])
 
-        hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
+            hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
+            sizer2 = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
+            sizer2.AddMany([cancelButton2, submitButton2])
+            hbox2.Add(sizer2, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
+            # End if else statements
 
-        sizer2 = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
-        sizer2.AddMany([cancelButton, submitButton])
-        hbox2.Add(sizer2, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
 
         vbox.Add(hbox)
         vbox.Add(hbox2)
@@ -104,6 +138,7 @@ class PopupFrame(wx.Frame):
         self.Show()
 
     def submit(self,event):
+        self.isSinput = self.isStructInput
         self.xval = self.xpos.GetValue()
         self.yval = self.ypos.GetValue()
         self.zval = self.zpos.GetValue()
@@ -121,6 +156,24 @@ class PopupFrame(wx.Frame):
         self.pandaParent.create_structure(self.structure, self)
         self.Close()
     def cancel(self,event):
+        self.Close()
+
+    def submit2(self,event):
+        self.isSinput = self.isStructInput
+        self.partSize = self.pSizeEntry.GetValue()
+        if self.typeCount == 1:
+            self.type1 = self.combo1.GetValue()
+        elif self.typeCount == 2:
+            self.type1 = self.combo1.GetValue()
+            self.type2 = self.combo2.GetValue()
+        else:
+            self.type1 = self.combo1.GetValue()
+            self.type2 = self.combo2.GetValue()
+            self.type3 = self.combo3.GetValue()
+        self.fname = self.filename
+        self.pandaParent.create_structure(self.structure, self)
+        self.Close()
+    def cancel2(self,event):
         self.Close()
 
 class Frame(wx.Frame):
@@ -260,23 +313,31 @@ class MainApp(ShowBase):
         print(self.pipe.getDisplayWidth())
         # Need to call structure_function to get the number of type of atoms
         dummy,typeCount = structure_function(1,1,1)
-        frame = PopupFrame(title=title, pandaParent=self, structure=structure_function, typeCount=typeCount)
+        frame = PopupFrame(title=title, pandaParent=self, structure=structure_function, typeCount=typeCount, isStructInput=True,filename="")
 
 
     def create_structure(self, structure_function, frame):
-        x = int(frame.xval)
-        y = int(frame.yval)
-        z = int(frame.zval)
-        partSize = float(frame.partSize)
-        points,count = structure_function(x,y,z)
         typeColors = []
-        print(count)
-        if count == 1:
-            typeColors = [frame.type1]
-        elif count == 2:
-            typeColors = [frame.type1,frame.type2]
+        partSize = float(frame.partSize)
+        if frame.isSinput:
+            x = int(frame.xval)
+            y = int(frame.yval)
+            z = int(frame.zval)
+            points,count = structure_function(x,y,z)
+            if count == 1:
+                typeColors = [frame.type1]
+            elif count == 2:
+                typeColors = [frame.type1,frame.type2]
+            else:
+                typeColors = [frame.type1,frame.type2,frame.type3]
         else:
-            typeColors = [frame.type1,frame.type2,frame.type3]
+            points,count = StructureLibrary.FileReader(frame.fname)
+            if count == 1:
+                typeColors = [frame.type1]
+            elif count == 2:
+                typeColors = [frame.type1,frame.type2]
+            else:
+                typeColors = [frame.type1,frame.type2,frame.type3]
         self.render_points(points,partSize,typeColors)
 
 
@@ -301,8 +362,10 @@ class MainApp(ShowBase):
         filename = fileDialog.GetPath()
         try:
             if filename:
-                points = StructureLibrary.FileReader(filename)
-                self.render_points(points)
+                title = 'Structure Information'
+                # Need to call FileReader to get the number of type of atoms
+                dummy,typeCount = StructureLibrary.FileReader(filename)
+                frame = PopupFrame(title=title, pandaParent=self, structure=None, typeCount=typeCount,isStructInput=False, filename=filename)
 
         except IOError:
             wx.LogError("Cannot open file '%s'." % newfile)
