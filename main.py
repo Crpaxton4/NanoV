@@ -318,27 +318,63 @@ class MainApp(ShowBase):
 
     def create_structure(self, structure_function, frame):
         typeColors = []
-        partSize = float(frame.partSize)
-        if frame.isSinput:
-            x = int(frame.xval)
-            y = int(frame.yval)
-            z = int(frame.zval)
-            points,count = structure_function(x,y,z)
-            if count == 1:
-                typeColors = [frame.type1]
-            elif count == 2:
-                typeColors = [frame.type1,frame.type2]
+        count = 0
+        try:
+            partSize = float(frame.partSize)
+            if frame.isSinput:
+                x = int(frame.xval)
+                y = int(frame.yval)
+                z = int(frame.zval)
+                points,count = structure_function(x,y,z)
+                if count == 1:
+                    typeColors = [frame.type1]
+                elif count == 2:
+                    typeColors = [frame.type1,frame.type2]
+                else:
+                    typeColors = [frame.type1,frame.type2,frame.type3]
             else:
-                typeColors = [frame.type1,frame.type2,frame.type3]
-        else:
-            points,count = StructureLibrary.FileReader(frame.fname)
+                points,count = StructureLibrary.FileReader(frame.fname)
+                if count == 1:
+                    typeColors = [frame.type1]
+                elif count == 2:
+                    typeColors = [frame.type1,frame.type2]
+                else:
+                    typeColors = [frame.type1,frame.type2,frame.type3]
+            colorCycle = ["Red","Green","Blue"]
             if count == 1:
-                typeColors = [frame.type1]
+                if typeColors[0] not in colorCycle:
+                    wx.MessageBox(message="Please make sure you have entered a color " +
+                    "from the provided list.",
+                    caption='User has entered an incorrect color value',
+                    style=wx.OK | wx.ICON_INFORMATION)
+                    print("An exception occurred")
+                else:
+                    self.render_points(points,partSize,typeColors)
             elif count == 2:
-                typeColors = [frame.type1,frame.type2]
+                if typeColors[0] not in colorCycle or typeColors[1] not in colorCycle:
+                    wx.MessageBox(message="Please make sure you have entered a color " +
+                    "from the provided list.",
+                    caption='User has entered an incorrect color value',
+                    style=wx.OK | wx.ICON_INFORMATION)
+                    print("An exception occurred")
+                else:
+                    self.render_points(points,partSize,typeColors)
             else:
-                typeColors = [frame.type1,frame.type2,frame.type3]
-        self.render_points(points,partSize,typeColors)
+                if typeColors[0] not in colorCycle or typeColors[1] not in colorCycle or typeColors[2] not in colorCycle:
+                    wx.MessageBox(message="Please make sure you have entered a color " +
+                    "from the provided list.",
+                    caption='User has entered an incorrect color value',
+                    style=wx.OK | wx.ICON_INFORMATION)
+                    print("An exception occurred")
+                else:
+                    self.render_points(points,partSize,typeColors)
+        except:
+            wx.MessageBox(message="Please make sure the particle size is a number."+
+            " If applicable, please make sure the "+
+            "X Cell, Y Cell, and Z Cell values are positive integers.",
+            caption='User has entered an incorrect numeric value',
+            style=wx.OK | wx.ICON_INFORMATION)
+            print("An exception occurred")
 
 
     def input_dialog(self):
@@ -482,14 +518,14 @@ class MainApp(ShowBase):
         # dlg = wx.TextEntryDialog(self.frame, "Particle Size", "Enter a Particle Size")
         # if dlg.ShowModal() == wx.ID_OK:
         #     result = dlg.GetValue()
-        #     try:
-        #         particleSize = float(result)
-        #     except:
-        #         wx.MessageBox(message="The user did not enter a numeric value so " +
-        #         "the particle size  could not be changed. The default size is .2",
-        #         caption='Incorrect Entry, Particle Size not changed',
-        #         style=wx.OK | wx.ICON_INFORMATION)
-        #         print("An exception occurred")
+            # try:
+            #     particleSize = float(result)
+            # except:
+            #     wx.MessageBox(message="The user did not enter a numeric value so " +
+            #     "the particle size  could not be changed. The default size is .2",
+            #     caption='Incorrect Entry, Particle Size not changed',
+            #     style=wx.OK | wx.ICON_INFORMATION)
+            #     print("An exception occurred")
             # =======
             # get max coord of poitns of structure
             # so that it can be centered in the viewport
@@ -545,6 +581,7 @@ class MainApp(ShowBase):
                     self.sphere.setMaterial(self.myMaterial2)
                 else:
                     self.sphere.setMaterial(self.myMaterial3)
+
             elif p[3] == 2:
                 if typeColors[1] == 'Red':
                     self.sphere.setMaterial(self.myMaterial1)
