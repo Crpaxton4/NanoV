@@ -134,7 +134,7 @@ class PopupFrame(wx.Frame):
         self.Center()
         gp = base.win.getPipe()
         print(gp.getDisplayWidth())
-        self.SetSize(400, int(gp.getDisplayHeight() * 0.35))
+        self.SetSize(450, int(gp.getDisplayHeight() * 0.35))
         self.Show()
 
     def submit(self,event):
