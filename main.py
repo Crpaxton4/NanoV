@@ -365,6 +365,7 @@ class MainApp(ShowBase):
                     print("An exception occurred")
                 else:
                     self.render_points(points,partSize,typeColors)
+
         except:
             wx.MessageBox(message="Please make sure the particle size is a number."+
             " If applicable, please make sure the "+
@@ -594,6 +595,16 @@ class MainApp(ShowBase):
                 else:
                     self.sphere.setMaterial(self.myMaterial3)
             self.sphere.setScale(particleSize)
+
+            self.disableMouse()
+            self.camera.setPos(0, -40, 0) # reset the camera after new structure is made
+            self.camera.setHpr(0, 0, 0)
+
+            mat = Mat4(camera.getMat())
+            mat.invertInPlace()
+            self.mouseInterfaceNode.setMat(mat)
+
+            self.enableMouse()
     #dlg.Destroy()
     #END render_points
 
