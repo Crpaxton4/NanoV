@@ -249,10 +249,8 @@ class MainApp(ShowBase):
 
         #setting up mouse to move the camera
         self.disableMouse()
-        angleDegrees = 60.0
-        angleRadians = angleDegrees * (pi / 180.0)
-        self.camera.setPos(20 * sin(angleRadians), -20 * cos(angleRadians), 0)
-        self.camera.setHpr(angleDegrees, 0, 0)
+
+        self.camera.setHpr(40, 0, 0)
 
         mat = Mat4(camera.getMat())
         mat.invertInPlace()
