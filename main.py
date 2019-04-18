@@ -249,7 +249,7 @@ class MainApp(ShowBase):
 
         #setting up mouse to move the camera
         self.disableMouse()
-        self.camera.setPos(40, 40, 0)
+        self.camera.setPos(0, -40, 0)
 
         mat = Mat4(camera.getMat())
         mat.invertInPlace()
