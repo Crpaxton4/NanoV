@@ -222,24 +222,25 @@ class MainApp(ShowBase):
         self.root = self.render.attachNewNode("Root")
         self.root.reparentTo(self.render)
 
-        self.set_up_lighting()
-
         #setting up mouse to move the camera
         self.disableMouse()
-        self.camera.setPos(0, 30, -4.2)
+        self.camera.setPos(0, -40, 0)
         self.camera.lookAt(0, 0, 0)
+
+
+        # create the axis indicator
+        self.axis=self.loader.loadModel('zup-axis.egg.pz')
+        base.axis.reparentTo(self.camera)
+        self.axis.setPos(-3.05, 10, -1.9)
+        self.axis.setScale(.04)
+        self.mouseTask=taskMgr.add(self.updateAxisIndicator, 'UpdateAxisIndicator')
+
+        self.set_up_lighting()
 
         mat = Mat4(camera.getMat())
         mat.invertInPlace()
         self.mouseInterfaceNode.setMat(mat)
         self.plnp.setMat(mat)
-
-        # create the axis indicator
-        self.axis=self.loader.loadModel('zup-axis.egg.pz')
-        self.axis.reparentTo(self.camera)
-        self.axis.setPos(.05,-40.15,.035)
-        self.axis.setScale(.001)
-        self.mouseTask=taskMgr.add(self.updateAxisIndicator, 'UpdateAxisIndicator')
 
         # create the menu for the window
         menuBar = DropDownMenu(
@@ -457,23 +458,21 @@ class MainApp(ShowBase):
         print("setting up lights")
         # Create Ambient Light
         self.alight = AmbientLight('alight')
-        self.alight.setColor(VBase4(0.2, 0.2, 0.2, 1))
+        self.alight.setColor(VBase4(0.5, 0.5, 0.5, 1))
         self.alnp = self.render.attachNewNode(self.alight)
         self.render.setLight(self.alnp)
 
         # Create a positional point light
         self.plight = PointLight('plight')
         self.plight.setColor(VBase4(1.0, 1.0, 1.0, 1))
-
         self.plnp = self.render.attachNewNode(self.plight)
         self.render.setLight(self.plnp)
 
+        self.axisLight = AmbientLight('axisLight')
+        self.axisLight.setColor(VBase4(0.7, 0.7, 0.7, 1))
+        self.axislnp = self.render.attachNewNode(self.axisLight)
+        self.axis.setLight(self.axislnp)
 
-        self.dlight = DirectionalLight('dlight')
-        self.dlight.setColor(VBase4(0.9, 0.9, 0.9, 1))
-        self.dlnp = self.render.attachNewNode(self.dlight)
-        self.dlnp.setHpr(0, -60, 0)
-        self.render.setLight(self.dlnp)
     #END set_up_lighting
 
 
@@ -577,7 +576,7 @@ class MainApp(ShowBase):
     #END updateStructureRotation
 
     def updateAxisIndicator(self, task):
-        self.axis.setHpr(base.camera.getHpr())
+        self.axis.setHpr(self.root.getHpr())
         return Task.cont
     #END updateAxisIndicator
 
