@@ -73,7 +73,7 @@ class PopupFrame(wx.Frame):
             cancelButton2.Bind(wx.EVT_BUTTON,self.cancel2)
 
         pSizeText = wx.StaticText(self, -1, "Particle Size:")
-        self.pSizeEntry = wx.TextCtrl(self, -1, ".2", size=(200, -1))
+        self.pSizeEntry = wx.TextCtrl(self, -1, "1", size=(200, -1))
 
 
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
