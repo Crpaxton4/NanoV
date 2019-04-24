@@ -192,7 +192,7 @@ class Frame(wx.Frame):
         # self.SetMenuBar(menubar)
 
     def onQuit(self, evt):
-        self.Close()
+        sys.exit()
 
 
 class MainApp(ShowBase):
@@ -253,16 +253,13 @@ class MainApp(ShowBase):
 
         #setting up mouse to move the camera
         self.disableMouse()
-        angleDegrees = 60.0
-        angleRadians = angleDegrees * (pi / 180.0)
-        self.camera.setPos(20 * sin(angleRadians), -20 * cos(angleRadians), 0)
-        self.camera.setHpr(angleDegrees, 0, 0)
+        self.camera.setPos(0, -40, 0)
 
         mat = Mat4(camera.getMat())
         mat.invertInPlace()
         self.mouseInterfaceNode.setMat(mat)
         self.plnp.setMat(mat)
-        self.enableMouse()
+        #self.enableMouse()
 
 
         # create the menu for the window
@@ -372,6 +369,7 @@ class MainApp(ShowBase):
                     print("An exception occurred")
                 else:
                     self.render_points(points,partSize,typeColors)
+
         except:
             wx.MessageBox(message="Please make sure the particle size is a number."+
             " If applicable, please make sure the "+
@@ -601,21 +599,27 @@ class MainApp(ShowBase):
                 else:
                     self.sphere.setMaterial(self.myMaterial3)
             self.sphere.setScale(particleSize)
+
+            self.disableMouse()
+            self.camera.setPos(0, -40, 0) # reset the camera after new structure is made
+            self.camera.setHpr(0, 0, 0)
+            self.plnp.setPos(0, -40, 0)
+            self.plnp.setHpr(0, 0, 0)
+
+            #self.enableMouse()
     #dlg.Destroy()
     #END render_points
 
 
-    def updateCameraLight(self, task):
+    def updateStructureRotation(self, task):
         """
 
         updateCameraLight
 
         """
 
-        #print("spin camera") WORKS
-        mat=Mat4(self.mouseInterfaceNode.getMat())
-        mat.invertInPlace()
-        self.plnp.setMat(mat)
+        # rotate the root node with the mouse
+        self.root.setHpr(self.mouseInterfaceNode.getHpr())
         return Task.cont
     #END spinCameraTask
 
