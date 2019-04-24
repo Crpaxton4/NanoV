@@ -8,7 +8,7 @@ from panda3d.core import *
 from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 from Menu import DropDownMenu, PopupMenu
-
+import sys
 import wx
 
 loadPrcFileData("", "want-wx true")
@@ -593,3 +593,5 @@ class MainApp(ShowBase):
 
 app = MainApp()
 app.run()
+print('EXIT')
+sys.exit()
