@@ -226,7 +226,8 @@ class MainApp(ShowBase):
 
         #setting up mouse to move the camera
         self.disableMouse()
-        self.camera.setPos(0, -40, 0)
+        self.camera.setPos(0, 30, -4.2)
+        self.camera.lookAt(0, 0, 0)
 
         mat = Mat4(camera.getMat())
         mat.invertInPlace()
@@ -234,9 +235,9 @@ class MainApp(ShowBase):
         self.plnp.setMat(mat)
 
         # create the axis indicator
-        self.axis=loader.loadModel('zup-axis.egg.pz')
+        self.axis=self.loader.loadModel('zup-axis.egg.pz')
         self.axis.reparentTo(self.camera)
-        self.axis.setPos(-.05,.15,-.035)
+        self.axis.setPos(.05,-40.15,.035)
         self.axis.setScale(.001)
         self.mouseTask=taskMgr.add(self.updateAxisIndicator, 'UpdateAxisIndicator')
 
@@ -466,6 +467,13 @@ class MainApp(ShowBase):
 
         self.plnp = self.render.attachNewNode(self.plight)
         self.render.setLight(self.plnp)
+
+
+        self.dlight = DirectionalLight('dlight')
+        self.dlight.setColor(VBase4(0.9, 0.9, 0.9, 1))
+        self.dlnp = self.render.attachNewNode(self.dlight)
+        self.dlnp.setHpr(0, -60, 0)
+        self.render.setLight(self.dlnp)
     #END set_up_lighting
 
 
