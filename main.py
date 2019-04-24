@@ -32,23 +32,27 @@ https://www.panda3d.org/manual/?title=Distributing_as_a_self-contained_installer
 """
 class PopupFrame(wx.Frame):
     """
-        Class used for creating frames other than the main one
+        Class used for creating frames other than the main one.
+        It holds a couple different inputs for the user depending on
+        where (File input or structure library) the user clicks
         """
 
     def __init__(self, title, pandaParent, structure, typeCount, isStructInput, filename, parent=None):
-
+        # Sets the constructor values
         self.pandaParent = pandaParent
         self.structure = structure
         self.typeCount = typeCount
         self.isStructInput = isStructInput
         self.filename = filename
-
+        # Creates the popup frame and the sizer boxes that help format the inputs
         wx.Frame.__init__(self, parent=parent, title=title)
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
         vbox = wx.BoxSizer(wx.VERTICAL)
         colorTypes = ['Red', 'Green', 'Blue']
         # Check to see if the frame should be for structures
+        # If the frame is for the structure library, an X, Y, and Z cell must be
+        # input by the User
         if self.isStructInput:
             xtext = wx.StaticText(self, -1, "X Cell:")
             ytext = wx.StaticText(self, -1, "Y Cell:")
