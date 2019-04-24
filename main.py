@@ -11,6 +11,8 @@ from Menu import DropDownMenu, PopupMenu
 
 import wx
 
+loadPrcFileData("", "want-wx true")
+
 
 """
 MainApp.py
@@ -230,8 +232,13 @@ class MainApp(ShowBase):
         mat.invertInPlace()
         self.mouseInterfaceNode.setMat(mat)
         self.plnp.setMat(mat)
-        #self.enableMouse()
 
+        # create the axis indicator
+        self.axis=loader.loadModel('zup-axis.egg.pz')
+        self.axis.reparentTo(self.camera)
+        self.axis.setPos(-.05,.15,-.035)
+        self.axis.setScale(.001)
+        self.mouseTask=taskMgr.add(self.updateAxisIndicator, 'UpdateAxisIndicator')
 
         # create the menu for the window
         menuBar = DropDownMenu(
@@ -559,8 +566,12 @@ class MainApp(ShowBase):
         # rotate the root node with the mouse
         self.root.setHpr(self.mouseInterfaceNode.getHpr())
         return Task.cont
-    #END spinCameraTask
+    #END updateStructureRotation
 
+    def updateAxisIndicator(self, task):
+        self.axis.setHpr(base.camera.getHpr())
+        return Task.cont
+    #END updateAxisIndicator
 
     def quit(self, event=None):
         self.onDestroy(event)
