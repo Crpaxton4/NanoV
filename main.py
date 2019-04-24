@@ -225,13 +225,12 @@ class MainApp(ShowBase):
         #setting up mouse to move the camera
         self.disableMouse()
         self.camera.setPos(0, -40, 0)
-        self.camera.lookAt(0, 0, 0)
 
 
         # create the axis indicator
         self.axis=self.loader.loadModel('zup-axis.egg.pz')
         base.axis.reparentTo(self.camera)
-        self.axis.setPos(-3.05, 10, -1.9)
+        self.axis.setPos(-3.075, 10, -1.9)
         self.axis.setScale(.04)
         self.mouseTask=taskMgr.add(self.updateAxisIndicator, 'UpdateAxisIndicator')
 
@@ -407,9 +406,7 @@ class MainApp(ShowBase):
 
     def popup(self):
         title = 'Structure Information'
-        print(self.pipe.getDisplayWidth())
         frame = PopupFrame(title=title)
-
 
     def createStructureMenuItems(self):
         """
@@ -554,13 +551,13 @@ class MainApp(ShowBase):
                     self.sphere.setMaterial(self.myMaterial2)
                 else:
                     self.sphere.setMaterial(self.myMaterial3)
-            self.sphere.setScale(particleSize)
+            self.sphere.setScale(particleSize * 0.2)
 
-            self.disableMouse()
             self.camera.setPos(0, -40, 0) # reset the camera after new structure is made
             self.camera.setHpr(0, 0, 0)
             self.plnp.setPos(0, -40, 0)
             self.plnp.setHpr(0, 0, 0)
+            self.mouseInterfaceNode.setHpr(0, 0, 0)
     #END render_points
 
 
