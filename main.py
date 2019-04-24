@@ -188,7 +188,7 @@ class Frame(wx.Frame):
         # self.SetMenuBar(menubar)
 
     def onQuit(self, evt):
-        self.Close()
+        sys.exit()
 
 
 class MainApp(ShowBase):
@@ -255,7 +255,7 @@ class MainApp(ShowBase):
         mat.invertInPlace()
         self.mouseInterfaceNode.setMat(mat)
         self.plnp.setMat(mat)
-        self.enableMouse()
+        #self.enableMouse()
 
 
         # create the menu for the window
@@ -599,27 +599,23 @@ class MainApp(ShowBase):
             self.disableMouse()
             self.camera.setPos(0, -40, 0) # reset the camera after new structure is made
             self.camera.setHpr(0, 0, 0)
+            self.plnp.setPos(0, -40, 0)
+            self.plnp.setHpr(0, 0, 0)
 
-            mat = Mat4(camera.getMat())
-            mat.invertInPlace()
-            self.mouseInterfaceNode.setMat(mat)
-
-            self.enableMouse()
+            #self.enableMouse()
     #dlg.Destroy()
     #END render_points
 
 
-    def updateCameraLight(self, task):
+    def updateStructureRotation(self, task):
         """
 
         updateCameraLight
 
         """
 
-        #print("spin camera") WORKS
-        mat=Mat4(self.mouseInterfaceNode.getMat())
-        mat.invertInPlace()
-        self.plnp.setMat(mat)
+        # rotate the root node with the mouse
+        self.root.setHpr(self.mouseInterfaceNode.getHpr())
         return Task.cont
     #END spinCameraTask
 
