@@ -12,6 +12,19 @@ Method call:
 atomsArray, numOfAtomTypes = CaB6(numx, numy, numz)
 where numx, numy, and numz are the dimensions for the structure
 '''
+'''
+Example of how to test new structures by writing to a .xyz file.
+Add this test after defining the method and then run the StructureLibrary.py file from the command line.
+
+data, count = CaB6(2, 2, 2)
+file = open("CaB6.xyz","w")
+file.write("{}\r\n".format(len(data)))
+file.write('Atoms\n')
+print("num types: " + str(count))
+for x in data:
+    file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
+file.close()
+'''
 class StructureLibrary:
     '''test Ca [type 1] on corners with a 6 atom diamond shape of B [type 2]
     in the middle'''
@@ -77,14 +90,7 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet, typecount
-    # data, count = CaB6(2, 2, 2)
-    # file = open("CaB6.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # print("num types: " + str(count))
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
+
     '''test Al(1) in corner with B(2) atoms on faces parallel to each other'''
 
     def AlB2(numcellx, numcelly, numcellz):
@@ -127,17 +133,6 @@ class StructureLibrary:
             finalRet.append(points)
         return finalRet, typecount
 
-    # data, count = AlB2(3, 3, 3)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("AlB2.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
-
-
     '''test BCC with Bs'''
     def BCC(numcellx, numcelly, numcellz):
         xpos, ypos, zpos = ([] for i in range(3))
@@ -178,16 +173,6 @@ class StructureLibrary:
             finalRet.append(points)
         #harded coded since there is only one type of atom in this structure
         return finalRet, 1
-
-    # data, count = BCC(3, 3, 3)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("bcc.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
 
     '''test Au(type 1) in corner and Cu (type 2) on faces'''
     def Cu3Au(numcellx, numcelly, numcellz):
@@ -238,16 +223,6 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet, typecount
-
-    # data, count = Cu3Au(3, 3, 3)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("Cu3Au.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
 
     ''' test Diamond with Bs '''
     def Diamond(numcellx, numcelly, numcellz):
@@ -325,16 +300,6 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet, typecount
-
-    # data, count = Diamond(3, 3, 3)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("diamond.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
 
     ''' Laves face structure '''
     def Laves(numcellx, numcelly, numcellz):
@@ -460,15 +425,6 @@ class StructureLibrary:
             finalRet.append(points)
         return finalRet, typecount
 
-    # data, count = Laves(1, 1, 2)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("laves.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
 
     def SC(numcellx, numcelly, numcellz):
         #test SC with Bs
@@ -513,17 +469,7 @@ class StructureLibrary:
         #hard coded because ther is only one type of atom in the structure
         return finalRet, 1
 
-    # data, count = SC(2, 2, 2)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("sc.xyz","w")
-    # file.write("{}\r\n".format(24))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
 
-    #The available code for this one is incorrect
     def MgCu2(numcellx, numcelly, numcellz):
         a=1.0
         b=a*math.sqrt(3.0)/4.0/1.11
@@ -647,16 +593,6 @@ class StructureLibrary:
             finalRet.append(points)
         return finalRet, typecount
 
-    # data, count = MgCu2(2,2,2)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("MgCu2.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
-
 
     def FCC(numcellx, numcelly, numcellz):
         #test FCC with Bs
@@ -701,15 +637,6 @@ class StructureLibrary:
         #hard coded as only one atom type in structure
         return finalRet, 1
 
-    # data, count = FCC(2,2,2)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("FCC.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
 
     def MgSnCu4(numcellx, numcelly, numcellz):
         #test Mg(1)in corners with Sn(2) in the diamond structure.  Cu(3) in a
@@ -843,16 +770,6 @@ class StructureLibrary:
             finalRet.append(points)
         return finalRet, typecount
 
-    # data, count = MgSnCu4(2,2,2)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("MgSnCu4.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
-
 
     def NaCl(numcellx, numcelly, numcellz):
         #test Diamond with Na atoms at corners and faces and Cl in the diamond
@@ -919,18 +836,6 @@ class StructureLibrary:
             finalRet.append(points)
         return finalRet, typecount
 
-    # data, count = NaCl(2,2,2)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("NaCl.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
-
-
-
 
     def ZincBlende(numcellx, numcelly, numcellz):
         '''test Diamond with Bs'''
@@ -994,16 +899,6 @@ class StructureLibrary:
             points = [Bxpos[x], Bypos[x],Bzpos[x],Btypepos[x]]
             finalRet.append(points)
         return finalRet, typecount
-
-    # data, count = ZincBlende(2,2,2)
-    # print("num atoms: " + str(len(data)))
-    # print("num types: " + str(count))
-    # file = open("ZincBlende.xyz","w")
-    # file.write("{}\r\n".format(len(data)))
-    # file.write('Atoms\n')
-    # for x in data:
-    #     file.write("{}\t {}\t {}\t {}\t\r\n".format(x[3], x[0], x[1],x[2]))
-    # file.close()
 
     '''File Reader. This file reader parses an XYZ file
     and returns a list of lists of each set of points in the format of
