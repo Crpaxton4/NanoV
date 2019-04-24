@@ -217,7 +217,8 @@ class MainApp(ShowBase):
         wp.setOrigin(0, 0)
         wp.setSize(self.frame.GetSize()[0], self.frame.GetSize()[1])
         wp.setParentWindow(self.frame.GetHandle())
-        self.openMainWindow(type = 'onscreen', props=wp, size=(self.frame.GetSize()[0], self.frame.GetSize()[1]))
+        #self.openMainWindow(type = 'onscreen', props=wp, size=(self.frame.GetSize()[0], self.frame.GetSize()[1]))
+        self.openMainWindow(type = 'onscreen', props=wp, size=(self.frame.GetSize()[0], int(self.frame.GetSize()[1]*.97)))
         self.setBackgroundColor(0, 0, 0);
 
         self.taskMgr.add(self.updateStructureRotation, "UpdateStructureRotation")
@@ -250,7 +251,7 @@ class MainApp(ShowBase):
             items=(
                 # (name, action)
                 ("_File", self.createFileMenuItems),
-                ("_Edit", self.createEditMenuItems),
+                #("_Edit", self.createEditMenuItems),
                 ("Structure _Library", self.createStructureMenuItems)
             ),
 
