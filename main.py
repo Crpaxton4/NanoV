@@ -595,5 +595,3 @@ class MainApp(ShowBase):
 
 app = MainApp()
 app.run()
-print('EXIT')
-sys.exit()
