@@ -5,7 +5,6 @@ from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
 from direct.actor.Actor import Actor
 from panda3d.core import *
-loadPrcFileData("", "want-wx true")
 from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 from Menu import DropDownMenu, PopupMenu
@@ -46,8 +45,6 @@ class PopupFrame(wx.Frame):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
         vbox = wx.BoxSizer(wx.VERTICAL)
-        # btn = wx.Button(self, label='Hi')
-        # btn.Bind(wx.EVT_BUTTON, self.printHi)
         colorTypes = ['Red', 'Green', 'Blue']
         # Check to see if the frame should be for structures
         if self.isStructInput:
@@ -133,7 +130,6 @@ class PopupFrame(wx.Frame):
         self.SetSizer(vbox)
         self.Center()
         gp = base.win.getPipe()
-        print(gp.getDisplayWidth())
         self.SetSize(450, int(gp.getDisplayHeight() * 0.35))
         self.Show()
 
@@ -179,13 +175,6 @@ class PopupFrame(wx.Frame):
 class Frame(wx.Frame):
     def __init__(self, *args, **kwargs):
         wx.Frame.__init__(self, *args, **kwargs)
-        # add menu
-        # menubar = wx.MenuBar()
-        # fileMenu = wx.Menu()
-        # fitem = fileMenu.Append(wx.ID_EXIT, 'Quit', 'Quit application')
-        # self.Bind(wx.EVT_MENU, self.onQuit, fitem)
-        # menubar.Append(fileMenu, '&File')
-        # self.SetMenuBar(menubar)
 
     def onQuit(self, evt):
         sys.exit()
@@ -197,8 +186,6 @@ class MainApp(ShowBase):
     MainApp
 
     """
-
-    step = 0
 
     def __init__(self):
         """
@@ -214,7 +201,6 @@ class MainApp(ShowBase):
         self.startWx()
         self.wxApp.Bind(wx.EVT_CLOSE, self.quit)
         self.frame = Frame(None, wx.ID_ANY, 'NanoV')
-        #self.frame.SetDimensions(0, 0, 800, 600)
         self.frame.SetSize(int(self.pipe.getDisplayWidth() * 0.8), int(self.pipe.getDisplayHeight() * 0.8))
         self.frame.Center()
         self.frame.Show()
@@ -223,23 +209,12 @@ class MainApp(ShowBase):
         # YNJH : create P3D window
         wp = WindowProperties()
         wp.setOrigin(0, 0)
-        #wp.setSize(800,600)
-        #wp.setSize(int(self.pipe.getDisplayWidth() * 0.8), int(self.pipe.getDisplayHeight() * 0.8))
         wp.setSize(self.frame.GetSize()[0], self.frame.GetSize()[1])
         wp.setParentWindow(self.frame.GetHandle())
         self.openMainWindow(type = 'onscreen', props=wp, size=(self.frame.GetSize()[0], self.frame.GetSize()[1]))
-        print(self.frame.GetSize()[0])
-        print(self.frame.GetSize()[1])
-        print(self.pipe.getDisplayWidth())
-        print(self.pipe.getDisplayHeight())
-
         self.setBackgroundColor(0, 0, 0);
 
-
-
-        self.taskMgr.add(self.updateCameraLight, "UpdateCameraLight")
-        #self.camera.setPos(20 * sin(1), -20.0 * cos(1), 0)
-        #self.camera.setHpr(0, 0, 0)
+        self.taskMgr.add(self.updateStructureRotation, "UpdateStructureRotation")
 
         # create the root node of the scene graph
         self.root = self.render.attachNewNode("Root")
@@ -307,7 +282,6 @@ class MainApp(ShowBase):
 
     def atom_property_dialog(self, structure_function):
         title = 'Structure Information'
-        print(self.pipe.getDisplayWidth())
         # Need to call structure_function to get the number of type of atoms
         dummy,typeCount = structure_function(1,1,1)
         frame = PopupFrame(title=title, pandaParent=self, structure=structure_function, typeCount=typeCount, isStructInput=True,filename="")
@@ -373,17 +347,6 @@ class MainApp(ShowBase):
             caption='User has entered an incorrect numeric value',
             style=wx.OK | wx.ICON_INFORMATION)
             print("An exception occurred")
-
-
-    def input_dialog(self):
-        answer = simpledialog.askinteger("Input", "Enter an int", parent=self.tk_parent, minvalue=0, maxvalue=100)
-
-        if answer:
-            self.step = answer
-            Reader.write_points('points.txt', self.step)
-            points = Reader.read_points('points.txt')
-
-            self.render_points(points)
 
     def read_in_file(self):
         fileDialog = wx.FileDialog(None, "Open XYZ file", wildcard="XYZ files (*.xyz)|*.xyz",
@@ -510,23 +473,6 @@ class MainApp(ShowBase):
         render_points
 
         """
-        print(typeColors)
-        # Create Popup to specify the particle size
-        #particleSize = .2
-        # dlg = wx.TextEntryDialog(self.frame, "Particle Size", "Enter a Particle Size")
-        # if dlg.ShowModal() == wx.ID_OK:
-        #     result = dlg.GetValue()
-            # try:
-            #     particleSize = float(result)
-            # except:
-            #     wx.MessageBox(message="The user did not enter a numeric value so " +
-            #     "the particle size  could not be changed. The default size is .2",
-            #     caption='Incorrect Entry, Particle Size not changed',
-            #     style=wx.OK | wx.ICON_INFORMATION)
-            #     print("An exception occurred")
-            # =======
-            # get max coord of poitns of structure
-            # so that it can be centered in the viewport
         max_x_point = max(point_list, key=lambda p: p[0])
         max_x_val = max_x_point[0]
 
@@ -601,9 +547,6 @@ class MainApp(ShowBase):
             self.camera.setHpr(0, 0, 0)
             self.plnp.setPos(0, -40, 0)
             self.plnp.setHpr(0, 0, 0)
-
-            #self.enableMouse()
-    #dlg.Destroy()
     #END render_points
 
 
@@ -613,7 +556,6 @@ class MainApp(ShowBase):
         updateCameraLight
 
         """
-
         # rotate the root node with the mouse
         self.root.setHpr(self.mouseInterfaceNode.getHpr())
         return Task.cont
@@ -627,23 +569,7 @@ class MainApp(ShowBase):
         except NameError:
             sys.exit()
         base.userExit()
-
-
 #END MainApp
-
-################################################################################
-# running the program for testing. This will need to be put into a different
-# main file to make running and testing easier
-################################################################################
-points_file = 'points.txt'
-
-points = []
-
-Reader.write_points(points_file, 10)
-
-#points = Reader.read_points(points_file)
 
 app = MainApp()
 app.run()
-
-print('Done!')
