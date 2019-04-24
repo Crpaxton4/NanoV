@@ -8,6 +8,7 @@ from panda3d.core import *
 from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 from Menu import DropDownMenu, PopupMenu
+loadPrcFileData("", "want-wx true")
 
 import wx
 
