@@ -12,6 +12,8 @@ loadPrcFileData("", "want-wx true")
 
 import wx
 
+loadPrcFileData("", "want-wx true")
+
 
 """
 MainApp.py
@@ -229,14 +231,20 @@ class MainApp(ShowBase):
 
         #setting up mouse to move the camera
         self.disableMouse()
-        self.camera.setPos(0, -40, 0)
+        self.camera.setPos(0, 30, -4.2)
+        self.camera.lookAt(0, 0, 0)
 
         mat = Mat4(camera.getMat())
         mat.invertInPlace()
         self.mouseInterfaceNode.setMat(mat)
         self.plnp.setMat(mat)
-        #self.enableMouse()
 
+        # create the axis indicator
+        self.axis=self.loader.loadModel('zup-axis.egg.pz')
+        self.axis.reparentTo(self.camera)
+        self.axis.setPos(.05,-40.15,.035)
+        self.axis.setScale(.001)
+        self.mouseTask=taskMgr.add(self.updateAxisIndicator, 'UpdateAxisIndicator')
 
         # create the menu for the window
         menuBar = DropDownMenu(
@@ -464,6 +472,13 @@ class MainApp(ShowBase):
 
         self.plnp = self.render.attachNewNode(self.plight)
         self.render.setLight(self.plnp)
+
+
+        self.dlight = DirectionalLight('dlight')
+        self.dlight.setColor(VBase4(0.9, 0.9, 0.9, 1))
+        self.dlnp = self.render.attachNewNode(self.dlight)
+        self.dlnp.setHpr(0, -60, 0)
+        self.render.setLight(self.dlnp)
     #END set_up_lighting
 
 
@@ -564,8 +579,12 @@ class MainApp(ShowBase):
         # rotate the root node with the mouse
         self.root.setHpr(self.mouseInterfaceNode.getHpr())
         return Task.cont
-    #END spinCameraTask
+    #END updateStructureRotation
 
+    def updateAxisIndicator(self, task):
+        self.axis.setHpr(base.camera.getHpr())
+        return Task.cont
+    #END updateAxisIndicator
 
     def quit(self, event=None):
         self.onDestroy(event)
