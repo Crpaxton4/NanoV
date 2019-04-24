@@ -1,4 +1,5 @@
 import math
+import wx
 
 """
 
@@ -906,21 +907,27 @@ class StructureLibrary:
     def FileReader(path):
         points = []
         typeset = []
-        with open(path) as f:
-            # Skip first 2 lines (XYZ file format)
-            next(f)
-            next(f)
-            for line in f.readlines():
-                formatted_pts = []
-                raw_nums = line.split()
-                formatted_pts.append(float(raw_nums[1]))
-                formatted_pts.append(float(raw_nums[2]))
-                formatted_pts.append(float(raw_nums[3]))
-                formatted_pts.append(float(raw_nums[0]))
-                points.append(formatted_pts)
-                if (float(raw_nums[0]) not in typeset):
-                    typeset.append(float(raw_nums[0]))
-        typecount = len(typeset)
+        try:
+            with open(path) as f:
+                # Skip first 2 lines (XYZ file format)
+                next(f)
+                next(f)
+                for line in f.readlines():
+                    formatted_pts = []
+                    raw_nums = line.split()
+                    formatted_pts.append(float(raw_nums[1]))
+                    formatted_pts.append(float(raw_nums[2]))
+                    formatted_pts.append(float(raw_nums[3]))
+                    formatted_pts.append(float(raw_nums[0]))
+                    points.append(formatted_pts)
+                    if (float(raw_nums[0]) not in typeset):
+                        typeset.append(float(raw_nums[0]))
+            typecount = len(typeset)
+        except:
+            wx.MessageBox(message="Please make sure the file you wish to read"+
+            " is in the proper XYZ format.",
+            caption='Error Reading File',
+            style=wx.OK | wx.ICON_INFORMATION)
         #return points
         return points,typecount
 

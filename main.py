@@ -185,6 +185,7 @@ class Frame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.onQuit)
 
     def onQuit(self, evt):
+        print('EXIT')
         sys.exit()
 
 
