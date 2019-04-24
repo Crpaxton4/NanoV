@@ -8,7 +8,7 @@ from panda3d.core import *
 from panda3d.core import VBase4
 from direct.gui.DirectGui import *
 from Menu import DropDownMenu, PopupMenu
-
+import sys
 import wx
 
 loadPrcFileData("", "want-wx true")
@@ -181,6 +181,8 @@ class PopupFrame(wx.Frame):
 class Frame(wx.Frame):
     def __init__(self, *args, **kwargs):
         wx.Frame.__init__(self, *args, **kwargs)
+
+        self.Bind(wx.EVT_CLOSE, self.onQuit)
 
     def onQuit(self, evt):
         sys.exit()
