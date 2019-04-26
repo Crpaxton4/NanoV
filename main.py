@@ -1,5 +1,4 @@
 from math import pi, sin, cos
-import Reader
 from StructureLibrary import StructureLibrary
 from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
