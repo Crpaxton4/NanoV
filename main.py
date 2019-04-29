@@ -29,13 +29,23 @@ https://www.panda3d.org/manual/?title=Distributing_as_a_self-contained_installer
 
 
 """
+"""
+Class used for creating frames other than the main one.
+It holds a couple different inputs for the user depending on
+where (File input or structure library) the user clicks
+"""
 class PopupFrame(wx.Frame):
-    """
-        Class used for creating frames other than the main one.
-        It holds a couple different inputs for the user depending on
-        where (File input or structure library) the user clicks
-        """
 
+    ''' This method initializes various parts of the popup frame neccessary
+    to create inputs that can be passed back to the particle rendering Methods
+    The inputs are:
+        title - the title of the frame
+        pandaParent - the parent of the frame
+        structure - if selecting from structure library, the name of the structure
+        typeCount - how many different particle types there are
+        isStruct - whether or not the user is selecting a structure from the structure library or inputting a file
+        filename - if selecting a file as input, the name of the file selected
+    '''
     def __init__(self, title, pandaParent, structure, typeCount, isStructInput, filename, parent=None):
         # Sets the constructor values
         self.pandaParent = pandaParent
@@ -71,14 +81,21 @@ class PopupFrame(wx.Frame):
             submitButton2.Bind(wx.EVT_BUTTON,self.submit2)
             cancelButton2.Bind(wx.EVT_BUTTON,self.cancel2)
 
+        # Specify particle size widget. This is also prompted
         pSizeText = wx.StaticText(self, -1, "Particle Size:")
         self.pSizeEntry = wx.TextCtrl(self, -1, "1", size=(200, -1))
 
-
+        # create Sizer for Widgets to help with formatting the popup
         sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
 
         # Put in if Else Statements
+        # Have to check if the input is for structure library or file load again
+        # We do this because the method that creates the points to be used for
+        # particle rendering is different in each case. So the submit Button
+        # has to be linked to different methods for each case
         if isStructInput:
+            # Check if there are multiple types and choose a color for each
+            # THIS NEEDS TO BE CHANGED TO ACCOUNT FOR MORE THAN 3 TYPES
             if typeCount == 1:
                 type1Txt =  wx.StaticText(self, -1, "Type 1:")
                 self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
@@ -97,12 +114,15 @@ class PopupFrame(wx.Frame):
                 type3Txt =  wx.StaticText(self, -1, "Type 3:")
                 self.combo3 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
                 sizer.AddMany([xtext, self.xpos,ytext,self.ypos,ztext,self.zpos,pSizeText,self.pSizeEntry,type1Txt,self.combo1,type2Txt,self.combo2,type3Txt,self.combo3])
-
+            # Create sizer for GUI formatting of widgets
             hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
             sizer2 = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
+            # Add structure library submit button
             sizer2.AddMany([cancelButton, submitButton])
             hbox2.Add(sizer2, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
         else:
+            # Same logic as above, except for the submit button relating
+            # to the file input type of particle rendering
             if typeCount == 1:
                 type1Txt =  wx.StaticText(self, -1, "Type 1:")
                 self.combo1 = wx.ComboBox(self,choices = colorTypes, size=(200, -1))
@@ -124,20 +144,27 @@ class PopupFrame(wx.Frame):
 
             hbox.Add(sizer, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
             sizer2 = wx.FlexGridSizer(cols=2, hgap=6, vgap=15)
+            # add submit button for file input particle rendering
             sizer2.AddMany([cancelButton2, submitButton2])
             hbox2.Add(sizer2, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
             # End if else statements
 
-
+        # Add horizontal sizers to vertical sizer for GUI formatting
         vbox.Add(hbox)
         vbox.Add(hbox2)
 
+        # Set the sizer for the frame
         self.SetSizer(vbox)
+        # Center it so it pops up in the middle
         self.Center()
+        # set the size based on the OS that the window is on
         gp = base.win.getPipe()
         self.SetSize(450, int(gp.getDisplayHeight() * 0.35))
+        # Show the popup
         self.Show()
-
+    ''' This submit method sets self up with variables correlating to the inputs
+    from the popup window. It then sends it to the create_structure method to
+    render the points'''
     def submit(self,event):
         self.isSinput = self.isStructInput
         self.xval = self.xpos.GetValue()
@@ -208,7 +235,7 @@ class MainApp(ShowBase):
         # setup application window
         self.startWx()
         self.wxApp.Bind(wx.EVT_CLOSE, self.quit)
-        self.frame = Frame(None, wx.ID_ANY, 'NanoV')
+        self.frame = Frame(None, wx.ID_ANY, 'NanoLab')
         self.frame.SetSize(int(self.pipe.getDisplayWidth() * 0.8), int(self.pipe.getDisplayHeight() * 0.8))
         self.frame.Center()
         self.frame.Show()

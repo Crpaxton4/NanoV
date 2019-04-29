@@ -22,5 +22,5 @@ Examples for how to test the structures can be found in the comments of that fil
 The logic behind the cutting tool will be placed in this file. Currently we have an untested method to cut a sphere from a molecule, but this functionality has not be added to the GUI yet.
 
 ### setup.py
-This file is used to build the executable. More info to come. More information can be found in the panda3d manual.
+This file is used to build the executable. Following the steps on the attached URL is pretty self-explanatory. Pretty much, just run ```python setup.py bdist_apps``` to get a self contained project that runs from a clickable executable. Mind you, the user must have python 3.6 installed in order for the executbale to run.
 https://www.panda3d.org/manual/?title=Distributing_Panda3D_Applications
