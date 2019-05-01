@@ -58,7 +58,7 @@ class PopupFrame(wx.Frame):
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
         vbox = wx.BoxSizer(wx.VERTICAL)
-        colorTypes = ['Red', 'Green', 'Blue']
+        colorTypes = ['Red', 'Green', 'Blue', 'Purple', 'Yellow','Orange']
         # Check to see if the frame should be for structures
         # If the frame is for the structure library, an X, Y, and Z cell must be
         # input by the User
@@ -353,7 +353,7 @@ class MainApp(ShowBase):
                     typeColors = [frame.type1,frame.type2]
                 else:
                     typeColors = [frame.type1,frame.type2,frame.type3]
-            colorCycle = ["Red","Green","Blue"]
+            colorCycle = ["Red","Green","Blue","Purple", "Yellow","Orange"]
             if count == 1:
                 if typeColors[0] not in colorCycle:
                     wx.MessageBox(message="Please make sure you have entered a color " +
@@ -551,6 +551,27 @@ class MainApp(ShowBase):
         self.myMaterial3.setSpecular((0.2, 0.45, 0.2, 1.0))
         self.myMaterial3.setShininess(90.0) #Make this material shiny
 
+        # Purple
+        self.myMaterial4 = Material()
+        self.myMaterial4.setAmbient((0.23, 0.2, 0.23, 1.0))
+        self.myMaterial4.setDiffuse((0.36, 0.2, 0.36, 1.0))
+        self.myMaterial4.setSpecular((0.24, 0.2, 0.24, 1.0))
+        self.myMaterial4.setShininess(90.0) #Make this material shiny
+
+        # Yellow
+        self.myMaterial5 = Material()
+        self.myMaterial5.setAmbient((0.44, 0.44, 0.2, 1.0))
+        self.myMaterial5.setDiffuse((0.7, 0.7, 0.2, 1.0))
+        self.myMaterial5.setSpecular((0.45, 0.45, 0.2, 1.0))
+        self.myMaterial5.setShininess(90.0) #Make this material shiny
+
+        # Orange
+        self.myMaterial6 = Material()
+        self.myMaterial6.setAmbient((0.44, 0.28, 0.2, 1.0))
+        self.myMaterial6.setDiffuse((0.7, 0.45, 0.2, 1.0))
+        self.myMaterial6.setSpecular((0.45, 0.29, 0.2, 1.0))
+        self.myMaterial6.setShininess(90.0) #Make this material shiny
+
         root_node = self.render.find('Root')
         root_node.removeNode()
 
@@ -568,23 +589,42 @@ class MainApp(ShowBase):
                     self.sphere.setMaterial(self.myMaterial1)
                 elif typeColors[0] == 'Blue':
                     self.sphere.setMaterial(self.myMaterial2)
-                else:
+                elif typeColors[0] == 'Green':
                     self.sphere.setMaterial(self.myMaterial3)
+                elif typeColors[0] == 'Purple':
+                    self.sphere.setMaterial(self.myMaterial4)
+                elif typeColors[0] == 'Yellow':
+                    self.sphere.setMaterial(self.myMaterial5)
+                else:
+                    self.sphere.setMaterial(self.myMaterial6)
 
             elif p[3] == 2:
                 if typeColors[1] == 'Red':
                     self.sphere.setMaterial(self.myMaterial1)
                 elif typeColors[1] == 'Blue':
                     self.sphere.setMaterial(self.myMaterial2)
-                else:
+                elif typeColors[1] == 'Green':
                     self.sphere.setMaterial(self.myMaterial3)
+                elif typeColors[1] == 'Purple':
+                    self.sphere.setMaterial(self.myMaterial4)
+                elif typeColors[1] == 'Yellow':
+                    self.sphere.setMaterial(self.myMaterial5)
+                else:
+                    self.sphere.setMaterial(self.myMaterial6)
             else:
                 if typeColors[2] == 'Red':
                     self.sphere.setMaterial(self.myMaterial1)
                 elif typeColors[2] == 'Blue':
                     self.sphere.setMaterial(self.myMaterial2)
-                else:
+                elif typeColors[2] == 'Green':
                     self.sphere.setMaterial(self.myMaterial3)
+                elif typeColors[2] == 'Purple':
+                    self.sphere.setMaterial(self.myMaterial4)
+                elif typeColors[2] == 'Yellow':
+                    self.sphere.setMaterial(self.myMaterial5)
+                else:
+                    self.sphere.setMaterial(self.myMaterial6)
+
             self.sphere.setScale(particleSize * 0.2)
 
             self.camera.setPos(0, -40, 0) # reset the camera after new structure is made
