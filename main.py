@@ -454,6 +454,7 @@ class MainApp(ShowBase):
     ############################################################################
     # Methods to create sub menus of menu bar
     ############################################################################
+    ''' This method creates the load file menu item '''
     def createFileMenuItems(self):
         """
 
@@ -465,7 +466,7 @@ class MainApp(ShowBase):
             ('_Load File...', 0, self.read_in_file),
             0
         )
-
+    ''' This method creates the structure library menu tab '''
     def createStructureMenuItems(self):
         """
 
@@ -607,7 +608,8 @@ class MainApp(ShowBase):
             self.sphere = self.loader.loadModel("sphere.egg.pz")
             self.sphere.reparentTo(self.render.find('Root'))
             self.sphere.setPos(p[0] - max_x_val/2, p[1] - max_y_val/2, p[2] - max_z_val/2)
-
+            # Depending on the color and number of particle types, set the color
+            # Set the color type for one particle type
             if p[3] == 1:
                 if typeColors[0] == 'Red':
                     self.sphere.setMaterial(self.myMaterial1)
@@ -621,7 +623,7 @@ class MainApp(ShowBase):
                     self.sphere.setMaterial(self.myMaterial5)
                 else:
                     self.sphere.setMaterial(self.myMaterial6)
-
+            # set second particle type color if present
             elif p[3] == 2:
                 if typeColors[1] == 'Red':
                     self.sphere.setMaterial(self.myMaterial1)
@@ -635,6 +637,7 @@ class MainApp(ShowBase):
                     self.sphere.setMaterial(self.myMaterial5)
                 else:
                     self.sphere.setMaterial(self.myMaterial6)
+            # set third particle type color if present
             else:
                 if typeColors[2] == 'Red':
                     self.sphere.setMaterial(self.myMaterial1)
@@ -649,6 +652,9 @@ class MainApp(ShowBase):
                 else:
                     self.sphere.setMaterial(self.myMaterial6)
 
+            # set particle size using user input
+            # multiply by .2 to make size ratio more understandable
+            # when multiplied by 2 users can use whole numbers to specify a size
             self.sphere.setScale(particleSize * 0.2)
 
             self.camera.setPos(0, -40, 0) # reset the camera after new structure is made
