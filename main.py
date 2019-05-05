@@ -466,19 +466,6 @@ class MainApp(ShowBase):
             0
         )
 
-    # ''' This method creates the file menu items'''
-    # def createEditMenuItems(self):
-    #     """
-    #
-    #     createFileMenuItems
-    #
-    #     """
-    #
-    #     return (
-    #         ('Load Structure', 0, self.popup),
-    #         0
-    #     )
-
     def createStructureMenuItems(self):
         """
 
