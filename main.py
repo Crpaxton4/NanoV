@@ -163,14 +163,18 @@ class PopupFrame(wx.Frame):
         # Show the popup
         self.Show()
     ''' This submit method sets self up with variables correlating to the inputs
-    from the popup window. It then sends it to the create_structure method to
+    from the popup window for structure libraries. It then sends it to the create_structure method to
     render the points'''
     def submit(self,event):
+        # set whether or not it is a file input or from structure library
         self.isSinput = self.isStructInput
+        # put x,y, and z values from user input into self
         self.xval = self.xpos.GetValue()
         self.yval = self.ypos.GetValue()
         self.zval = self.zpos.GetValue()
+        # put the particle size into self
         self.partSize = self.pSizeEntry.GetValue()
+        # depending on number of particles, get color values for each type
         if self.typeCount == 1:
             self.type1 = self.combo1.GetValue()
         elif self.typeCount == 2:
@@ -180,15 +184,24 @@ class PopupFrame(wx.Frame):
             self.type1 = self.combo1.GetValue()
             self.type2 = self.combo2.GetValue()
             self.type3 = self.combo3.GetValue()
-
+        # use panda parent to call create structure and send the structure
+        # and self (which contains all of the user input)
         self.pandaParent.create_structure(self.structure, self)
         self.Close()
+
+    ''' This just closes the popup window'''
     def cancel(self,event):
         self.Close()
 
+    ''' This submit method sets self up with variables correlating to the inputs
+    from the popup window for file inputs. It then sends it to the create_structure method to
+    render the points'''
     def submit2(self,event):
+        # set whether the structure is from file reader or library
         self.isSinput = self.isStructInput
+        # put particle size in self
         self.partSize = self.pSizeEntry.GetValue()
+        # Depending on the number of types, put the colors in self
         if self.typeCount == 1:
             self.type1 = self.combo1.GetValue()
         elif self.typeCount == 2:
@@ -198,12 +211,17 @@ class PopupFrame(wx.Frame):
             self.type1 = self.combo1.GetValue()
             self.type2 = self.combo2.GetValue()
             self.type3 = self.combo3.GetValue()
+        # put the filename in self
         self.fname = self.filename
+        # call create structure and send the structure and self with it
         self.pandaParent.create_structure(self.structure, self)
         self.Close()
+
+    ''' This just closes the popup window'''
     def cancel2(self,event):
         self.Close()
 
+''' Ths class creates the wx frame for the entire application. '''
 class Frame(wx.Frame):
     def __init__(self, *args, **kwargs):
         wx.Frame.__init__(self, *args, **kwargs)
@@ -321,24 +339,35 @@ class MainApp(ShowBase):
     # Menu item actions
     # TODO Change from button commands to functions for each menu item
     ############################################################################
-
+    ''' Method used to get popup dialog for structures from the structure library'''
     def atom_property_dialog(self, structure_function):
         title = 'Structure Information'
         # Need to call structure_function to get the number of type of atoms
         dummy,typeCount = structure_function(1,1,1)
         frame = PopupFrame(title=title, pandaParent=self, structure=structure_function, typeCount=typeCount, isStructInput=True,filename="")
 
-
+    ''' Method used to set up the structure with the specified user inputs from the popup
+    Parameters:
+        self - self object
+        structure_function - function name from structure library if structure library was used
+        frame - self object from popup that contains user input information
+    '''
     def create_structure(self, structure_function, frame):
         typeColors = []
         count = 0
+        # The try-catch is used to make sure that the users entered correct values for x,y,z and particle size
+        # The color checking is done later in this method and is constrained within the try-catch as well
         try:
+            # set the particle size from the user input
             partSize = float(frame.partSize)
+            # if the structure from structure library was selected, set the x,y,z vals from the user input
             if frame.isSinput:
                 x = int(frame.xval)
                 y = int(frame.yval)
                 z = int(frame.zval)
+                # get the points from the structure function as well as how many particle types there are
                 points,count = structure_function(x,y,z)
+                # set the user input colors based on the number of particle types
                 if count == 1:
                     typeColors = [frame.type1]
                 elif count == 2:
@@ -346,13 +375,19 @@ class MainApp(ShowBase):
                 else:
                     typeColors = [frame.type1,frame.type2,frame.type3]
             else:
+                # if a file is being read in, read in the file to get the points and the number of particle types
                 points,count = StructureLibrary.FileReader(frame.fname)
+                # set the user input colors based on the number of particle types
                 if count == 1:
                     typeColors = [frame.type1]
                 elif count == 2:
                     typeColors = [frame.type1,frame.type2]
                 else:
                     typeColors = [frame.type1,frame.type2,frame.type3]
+            # THIS SHOULD PROBABLY BE ITS OWN Method
+            # Check and make sure the user input colors are a part of the colors that we Have
+            # If the user put a color that is not available, show an error message
+            # If the colors are fine and so is everything else, send the points, particle size and colors to render points
             colorCycle = ["Red","Green","Blue","Purple", "Yellow","Orange"]
             if count == 1:
                 if typeColors[0] not in colorCycle:
@@ -362,6 +397,7 @@ class MainApp(ShowBase):
                     style=wx.OK | wx.ICON_INFORMATION)
                     print("An exception occurred")
                 else:
+                    # send info to render_points
                     self.render_points(points,partSize,typeColors)
             elif count == 2:
                 if typeColors[0] not in colorCycle or typeColors[1] not in colorCycle:
@@ -371,6 +407,7 @@ class MainApp(ShowBase):
                     style=wx.OK | wx.ICON_INFORMATION)
                     print("An exception occurred")
                 else:
+                    # send info to render_points
                     self.render_points(points,partSize,typeColors)
             else:
                 if typeColors[0] not in colorCycle or typeColors[1] not in colorCycle or typeColors[2] not in colorCycle:
@@ -380,8 +417,9 @@ class MainApp(ShowBase):
                     style=wx.OK | wx.ICON_INFORMATION)
                     print("An exception occurred")
                 else:
+                    # send info to render_points
                     self.render_points(points,partSize,typeColors)
-
+        # Throw exception and show error message if either the particle size, x,y, or z values are not of the correct type
         except:
             wx.MessageBox(message="Please make sure the particle size is a number."+
             " If applicable, please make sure the "+
@@ -390,10 +428,12 @@ class MainApp(ShowBase):
             style=wx.OK | wx.ICON_INFORMATION)
             print("An exception occurred")
 
+    ''' This is the method that reads in a XYZ file from the user in order to render a structure'''
     def read_in_file(self):
+        # prompts a user to select a file
         fileDialog = wx.FileDialog(None, "Open XYZ file", wildcard="XYZ files (*.xyz)|*.xyz",
                        style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
-
+        # does nothing if the user cancels the action
         if fileDialog.ShowModal() == wx.ID_CANCEL:
             return     # the user changed their mind
 
@@ -426,21 +466,18 @@ class MainApp(ShowBase):
             0
         )
 
-    def createEditMenuItems(self):
-        """
-
-        createFileMenuItems
-
-        """
-
-        return (
-            ('Load Structure', 0, self.popup),
-            0
-        )
-
-    def popup(self):
-        title = 'Structure Information'
-        frame = PopupFrame(title=title)
+    # ''' This method creates the file menu items'''
+    # def createEditMenuItems(self):
+    #     """
+    #
+    #     createFileMenuItems
+    #
+    #     """
+    #
+    #     return (
+    #         ('Load Structure', 0, self.popup),
+    #         0
+    #     )
 
     def createStructureMenuItems(self):
         """
