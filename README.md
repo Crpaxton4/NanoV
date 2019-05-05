@@ -9,6 +9,10 @@ To run the project, type the command ```python main.py``` in the command line.
 
 ### main.py
 This file contains the settings and properties of the main window. Panda3D is used to create the model.
+Additionally, this file pretty much holds the majority of the functionality of the app as a whole.
+It contains the framework for the front-end, holds the logic on user-specific input, and connects the user input
+to the associated molecular structure points that I gathered from either the read-in file or the structure library.
+Additionally, the Panda3D particle rendering is in this file.
 
 ### Menu.py
 This file creates the menu bar at the top of the screen as well as the drop down items.
