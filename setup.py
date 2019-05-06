@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name="NanoV",
+    name="NanoLab",
     options = {
         'build_apps': {
             'include_patterns': [
